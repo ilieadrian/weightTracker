@@ -11,19 +11,22 @@
 <body>
     <main>
             <form>
-                <div class="date">
-                    <label for="birthday">Date</label>
-                    <input type="date" id="Date" name="Date of the input"> 
+                <div class="date-picking-side">
+                    <div class="date form-item">
+                        <label for="date">Date</label>
+                        <input type="date" id="date_timepicker" name="Date of the input"> 
+                    </div>
                 </div>
+                <div class="info-side">
+                    <div class="weight form-item">
+                        <label for="weight">Weight: </label>
+                        <input type="text" id="weight" name="weight" placeholder="kg"><br>
+                    </div>
 
-                <div class="weight">
-                    <label for="weight">Weight (kg)</label>
-                    <input type="text" id="weight" name="weight" value="Please add a value"><br>
-                </div>
-
-                <div class="comments">
-                    <label for="weight">Comments</label>
-                    <input type="text" id="comments" name="comments" value="Please add a value"><br>
+                    <div class="comments form-item">
+                        <label for="weight">Comments: </label>
+                        <input type="text" id="comments" name="comments" placeholder="optional"><br>
+                    </div>
                 </div>
 
                 <input type="submit" value="Submit">
@@ -32,8 +35,10 @@
 
             <ul>
                 <li id="header"><p>Date</p><p>Measured weight</p><p>Comments</p></li>
-                <li> <p>ID: </p> <p>23.09.2023</p> <p>98.2</p> <p></p></li>
-                <li> <p>ID: </p> <p>29.09.2023</p> <p>98.3</p><p></p></li>
+                <li> <p>23.09.2023</p> <p>98.2</p> <p>Start of mesurements
+
+                </p></li>
+                <li> <p>29.09.2023</p> <p>98.3</p><p></p></li>
             </ul>
 
             <!-- pagination / maximul 12 items -->
