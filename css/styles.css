@@ -4,6 +4,7 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: #F0F8FB;
     color: #474F69;
+    box-sizing: border-box;
 }
 
 main {
@@ -51,7 +52,7 @@ form input[type=date] {
 form button {
     padding: 15px 15px;
     background-color: white;
-    border: none;
+    border: 1px solid #474F69;
     cursor: pointer;
     width: 70%;
     color: #474F69;
@@ -60,7 +61,7 @@ form button {
     text-transform: uppercase;
     border-radius: 5px;
     letter-spacing: 1px;
-}
+} 
 
 @media only screen and (max-width: 600px) {
     form {
