@@ -1,18 +1,80 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
+/* Styles Reset*/
+
+html {
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+  *, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* End reset styles */
+
 body {
     font-family: 'Poppins', sans-serif;
+    font: 1rem;
     background-color: #F0F8FB;
     color: #474F69;
     box-sizing: border-box;
 }
 
 main {
-    width: 90%;
     max-width: 1280px;
-    margin: auto;
+    margin: 0 auto;
+    padding: 0 0.6rem;
+}
+form {
+    width: 100%;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
+.form-item {
+    display: flex;
+    flex-direction: column;
+    width: 78%;
+}
+form input[type=text],
+form input[type=date] {
+    max-width: 100%;
+    padding: 15px;
+    background-color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: inherit;
+    border: none;
+    border-radius: 5px;
+}
+form input::placeholder {
+    color: #474F69;
+}
+
+label {
+    margin: 0.5rem 0;
+}
+
+/* Old Styles */
+/*  
 form {
     width: 100%;
     max-width: 30rem;
@@ -20,23 +82,25 @@ form {
     display: flex;
     flex-direction: column;
     justify-items: center;
-    align-items: flex-end;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
 }
 
 label {
-    display: inline-block;
+    display: block;
     width: 30%;
     margin-right: 1rem;
 }
 
 .form-item {
-    /* background-color: red; */
+    background-color: red;
     width: 100%;
     margin-bottom: 1rem;
     text-align: left;
     display: flex;
     align-items: center;
-}    
+
 
 form input[type=text],
 form input[type=date] {
@@ -69,12 +133,24 @@ form button {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin: 0 auto;
     }
 
-    form input[type=text] {
+    .form-item {
+        background-color: red;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+    }
+
+    form input[type=text],
+    form input[type=date] {
         width: 100%;
         margin-bottom: 10px;
     }
+
 }
 
 li {
@@ -97,13 +173,14 @@ li i {
 }
 
 /* Tooltip setup */
+/*
 .tooltip {
     position: relative;
     display: inline-block;
     border-bottom: 1px dotted black;
 }
- 
- .tooltip .tooltiptext {
+
+.tooltip .tooltiptext {
     visibility: hidden;
     width: 120px;
     background-color: black;
@@ -116,9 +193,9 @@ li i {
     bottom: 150%;
     left: 50%;
     margin-left: -60px;
-  }
-  
-  .tooltip .tooltiptext::after {
+}
+
+.tooltip .tooltiptext::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -127,8 +204,10 @@ li i {
     border-width: 5px;
     border-style: solid;
     border-color: black transparent transparent transparent;
-  }
-  
-  .tooltip:hover .tooltiptext {
+}
+
+.tooltip:hover .tooltiptext {
     visibility: visible;
-  }
+}
+*/
+/* End old styles */
