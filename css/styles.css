@@ -44,6 +44,7 @@ main {
 form {
     width: 100%;
     min-width: 200px;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -53,8 +54,9 @@ form {
 .form-item {
     display: flex;
     flex-direction: column;
-    width: 78%;
+    width: 75%;
 }
+
 form input[type=text],
 form input[type=date] {
     max-width: 100%;
@@ -65,13 +67,66 @@ form input[type=date] {
     border: none;
     border-radius: 5px;
 }
-form input::placeholder {
-    color: #474F69;
-}
+
 
 label {
     margin: 0.5rem 0;
 }
+
+form button {
+    padding: 15px 15px;
+    background-color: white;
+    border: 1px solid #474F69;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    width: 70%;
+    color: #474F69;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 5px;
+    letter-spacing: 1px;
+} 
+
+/* Media queries */
+
+@media only screen and (min-width: 600px) {
+    form {
+        background-color: rgb(238, 220, 220);
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 2rem auto;
+    }
+
+    .form-item {
+        width: 100%;
+        margin-bottom: 2rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        
+    }
+
+    form input[type=text],
+    form input[type=date] {
+        width: 30rem;
+    }
+    label {
+        display: block;
+        text-align: left;
+        margin: 0;
+    }
+
+    form button {
+        margin-top: 0;
+    } 
+
+    
+}   
 
 /* Old Styles */
 /*  
