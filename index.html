@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <title>Weight Tracker</title>
 </head>
 <body>
@@ -27,14 +27,13 @@
                     
                 </div>
                 <button> Submit</button>
-                
             </form>
 
 
             <ul>
-                <li id="header"><p>Date</p><p>Measured weight</p><p>Comments</p></li>
-                <li> <p>23.09.2023</p> <p>98.2</p> <div class="icons"><i class="tooltip fa-solid fa-sharp fa-comment"></i> <i class="fa-sharp fa-solid fa-trash"></i></div></li>
-                <li> <p>29.09.2023</p> <p>98.3</p> <div class="icons"><i class="tooltip fa-sharp fa-regular fa-comment"><span class="tooltiptext">No coments recorded</span></i> <i class="fa-sharp fa-solid fa-trash"></i></div></li>
+                <li class="header"><p>Date</p><p>Weight</p><p>Actions</p></li>
+                <li class="table-item"> <span>23.09.2023</span> <p>98.2</p> <div class="icons"><i class="tooltip fa-solid fa-sharp fa-comment"></i> <i class="fa-sharp fa-solid fa-trash"></i></div></li>
+                <li class="table-item"> <span>29.09.2023</span> <p>98.3</p> <div class="icons"><i class="tooltip fa-sharp fa-regular fa-comment"><span class="tooltiptext">No coments recorded</span></i> <i class="fa-sharp fa-solid fa-trash"></i></div></li>
             </ul>
 
             <!-- pagination / maximum 12 items -->
