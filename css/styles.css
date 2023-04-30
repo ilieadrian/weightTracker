@@ -113,20 +113,19 @@ li {
     align-items: center;
 }
 
-li.table-item {
-    justify-content: space-around;
+.table-item {
+    width: 33.333%;
+    text-align: center;
 }
 
-li.table-item:hover {
+li.table-row:hover {
     box-shadow: 0px 0px 5px #BCBCC5;
-}
-
-li span {
-    margin-left: -10%;
 }
 
 .icons {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
 }
 /* Media queries */
@@ -177,9 +176,9 @@ li span {
         justify-content: space-around;
     }
 
-    li.table-item {
-        justify-content: space-between;
-    }
+    /* li.table-row {
+        justify-content: space-around;
+    } */
     li span {
         margin-left: 0;
     }
