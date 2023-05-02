@@ -32,9 +32,20 @@
 
             <ul>
                 <li class="header"><p class="table-item">Date</p><p class="table-item">Weight</p><p class="table-item">Actions</p></li>
-                <li class="table-row"> <p class="table-item">23.09.2023</p> <p class="table-item">98.2</p> <div class="icons table-item"><i class="tooltip fa-solid fa-sharp fa-comment"><span class="tooltiptext">Start of recording</span></i> <i class="fa-sharp fa-solid fa-trash"></i></div></li>
-                <li class="table-row"> <p class="table-item">29.09.2023</p> <p class="table-item">98.3</p> <div class="icons table-item"><i class="tooltip fa-sharp fa-regular fa-comment"><span class="tooltiptext">No coments recorded</span></i> <i class="fa-sharp fa-solid fa-trash"></i></div></li>
+                <li class="table-row"> <p class="table-item">23.09.2023</p> <p class="table-item">98.2</p> <div class="icons table-item"><i class="tooltip fa-solid fa-sharp fa-comment"><span class="tooltiptext">Start of recording</span></i> <i class="fa-sharp fa-solid fa-trash delete-record"></i></div></li>
+                <li class="table-row"> <p class="table-item">29.09.2023</p> <p class="table-item">98.3</p> <div class="icons table-item"><i class="tooltip fa-sharp fa-regular fa-comment"><span class="tooltiptext">No coments recorded</span></i> <i class="fa-sharp fa-solid fa-trash delete-record"></i></div></li>
             </ul>
+
+            <div id="delete-modal" class="modal">
+                <div class="modal-content">
+                    <i class="fa-sharp fa-solid fa-rectangle-xmark fa-xl"></i>
+                    <p>Are you sure you want to delete this record?</p>
+                    <div class="modal-buttons">
+                        <button id="delete-confirm">Ok</button>
+                        <button id="delete-cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
 
             <!-- pagination / maximum 12 items -->
 
@@ -45,4 +56,6 @@
             -->
     </main>
 </body>
+
+<script src="js/script.js"></script>
 </html>

@@ -167,6 +167,51 @@ li.table-row:hover {
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
+
+
+/* Modal Styles */
+.modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    text-align: center;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+button {
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#delete-confirm {
+    background-color: #f44336;
+    color: #fff;
+}
+
+#delete-cancel {
+    background-color: #ddd;
+}
 /* Media queries */
 
 @media only screen and (min-width: 600px) {
