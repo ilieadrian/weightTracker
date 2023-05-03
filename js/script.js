@@ -1,3 +1,5 @@
+// Delete record modal control
+
 const trashIcons = document.querySelectorAll('.delete-record');
 const modal = document.getElementById('delete-modal');
 const confirmBtn = document.getElementById('delete-confirm');
@@ -7,6 +9,7 @@ const cancelBtn = document.getElementById('delete-cancel');
 trashIcons.forEach(icon => {
     icon.addEventListener('click', () => {
         modal.style.display = 'block';
+        console.log(trashIcons)
     });
 });
 
@@ -21,3 +24,5 @@ confirmBtn.addEventListener('click', () => {
     console.log('Record deleted from database');
     modal.style.display = 'none';
 });
+
+// End Delete record modal control
