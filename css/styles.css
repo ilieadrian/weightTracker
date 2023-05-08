@@ -193,36 +193,34 @@ li.table-row:hover {
 
 .fa-rectangle-xmark {
     position: absolute;
-    top: 10%;
-    left: 90%;
-    margin-left: -5px;
+    top: 20px;
+    right: 10px;
+    /* margin-left: 10px; */
 }
 
 .modal-message {
-    margin-top: 1rem;
+    margin-top: 1.3rem;
 }
 
 .modal-buttons {
     display: flex;
-    /* flex-direction: column; */
-    justify-content: center;
-    gap: 1rem;
-    /* margin-top: 10px; */
+    margin: 0 auto;
+    text-align: center;
+    flex-direction: column;
+    width: 50%;
+    gap: 0.1rem;
+    margin-top: 10px;
 }
 
 button {
-    /* margin: 5px;
-    padding: 10px 20px;
-    border-radius: 6px;
     font-size: 16px;
-    cursor: pointer; */
-
-    padding: 15px 15px;
+    padding: 0.5rem;
     background-color: white;
     border: 1px solid #474F69;
     cursor: pointer;
     margin-top: 1.5rem;
-    /* width: 75%; */
+    width: 100%;
+    /* min-width: 80px; */
     color: #474F69;
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
@@ -237,7 +235,8 @@ button {
 }
 
 #delete-cancel {
-    background-color: #ddd;
+    color: #474F69;
+    background-color: #F0F8FB;
 }
 /* Media queries */
 
