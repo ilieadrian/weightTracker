@@ -28,8 +28,12 @@ confirmBtn.addEventListener('click', () => {
 
 closeBtn.addEventListener('click', () => {
     // Add code to delete record from database here
-    console.log('modal closed');
     modal.style.display = 'none'
 })
 
 // End Delete record modal control
+
+// Form validations
+
+
+// End for form validation

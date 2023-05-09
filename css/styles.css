@@ -169,7 +169,7 @@ li.table-row:hover {
 
 /* Modal Styles */
 .modal {
-    display: block;
+    display: none;
     position: fixed;
     z-index: 1;
     left: 0;
@@ -195,7 +195,7 @@ li.table-row:hover {
     position: absolute;
     top: 20px;
     right: 10px;
-    /* margin-left: 10px; */
+    cursor: pointer;
 }
 
 .modal-message {
