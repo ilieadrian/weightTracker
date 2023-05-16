@@ -72,6 +72,14 @@ label {
     margin: 0.5rem 0;
 }
 
+.form-error {
+    display: none;
+    margin: 1rem 0;
+    font-size: medium;
+    font-weight: 700;
+    color: #F87D7D;
+}
+
 form button {
     padding: 15px 15px;
     background-color: white;

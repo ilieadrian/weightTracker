@@ -21,6 +21,8 @@ function addData() {
     }
     inputs.push(newInput)
     currentId++
+
+    
     let inputsSerialized = JSON.stringify(inputs)
     console.log(inputsSerialized)
 
