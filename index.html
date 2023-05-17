@@ -10,16 +10,16 @@
 </head>
 <body>
     <main>
-            <form>
-                <div class="date form-item">
+            <form id="form-id">
+                <div class="date form-item form-control">
                     <label for="date">Date:</label>
                     <input type="date" id="date-timepicker" name="Date of the input"> 
                     <p class="form-error">This field is required.</p>
                 </div>
             
-                <div class="weight form-item">
+                <div class="weight form-item form-control">
                     <label for="weight">Weight:</label>
-                    <input type="text" id="weight" name="weight" placeholder="Kilograms">
+                    <input type="text" id="weight" name="weight" placeholder="Kilograms" >
                     <p class="form-error">This field is required. Only whole or decimal numbers.</p>
                 </div>
 
@@ -59,6 +59,7 @@
     </main>
 </body>
 
-<script src="js/script.js"></script>
+<script src="js/modal.js"></script>
+<script src="js/validation.js"></script>
 <script src="js/crud.js"></script>
 </html>

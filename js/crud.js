@@ -24,12 +24,12 @@ function addData() {
 
     
     let inputsSerialized = JSON.stringify(inputs)
-    console.log(inputsSerialized)
+    // console.log(inputsSerialized)
 
     localStorage.setItem("inputs", inputsSerialized)
 
     let inputsDeserialized = JSON.parse(localStorage.getItem("inputs"))
-    console.log(inputsDeserialized)
+    // console.log(inputsDeserialized)
 
 }
 
