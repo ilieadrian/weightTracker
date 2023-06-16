@@ -136,11 +136,14 @@ li.table-row:hover {
     gap: 1rem;
 }
 
+i {
+    cursor: pointer;
+}
+
 /* Tooltip in actions column */
 .tooltip {
     position: relative;
     display: inline-block;
-    cursor: pointer;
 }
 
 .tooltip .tooltiptext {
