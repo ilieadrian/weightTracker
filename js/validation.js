@@ -1,9 +1,13 @@
-const form = document.getElementById('form-id')
-const date = document.getElementById('date-timepicker')
-const weight = document.getElementById('weight')
-const submitBtn = document.getElementById('submit-btn')
+const form = document.getElementById('form-id');
+const date = document.getElementById('date-timepicker').valueAsDate;
+const weight = document.getElementById('weight').value;
+const comment = document.getElementById('comment').value;
+const submitBtn = document.getElementById('submit-btn');
 
-function checkRequired (inputArr) {
+
+function checkRequired () {
+
+    console.log(typeof date, date, typeof date, weight, typeof comment, comment)
     inputArr.forEach(function(input) {
         if(input.value.trim() === '') {
         error(input)
@@ -14,7 +18,7 @@ function checkRequired (inputArr) {
 }
 
 function error(input) {
-    console.log("Error")
+    console.log("Error");
     const formControl = input.parentElement;
     const inputEl = formControl.querySelector('.form-control');
     const spanEl = formControl.querySelector('.form-error');
@@ -32,5 +36,5 @@ function succes(input) {
 
 submitBtn.addEventListener('click', e => {
     e.preventDefault()
-    checkRequired([date, weight])
+    checkRequired()
 })
