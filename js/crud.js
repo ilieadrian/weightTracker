@@ -1,5 +1,3 @@
-// const submitBtn = document.getElementById('submit-btn')
-
 // let currentId = 1;
 // let inputs = [];
 

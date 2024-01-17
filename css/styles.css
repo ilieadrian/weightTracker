@@ -54,11 +54,22 @@ form {
 .form-item {
     display: flex;
     flex-direction: column;
-    width: 75%;
+    width: 100%;
+}
+
+.input-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem; 
+    
 }
 
 form input[type=text],
 form input[type=date] {
+    width: 100%;
     max-width: 100%;
     padding: 1rem;
     background-color: white;
@@ -68,16 +79,23 @@ form input[type=date] {
     border-radius: 6px;
 }
 
-label {
-    margin: 0.5rem 0;
+form input[type=text].error, 
+form input[type=date].error {
+    border: 1px solid red;
 }
 
 .form-error {
-    display: none;
-    margin: 1rem 0;
+    width: 100%;
+    text-align: center;
+    margin: 0;
     font-size: medium;
     font-weight: 700;
     color: #F87D7D;
+}
+
+label {
+    display: block;
+    margin: 0.5rem 0;
 }
 
 form button {
@@ -262,11 +280,13 @@ button {
         margin: 2rem auto;
     }
 
-    .form-item {
+    .input-container{
         flex-direction: row;
-        margin-bottom: 1rem;
-        align-items: center;
-        width: 100%;
+    }
+
+    .form-error {
+        text-align: right;
+        margin-bottom: 0.5rem;
     }
 
     form input[type=text],
