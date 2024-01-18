@@ -68,6 +68,7 @@ form {
 }
 
 form input[type=text],
+form input[type=number],
 form input[type=date] {
     width: 100%;
     max-width: 100%;
@@ -79,18 +80,23 @@ form input[type=date] {
     border-radius: 6px;
 }
 
-form input[type=text].error, 
+form input[type=number].error, 
 form input[type=date].error {
     border: 1px solid red;
 }
 
 .form-error {
+    display: none;
     width: 100%;
     text-align: center;
     margin: 0;
     font-size: medium;
     font-weight: 700;
     color: #F87D7D;
+}
+
+.form-error.error{
+    display: block;
 }
 
 label {
@@ -267,7 +273,26 @@ button {
 #delete-cancel {
     color: #474F69;
     background-color: #F0F8FB;
+    
 }
+
+/* Footer */
+.attribution {
+    text-align: center;
+    width: 100%;
+    padding-bottom: 0.3rem;
+    font-size: 0.7rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+}
+
+.attribution a {
+    margin-left: 0.3rem;
+}
+
+
 /* Media queries */
 
 @media only screen and (min-width: 600px) {
@@ -290,6 +315,7 @@ button {
     }
 
     form input[type=text],
+    form input[type=number],
     form input[type=date] {
         width: 100%;
         padding: 1rem;
