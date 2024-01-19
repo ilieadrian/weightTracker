@@ -164,6 +164,15 @@ i {
     cursor: pointer;
 }
 
+#row-id {
+    display: none;
+}
+
+.header p:first-of-type {
+    display: none;
+}
+
+
 /* Tooltip in actions column */
 .tooltip {
     position: relative;
@@ -344,10 +353,15 @@ button {
         justify-content: space-around;
     }
 
-    /* li.table-row {
-        justify-content: space-around;
-    } */
     li span {
         margin-left: 0;
+    }
+
+    #row-id {
+        display: block;
+    }
+    
+    .header p:first-of-type {
+        display: block;
     }
 }   
