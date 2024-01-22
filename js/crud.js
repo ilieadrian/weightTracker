@@ -1,47 +1,25 @@
-// let currentId = 1;
-// let inputs = [];
+var table = document.getElementById('table');
+var dataArray = [
+{ rowId: 1, date: "22.09.2023", value: 97.5, comment: "Start of recording"},
+{ rowId: 2, date: "27.09.2023", value: 98.2, comment:""},
+];
 
-// submitBtn.addEventListener("click", addData)
+dataArray.forEach(function(data) {
+    var listItem = document.createElement("li");
+    listItem.classList = "table-row";
 
-// function addData() {
-//     event.preventDefault()
-    
-//     const date = document.getElementById('date-timepicker').value
-//     const weight = document.getElementById('weight').value
-//     const comments = document.getElementById('comments').value
-    
-//     // Add the user input to the data object
-//     const newInput = {
-//         id: currentId,
-//         date: date,
-//         weight: weight,
-//         comments: comments
-//     }
-//     inputs.push(newInput)
-//     currentId++
-
-    
-//     let inputsSerialized = JSON.stringify(inputs)
-//     // console.log(inputsSerialized)
-
-//     localStorage.setItem("inputs", inputsSerialized)
-
-//     let inputsDeserialized = JSON.parse(localStorage.getItem("inputs"))
-//     // console.log(inputsDeserialized)
-
-// }
+    listItem.innerHTML = `
+    <p id="row-id" class="table-item">${data.rowId}</p>
+    <p class="table-item">${data.date}</p>
+    <p class="table-item">${data.value}</p>
+    <i class="fa-solid fa-grip-lines table-item"></i>
+    <div class="icons table-item">
+        <i class="tooltip fa-solid fa-sharp fa-comment">
+        <span class="tooltiptext">${data.comment}</span></i>
+        <i class="fa-sharp fa-solid fa-trash delete-record"></i>
+    </div>
+    `;
 
 
-
-
-// // Form validation
-
-// // Store object to localhost
-
-// // generate the list from the object
-
-// // Delete inputs
-
-// // Store object to database
-
-
+    table.appendChild(listItem)
+});
