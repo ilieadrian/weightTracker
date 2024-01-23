@@ -1,13 +1,13 @@
 const submitBtn = document.getElementById('submit-btn');
 const recordsList = document.querySelector('ul');
 const form = document.getElementById('form-id');
+const date = document.getElementById('date-timepicker').value;
+// const weight = document.getElementById('weight').value.trim();
+const comment = document.getElementById('comment').value.trim();
 
 function checkRequired() {
     const formElementsIDs = ['date-timepicker', 'weight'];
     let hasErrors = false;
-    const date = document.getElementById('date-timepicker').value;
-    const weight = document.getElementById('weight').value.trim();
-    const comment = document.getElementById('comment').value.trim();
 
     formElementsIDs.forEach(elementId => {
         const inputElement = document.getElementById(elementId);
@@ -25,18 +25,8 @@ function checkRequired() {
     });
 
     if (!hasErrors) {
-        succes(date, weight, comment);
+        addData(date, weight, comment);
     }
-}
-
-function succes(...args) {
-
-    const date = args[0];
-    // console.log(normalArray)
-    console.log(date)
-    // console.log(...args[0]);
-    // console.log(...args[1]);
-    // console.log(...args[2]);
 }
 
 submitBtn.addEventListener('click', e => {
