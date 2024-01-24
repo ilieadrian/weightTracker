@@ -8,14 +8,14 @@ const closeBtn = document.getElementById ('delete-mark')
 trashIcons.forEach((icon, index) => {
     icon.addEventListener('click', () => {
         modal.style.display = 'block';
-        console.log(icon); // 17.01.2023 - i check and the correct id for the coresponding line is present in modal
+        // console.log(icon); // 17.01.2023 - i check and the correct id for the coresponding line is present in modal
     })
 })
 
 //Delete record from database when confirm button is clicked
 confirmBtn.addEventListener('click', () => {
   // Add reference to delete record from database code here
-    console.log('Record deleted from database');
+    // console.log('Record deleted from database');
     modal.style.display = 'none'
 })
 
