@@ -1,20 +1,11 @@
 let table = document.getElementById('table');
 let dataArray = [];
 
-// Placeholder array data
-// {rowId: 1, date: "22.09.2023", weight: 97.5, evolution: 0, comment: "Start of recording"},
-// { rowId: 2, date: "27.09.2023", weight: 98.2, evolution: 1, comment:""},
-// { rowId: 3, date: "29.09.2023", weight: 99.0, evolution: -1, comment:""},
-// { rowId: 4, date: "29.09.2023", weight: 98.0, evolution: -1, comment:"Doooonw"},
-// { rowId: 5, date: "29.09.2023", weight: 98.0, evolution: 0, comment:"Za saim"},
-// { rowId: 6, date: "29.09.2023", weight: 100.0, evolution: 1, comment:""},
-
 function updateDisplay() {
-    console.table(dataArray);
     let listItem;
 
     if(dataArray.length !== 0) { // prevents apartion of an empty row if not data is present in array
-                listItem = document.createElement("li");
+        listItem = document.createElement("li");
         listItem.classList = "table-row";
         table.appendChild(listItem);
     }
@@ -37,6 +28,7 @@ function updateDisplay() {
 function addData(date, weight, comment) {
     let newId = checkRowId();
     let evolution = checkEvolution(weight);
+    
 
     const newData = {
         rowId: newId,
@@ -64,7 +56,7 @@ function checkEvolution(weight) {
         return 'fa-grip-lines';
     }
 
-    let lastWeight = dataArray[dataArray.length - 1].value;
+    let lastWeight = dataArray[dataArray.length - 1].weight;
 
     if (weight === lastWeight) {
         return 'fa-grip-lines';
