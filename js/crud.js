@@ -28,7 +28,6 @@ function updateDisplay() {
 function addData(date, weight, comment) {
     let newId = checkRowId();
     let evolution = checkEvolution(weight);
-    
 
     const newData = {
         rowId: newId,
@@ -65,6 +64,20 @@ function checkEvolution(weight) {
     } else if (weight > lastWeight) {
         return 'fa-angles-up';
     }
+}
+
+function checkDuplicateEntry(date, weight, comment){
+    const duplicateError = document.getElementById("duplicate-error");
+    const isDateDuplicate = dataArray.some(data => data.date === date);
+    const isWeightDuplicate = dataArray.some(data => data.weight === weight);
+    
+    if(isDateDuplicate && isWeightDuplicate) {
+            duplicateError.classList.add("error");
+            return;
+        } else {
+            addData(date, weight, comment);
+            duplicateError.classList.remove("error");
+        }
 }
 
 updateDisplay();

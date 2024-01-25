@@ -99,6 +99,11 @@ form input[type=date].error {
     display: block;
 }
 
+#duplicate-error {
+    margin-top: 0.6rem;
+    text-align: center;
+}
+
 label {
     display: block;
     margin: 0.5rem 0;
@@ -171,7 +176,6 @@ i {
 .header p:first-of-type {
     display: none;
 }
-
 
 /* Tooltip in actions column */
 .tooltip {

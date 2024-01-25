@@ -18,7 +18,6 @@ function checkRequired() {
         } else {
             inputElement.classList.remove("error");
             errorTxtElement.classList.remove("error");
-            
         }
     });
 
@@ -26,7 +25,7 @@ function checkRequired() {
         const date = document.getElementById('date-timepicker').value;
         const weight = +document.getElementById('weight').value;
         const comment = document.getElementById('comment').value.trim();
-        addData(date, weight, comment);
+        checkDuplicateEntry(date, weight, comment);
     }
 }
 
