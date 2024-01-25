@@ -4,6 +4,7 @@ const form = document.getElementById('form-id');
 
 function checkRequired() {
     const formElementsIDs = ['date-timepicker', 'weight'];
+    let isError = false;
 
     formElementsIDs.forEach(elementId => {
         const inputElement = document.getElementById(elementId);
@@ -13,16 +14,20 @@ function checkRequired() {
         if (value.length === 0) {
             inputElement.classList.add("error");
             errorTxtElement.classList.add("error");
+            isError = true;
         } else {
             inputElement.classList.remove("error");
             errorTxtElement.classList.remove("error");
-            const date = document.getElementById('date-timepicker').value;
-            const weight = +document.getElementById('weight').value;
-            const comment = document.getElementById('comment').value.trim();
-            addData(date, weight, comment);
+            
         }
     });
 
+    if(!isError) {
+        const date = document.getElementById('date-timepicker').value;
+        const weight = +document.getElementById('weight').value;
+        const comment = document.getElementById('comment').value.trim();
+        addData(date, weight, comment);
+    }
 }
 
 submitBtn.addEventListener('click', e => {
