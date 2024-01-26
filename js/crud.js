@@ -1,28 +1,29 @@
 let table = document.getElementById('table');
-let dataArray = [];
+let dataArray = JSON.parse(localStorage.getItem('dataArray')) || [];
+let deleteButton = document.getElementById("delete-local");
 
 function updateDisplay() {
-    let listItem;
-
-    if(dataArray.length !== 0) { // prevents apartion of an empty row if not data is present in array
-        listItem = document.createElement("li");
-        listItem.classList = "table-row";
-        table.appendChild(listItem);
+    
+    if (dataArray.length > 0) {
+        table.innerHTML = ""; // Clear the table only if there is data
+        dataArray.forEach(function(data) {
+            let listItem = document.createElement("li");
+            listItem.classList = "table-row";
+            listItem.innerHTML = `
+                <p id="row-id" class="table-item">${data.rowId}</p>
+                <p class="table-item">${data.date}</p>
+                <p class="table-item">${data.weight}</p>
+                <i class="fa-solid ${data.evolution} table-item"></i>
+                <div class="icons table-item">
+                    <i class="tooltip ${data.comment.length > 0 ? "fa-solid" : 'fa-regular'} fa-sharp fa-comment">
+                        <span class="tooltiptext">${data.comment.length > 0 ? data.comment : 'No comment added'}</span>
+                    </i>
+                    <i class="fa-sharp fa-solid fa-trash delete-record"></i>
+                </div>
+            `;
+            table.appendChild(listItem);
+        });
     }
-
-    dataArray.forEach(function(data) {
-        listItem.innerHTML = `
-        <p id="row-id" class="table-item">${data.rowId}</p>
-        <p class="table-item">${data.date}</p>
-        <p class="table-item">${data.weight}</p>
-        <i class="fa-solid ${data.evolution} table-item"></i>
-        <div class="icons table-item">
-            <i class="tooltip ${data.comment.length > 0 ? "fa-solid" : 'fa-regular'} fa-sharp fa-comment">
-            <span class="tooltiptext">${data.comment.length > 0 ? data.comment : 'No comment added'}</span></i>
-            <i class="fa-sharp fa-solid fa-trash delete-record"></i>
-        </div>
-        `;
-    });
 }
 
 function addData(date, weight, comment) {
@@ -37,7 +38,8 @@ function addData(date, weight, comment) {
         comment: comment,
     };
 
-    dataArray.push(newData);
+    dataArray.unshift(newData);
+    localStorage.setItem('dataArray', JSON.stringify(dataArray));
     updateDisplay();
 }
 
@@ -45,7 +47,7 @@ function checkRowId() {
     if (dataArray.length == 0) {
         return 1;
     } else {
-        let lastRowId = dataArray[dataArray.length - 1].rowId;
+        let lastRowId = dataArray[0].rowId;
         return lastRowId + 1;
     }
 }
@@ -55,7 +57,7 @@ function checkEvolution(weight) {
         return 'fa-grip-lines';
     }
 
-    let lastWeight = dataArray[dataArray.length - 1].weight;
+    let lastWeight = dataArray[0].weight;
 
     if (weight === lastWeight) {
         return 'fa-grip-lines';
@@ -81,3 +83,5 @@ function checkDuplicateEntry(date, weight, comment){
 }
 
 updateDisplay();
+
+deleteButton.addEventListener("click", () => localStorage.removeItem("dataArray"));
