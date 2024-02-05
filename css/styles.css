@@ -218,7 +218,9 @@ i {
 
 /* Modal Styles */
 .modal {
-    display: none;
+    /* !!!!!!! */
+    display: none; 
+    /* !!!!!!!! */
     position: fixed;
     z-index: 1;
     left: 0;
@@ -251,6 +253,15 @@ i {
     margin-top: 1.3rem;
 }
 
+#modal-message-all {
+    color: #f44336;
+}
+
+#modal-message-all span {
+    font-weight: 900;
+    cursor: pointer;
+}
+
 .modal-buttons {
     display: flex;
     margin: 0 auto;
@@ -269,7 +280,6 @@ button {
     cursor: pointer;
     margin-top: 1.5rem;
     width: 100%;
-    /* min-width: 80px; */
     color: #474F69;
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
@@ -278,7 +288,7 @@ button {
     letter-spacing: 1px;
 }
 
-#delete-confirm {
+.delete-confirm {
     background-color: #f44336;
     color: #fff;
 }
@@ -304,7 +314,6 @@ button {
 .attribution a {
     margin-left: 0.3rem;
 }
-
 
 /* Media queries */
 

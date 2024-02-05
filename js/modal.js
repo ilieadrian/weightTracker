@@ -1,29 +1,60 @@
 const trashIcons = document.querySelectorAll('.delete-record');
-const modal = document.getElementById('delete-modal');
+const modalContainer = document.getElementById('delete-modal');
 const confirmBtn = document.getElementById('delete-confirm');
 const cancelBtn = document.getElementById('delete-cancel');
 const closeBtn = document.getElementById ('delete-mark')
 
 // Add event listener to all trash icons
-trashIcons.forEach((icon, index) => {
-    icon.addEventListener('click', () => {
-        modal.style.display = 'block';
-        // console.log(icon); // 17.01.2023 - i check and the correct id for the coresponding line is present in modal
-    })
-})
 
-//Delete record from database when confirm button is clicked
-confirmBtn.addEventListener('click', () => {
-  // Add reference to delete record from database code here
-    // console.log('Record deleted from database');
-    modal.style.display = 'none'
-})
+function renderModal(itemIndex) {
+    let modal = document.createElement("div");
+    modal.classList = "modal-content";
+    modalContainer.style.display = "block"
+
+
+    modal.innerHTML = `
+    <i class="fa-sharp fa-solid fa-rectangle-xmark fa-xl" id="delete-mark"></i>
+                    <p class="modal-message">Are you sure you want to delete this record?</p>
+                    <div class="modal-buttons">
+                        <button class="delete-confirm" id="modal-delete-${itemIndex}">Delete</button>
+                        <button id="delete-cancel">Cancel</button>
+                    </div>
+        <p class="modal-message" id="modal-message-all"><span>Click here</span> to bulk delete all the records! </p>
+    `;
+    modalContainer.appendChild(modal)
+
+    let modalDeleteBtn = document.getElementById(`modal-delete-${itemIndex}`);
+    console.log(modalDeleteBtn, itemIndex)
+
+    modalDeleteBtn.addEventListener('click', function() {
+        deleteFromList(itemIndex);
+        console.log(itemIndex);
+    });
+    
+}
+
+function deleteFromList(itemIndex) {
+    delete dataArray [itemIndex];
+    // localStorage.setItem('dataArray', JSON.stringify(dataArray));
+    modalContainer.innerHTML = "";
+    modalContainer.style.display = "none";
+
+    updateDisplay()
+}
+
+
+// //Delete record from database when confirm button is clicked
+// confirmBtn.addEventListener('click', () => {
+//   // Add reference to delete record from database code here
+//     // console.log('Record deleted from database');
+//     modal.style.display = 'none'
+// })
 
 // Hide modal when cancel or close button is clicked
-cancelBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-})
+// cancelBtn.addEventListener('click', () => {
+//     modal.style.display = 'none';
+// })
 
-closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none'
-})
+// closeBtn.addEventListener('click', () => {
+//     modal.style.display = 'none'
+// })

@@ -1,16 +1,17 @@
 let table = document.getElementById('table');
 let dataArray = JSON.parse(localStorage.getItem('dataArray')) || [];
-let deleteButton = document.getElementById("delete-local");
+let deleteButton = document.getElementById("modal-message-all");
 
 function updateDisplay() {
     
     if (dataArray.length > 0) {
         table.innerHTML = ""; // Clear the table only if there is data
-        dataArray.forEach(function(data) {
+        dataArray.forEach(function(data, index) {
             let listItem = document.createElement("li");
             listItem.classList = "table-row";
+            listItem.setAttribute("table-row-index", index); 
+            // <p id="row-id" class="table-item">${data.rowId}</p>
             listItem.innerHTML = `
-                <p id="row-id" class="table-item">${data.rowId}</p>
                 <p class="table-item">${data.date}</p>
                 <p class="table-item">${data.weight}</p>
                 <i class="fa-solid ${data.evolution} table-item"></i>
@@ -18,20 +19,27 @@ function updateDisplay() {
                     <i class="tooltip ${data.comment.length > 0 ? "fa-solid" : 'fa-regular'} fa-sharp fa-comment">
                         <span class="tooltiptext">${data.comment.length > 0 ? data.comment : 'No comment added'}</span>
                     </i>
-                    <i class="fa-sharp fa-solid fa-trash delete-record"></i>
+                    <i class="fa-sharp fa-solid fa-trash delete-record" id="delete-${index}"></i>
                 </div>
             `;
             table.appendChild(listItem);
+
+            let deleteBtn = document.getElementById(`delete-${index}`);
+            const itemIndex = listItem.getAttribute('table-row-index');
+
+            deleteBtn.addEventListener('click', function() {
+                renderModal(itemIndex);
+            });
         });
     }
 }
 
 function addData(date, weight, comment) {
-    let newId = checkRowId();
+    // let newId = checkRowId();
     let evolution = checkEvolution(weight);
 
     const newData = {
-        rowId: newId,
+        // rowId: newId,
         date: date,
         weight: weight,
         evolution: evolution,
@@ -82,6 +90,15 @@ function checkDuplicateEntry(date, weight, comment){
         }
 }
 
-updateDisplay();
+function deleteArray() {
+    if (confirm('Confirm permanent deletion for all the data!')) {
+        localStorage.removeItem("dataArray");
+        dataArray = [];
+        modal.style.display = 'none';
+        updateDisplay();
+    } else {
+        modal.style.display = 'none';
+    }
+}
 
-deleteButton.addEventListener("click", () => localStorage.removeItem("dataArray"));
+updateDisplay();
