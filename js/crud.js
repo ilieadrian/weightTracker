@@ -1,3 +1,5 @@
+// Start to refactor to object aproach
+
 let table = document.getElementById('table');
 let dataArray = JSON.parse(localStorage.getItem('dataArray')) || [];
 let deleteButton = document.getElementById("modal-message-all");
