@@ -1,5 +1,11 @@
 // Start to refactor to object aproach
 
+function addData(date, weight, comment) {
+    let evolution = checkEvolution(weight);
+
+    return { }
+}
+
 let table = document.getElementById('table');
 let dataArray = JSON.parse(localStorage.getItem('dataArray')) || [];
 let deleteButton = document.getElementById("modal-message-all");
