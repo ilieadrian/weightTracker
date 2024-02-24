@@ -1,11 +1,3 @@
-// Start to refactor to object aproach
-
-function addData(date, weight, comment) {
-    let evolution = checkEvolution(weight);
-
-    return { }
-}
-
 let table = document.getElementById('table');
 let dataArray = JSON.parse(localStorage.getItem('dataArray')) || [];
 let deleteButton = document.getElementById("modal-message-all");
@@ -39,7 +31,7 @@ function updateDisplay() {
                 renderModal(itemIndex);
             });
         });
-    }
+    } 
 }
 
 function addData(date, weight, comment) {
@@ -86,6 +78,7 @@ function checkEvolution(weight) {
 
 function checkDuplicateEntry(date, weight, comment){
     const duplicateError = document.getElementById("duplicate-error");
+
     const isDateDuplicate = dataArray.some(data => data.date === date);
     const isWeightDuplicate = dataArray.some(data => data.weight === weight);
     

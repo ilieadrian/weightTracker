@@ -42,19 +42,3 @@ function deleteFromList(itemIndex) {
     updateDisplay()
 }
 
-
-// //Delete record from database when confirm button is clicked
-// confirmBtn.addEventListener('click', () => {
-//   // Add reference to delete record from database code here
-//     // console.log('Record deleted from database');
-//     modal.style.display = 'none'
-// })
-
-// Hide modal when cancel or close button is clicked
-// cancelBtn.addEventListener('click', () => {
-//     modal.style.display = 'none';
-// })
-
-// closeBtn.addEventListener('click', () => {
-//     modal.style.display = 'none'
-// })
