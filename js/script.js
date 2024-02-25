@@ -1,11 +1,40 @@
-function handleValidData(date, weight, comment) {
+function handleData(date, weight, comment) {
     // Your logic for handling valid data goes here
     console.log('Handling valid data:', date, weight, comment);
-    return {
-        date, weight, comment
+    // let evolution = ;
+    let dataArray = JSON.parse(localStorage.getItem('dataArray')) || [];
+
+    const newData = {
+        date: date,
+        weight: weight,
+        evolution: checkEvolution(weight, dataArray),
+        comment: comment,
+    };
+
+    dataArray.push(newData)
+    console.log(dataArray)
+    return { dataArray }
+    
+}
+
+function checkEvolution(weight, dataArray) {
+    if (dataArray.length === 0) {
+        return 'fa-grip-lines';
+    }
+
+    let lastWeight = dataArray[0].weight;
+
+    if (weight === lastWeight) {
+        return 'fa-grip-lines';
+    } else if (weight < lastWeight) {
+        return 'fa-angles-down';
+    } else if (weight > lastWeight) {
+        return 'fa-angles-up';
     }
 }
 
+// const newData = handleData();
+// console.log(newData);
 
 const FormModule = (function () {
     function handleSubmit(e) {
@@ -34,7 +63,7 @@ const FormModule = (function () {
             const weight = +document.getElementById('weight').value;
             const comment = document.getElementById('comment').value.trim();
 
-            handleValidData(date, weight, comment);
+            handleData(date, weight, comment);
         } else {
             console.log('Form validation failed. Cannot proceed.');
             return null;
