@@ -16,7 +16,7 @@ function processData(date, weight, comment) {
             comment: comment,
         };
 
-        dataArray.push(newData);
+        dataArray.unshift(newData);
         localStorage.setItem('dataArray', JSON.stringify(dataArray));
 
         updateDisplay(dataArray);
@@ -28,9 +28,10 @@ function processData(date, weight, comment) {
 }
 
 function updateDisplay(dataArray) {
-    
+
     if (dataArray.length > 0) {
-        table.innerHTML = ""; // Clear the table only if there is data
+        table.innerHTML = ""; 
+
         dataArray.forEach(function(data, index) {
             let listItem = document.createElement("li");
             listItem.classList = "table-row";
