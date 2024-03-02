@@ -1,23 +1,30 @@
-
-function handleData(date, weight, comment) {
+function processData(date, weight, comment) {
     let dataArray = JSON.parse(localStorage.getItem('dataArray')) || [];
+    const duplicateError = document.getElementById("duplicate-error");
 
-    console.log('Handling valid data:', date, weight, comment);
+    const isDateDuplicate = dataArray.some(data => data.date === date);
+    const isWeightDuplicate = dataArray.some(data => data.weight === weight);
 
-    const newData = {
-        date: date,
-        weight: weight,
-        evolution: checkEvolution(weight, dataArray),
-        comment: comment,
-    };
+    if (isDateDuplicate && isWeightDuplicate) {
+        duplicateError.classList.add("error");
+        return;
+    } else {
+        const newData = {
+            date: date,
+            weight: weight,
+            evolution: checkEvolution(weight, dataArray),
+            comment: comment,
+        };
 
-    dataArray.push(newData);
+        dataArray.push(newData);
+        localStorage.setItem('dataArray', JSON.stringify(dataArray));
 
-    localStorage.setItem('dataArray', JSON.stringify(dataArray));
+        updateDisplay(dataArray);
 
-    updateDisplay(dataArray);
+        duplicateError.classList.remove("error");
 
-    return { dataArray };
+        return { dataArray };
+    }
 }
 
 function updateDisplay(dataArray) {
@@ -68,9 +75,6 @@ function checkEvolution(weight, dataArray) {
     }
 }
 
-// const newData = handleData();
-// console.log(newData);
-
 const FormModule = (function () {
     function handleSubmit(e) {
         e.preventDefault();
@@ -98,7 +102,7 @@ const FormModule = (function () {
             const weight = +document.getElementById('weight').value;
             const comment = document.getElementById('comment').value.trim();
 
-            handleData(date, weight, comment);
+            processData(date, weight, comment);
         } else {
             console.log('Form validation failed. Cannot proceed.');
             return null;
