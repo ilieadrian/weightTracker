@@ -47,29 +47,34 @@ if (signUpBtn) {
             const docRef = doc(db, "users", user.uid);
             await setDoc(docRef, userData);
             
-            showMessage("Account Created Successfully", "signUpMessage");
+            showMessage("Account created successfully", "signUpMessage", "succesMessage");
             window.location.href = "dashboard.html"; // Redirect after successful signup
             //to be added
         } catch (error) {
             console.error("Error:", error);
             if (error.code === "auth/email-already-in-use") {
-                showMessage("Email address already exists!", "signUpMessage");
+                showMessage("Email address already exists!", "signUpMessage", null);
             } else if(error.code === "auth/weak-password"){
-                showMessage(" Password should be at least 6 characters!", "signUpMessage");
+                showMessage(" Password should be at least 6 characters!", "signUpMessage", null);
             }            
             else {
-                showMessage("Unable to create user", "signUpMessage");
+                showMessage("Unable to create user", "signUpMessage", null);
             }
         }
     });
 }
 
-function showMessage(message, divId){
+function showMessage(message, divId, succesMessage){
     const messageDiv = document.getElementById('divId');
+    
+    if(succesMessage !== null) {
+        messageDiv.classList.add("bg-teal-100", "border", "border-teal-500", "text-teal-900", "px-4", "py-3", "rounded", "relative")
+    } else {
+        messageDiv.classList.add("bg-red-100", "border", "border-red-400", "text-red-700", "px-4", "py-3", "rounded", "relative")
+    }
+ 
     messageDiv.style.display="block";
-    messageDiv.innerHTML=message;
+    messageDiv.innerHTML = message;
     messageDiv.style.opacity=1;
-    // setTimeout(function(){
-    //     messageDiv.style.opacity=0;
-    // },25000);
+
 }
