@@ -8,15 +8,13 @@ const signUpForm = document.getElementById("signup");
 const passwordReset = document.getElementById("passwordReset");
 
 signUpLink.addEventListener("click", function () {
-    console.log("SignUP clickd")
-    signInForm.classList.add("hidden");
-    signUpForm.classList.remove("hidden");
+    signInForm.classList.toggle("hidden");
+    signUpForm.classList.toggle("hidden");
 });
 
 signInLink.addEventListener("click", function () {
-    console.log("SignIN clickd")
-    signUpForm.classList.add("hidden");
-    signInForm.classList.remove("hidden");
+    signInForm.classList.toggle("hidden");
+    signUpForm.classList.toggle("hidden");
 });
 
 passwordReset.addEventListener("click", function () {
