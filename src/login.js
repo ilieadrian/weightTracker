@@ -2,6 +2,9 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, setDoc, doc } from "firebase/firestore";
 
+const signUpBtn = document.getElementById('signUpBtn');
+const signInBtn = document.getElementById('signInButton');
+
 const firebaseConfig = {
     apiKey: "AIzaSyD3S7QjWcwvN9QPb-lWaV7EXyIKW-BOkv0",
     authDomain: "weight-tracker-2eee6.firebaseapp.com",
@@ -11,21 +14,17 @@ const firebaseConfig = {
     appId: "1:415805786895:web:db9a80ba5e44fa7bcf8c7a"
 };
 
-const signUpBtn = document.getElementById('signUpBtn');
-const signInBtn = document.getElementById('signInButton');
 
-// Firebase Initialization
 const app = initializeApp(firebaseConfig);
 console.log("Firebase Initialized", app);
 
-// Ensure Firebase auth and Firestore are initialized correctly
 const auth = getAuth();
 const db = getFirestore();
 
 if (signUpBtn) {
     signUpBtn.addEventListener('click', async (e) => {
-        e.preventDefault(); // Prevent form submission refresh
-        
+        e.preventDefault(); 
+
         const name = document.getElementById('signUpName').value.trim();
         const email = document.getElementById('signUpEmail').value.trim();
         const password = document.getElementById('signUpPassword').value.trim();
@@ -50,13 +49,27 @@ if (signUpBtn) {
             
             showMessage("Account Created Successfully", "signUpMessage");
             window.location.href = "dashboard.html"; // Redirect after successful signup
+            //to be added
         } catch (error) {
             console.error("Error:", error);
             if (error.code === "auth/email-already-in-use") {
-                showMessage("Email Address Already Exists!", "signUpMessage");
-            } else {
+                showMessage("Email address already exists!", "signUpMessage");
+            } else if(error.code === "auth/weak-password"){
+                showMessage(" Password should be at least 6 characters!", "signUpMessage");
+            }            
+            else {
                 showMessage("Unable to create user", "signUpMessage");
             }
         }
     });
+}
+
+function showMessage(message, divId){
+    const messageDiv = document.getElementById('divId');
+    messageDiv.style.display="block";
+    messageDiv.innerHTML=message;
+    messageDiv.style.opacity=1;
+    // setTimeout(function(){
+    //     messageDiv.style.opacity=0;
+    // },25000);
 }
