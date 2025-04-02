@@ -2,15 +2,30 @@ const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: {
+    index: "./src/index.js",
+    frontend: "./src/modules/frontend.js",
+    login: "./src/modules/login.js",
+    dashboard: "./src/modules/dashboard.js",
+  },
   output: {
-    filename: "bundle.js",
+    filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Weight tracker!',
+      filename: "index.html",
+      template: "./src/index.html", 
+      chunks: ["index"], 
+      title: "Index - Weight tracker",
+      
+    }),
+    new HtmlWebpackPlugin({
+      filename: "dashboard.html",
+      template: "./src/index.html", 
+      chunks: ["dashboard"],
+      title: "Dashboard - Weight tracker",
     }),
   ],
   mode: "development",
@@ -26,7 +41,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/i,
-        loader: 'babel-loader',
+        loader: "babel-loader",
       },
       {
         test: /\.css$/,
@@ -36,8 +51,9 @@ module.exports = {
   },
   devServer: {
     static: path.resolve(__dirname, "dist"),
-    open: true,
-    hot: true,
+    open: "index.html",
+    hot: false,
     port: 3000,
+    historyApiFallback: true, 
   },
 };

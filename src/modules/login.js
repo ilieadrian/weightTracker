@@ -10,7 +10,6 @@ const signUpLink = document.getElementById("signUpLink");
 const signInLink = document.getElementById("signInLink");
 const signInForm = document.getElementById("signIn");
 const signUpForm = document.getElementById("signup");
-
 const passwordReset = document.getElementById("passwordReset");
 
 signUpLink.addEventListener("click", function () {
@@ -96,7 +95,7 @@ if (signInBtn) {
                     
             showMessage("Successfully logged in", "signInMessage", "successMessage");
             localStorage.setItem('loggedInUserId', user.uid);
-            window.location.href = "dashboard.html"; 
+            window.location.href = "/dashboard.html"; 
         } catch (error) {
             if (error.code === "auth/invalid-credential") {
                 showMessage("Incorrect Email or Password", "signInMessage", "login");
