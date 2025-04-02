@@ -14,10 +14,7 @@ const firebaseConfig = {
     appId: "1:415805786895:web:db9a80ba5e44fa7bcf8c7a"
 };
 
-
 const app = initializeApp(firebaseConfig);
-console.log("Firebase Initialized", app);
-
 const auth = getAuth();
 const db = getFirestore();
 
@@ -29,10 +26,8 @@ if (signUpBtn) {
         const email = document.getElementById('signUpEmail').value.trim();
         const password = document.getElementById('signUpPassword').value.trim();
         
-        console.log("User Input:", name, email, password); // Debugging log
-        
         if (!name || !email || !password) {
-            showMessage("All fields are required!", "signUpMessage");
+            showMessage("All fields are required!", "signUpMessage", null);
             return;
         }
 
@@ -42,14 +37,11 @@ if (signUpBtn) {
 
             console.log("User Created:", user);
 
-            // Store user data in Firestore
             const userData = { email, name };
             const docRef = doc(db, "users", user.uid);
             await setDoc(docRef, userData);
             
-            showMessage("Account created successfully", "signUpMessage", "succesMessage");
-            window.location.href = "dashboard.html"; // Redirect after successful signup
-            //to be added
+            window.location.href = "index.html"; 
         } catch (error) {
             console.error("Error:", error);
             if (error.code === "auth/email-already-in-use") {
@@ -64,17 +56,52 @@ if (signUpBtn) {
     });
 }
 
-function showMessage(message, divId, succesMessage){
-    const messageDiv = document.getElementById('divId');
-    
-    if(succesMessage !== null) {
-        messageDiv.classList.add("bg-teal-100", "border", "border-teal-500", "text-teal-900", "px-4", "py-3", "rounded", "relative")
-    } else {
-        messageDiv.classList.add("bg-red-100", "border", "border-red-400", "text-red-700", "px-4", "py-3", "rounded", "relative")
-    }
- 
-    messageDiv.style.display="block";
-    messageDiv.innerHTML = message;
-    messageDiv.style.opacity=1;
+if (signInBtn) {
+    signInBtn.addEventListener('click', async (e) => {
+        e.preventDefault(); 
 
+        const email = document.getElementById('signInEmail').value.trim();
+        const password = document.getElementById('signInPassword').value.trim();
+        
+        if (!email || !password) {
+            showMessage("All fields are required!", "signInMessage");
+            return;
+        }
+
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+                    
+            showMessage("Successfully logged in", "signInMessage", "successMessage");
+            localStorage.setItem('loggedInUserId', user.uid);
+            window.location.href = "dashboard.html"; 
+        } catch (error) {
+            if (error.code === "auth/invalid-credential") {
+                showMessage("Incorrect Email or Password", "signInMessage", "login");
+            } else if (error.code === "auth/user-not-found") {
+                showMessage("No account found with this email", "signInMessage", "login");
+            } else if (error.code === "auth/too-many-requests") {
+                showMessage("Too many failed attempts. Try again later.", "signInMessage",  "login");
+            } else {
+                showMessage("Something went wrong. Please try again.", "signInMessage", "login");
+            }
+        }
+    });
+}
+
+function showMessage(message, divId, login){
+    const messageDiv = document.getElementById('divId');
+    const loginMessageDiv = document.getElementById('loginDivId');
+        
+    if(login !== null) {
+        loginMessageDiv.classList.add("bg-red-100", "border", "border-red-400", "text-red-700", "px-4", "py-3", "rounded", "relative");
+        loginMessageDiv.style.display="block";
+        loginMessageDiv.innerHTML = message;
+        loginMessageDiv.style.opacity=1;
+    } else {
+        messageDiv.classList.add("bg-red-100", "border", "border-red-400", "text-red-700", "px-4", "py-3", "rounded", "relative");
+        messageDiv.style.display="block";
+        messageDiv.innerHTML = message;
+        messageDiv.style.opacity=1;
+    } 
 }
