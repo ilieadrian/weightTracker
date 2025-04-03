@@ -89,7 +89,6 @@ if (signInBtn) {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
                     
-            showMessage("Successfully logged in", "signInMessage", "successMessage");
             window.location.href = "/dashboard.html"; 
         } catch (error) {
             if (error.code === "auth/invalid-credential") {
