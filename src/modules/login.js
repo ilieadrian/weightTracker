@@ -1,6 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, setDoc, doc } from "firebase/firestore";
+import { auth, db } from "./firebaseConfig";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
 
 console.log("hello from login.js")
 
@@ -25,19 +25,6 @@ signInLink.addEventListener("click", function () {
 passwordReset.addEventListener("click", function () {
     alert("Functionality to be implemented")
 });
-
-const firebaseConfig = {
-    apiKey: "AIzaSyD3S7QjWcwvN9QPb-lWaV7EXyIKW-BOkv0",
-    authDomain: "weight-tracker-2eee6.firebaseapp.com",
-    projectId: "weight-tracker-2eee6",
-    storageBucket: "weight-tracker-2eee6.firebasestorage.app",
-    messagingSenderId: "415805786895",
-    appId: "1:415805786895:web:db9a80ba5e44fa7bcf8c7a"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const db = getFirestore();
 
 if (signUpBtn) {
     signUpBtn.addEventListener('click', async (e) => {

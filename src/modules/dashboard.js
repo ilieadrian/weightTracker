@@ -1,10 +1,11 @@
 import "../styles.css";
+import { auth, db } from "./firebaseConfig";
 
 console.log("Hello from dashboard")
 
 function generateDashboardUi(){
-    let container = document.querySelector('.dashboard-container');
-    const htmlTag = document.getElementsByTagName("html")[0];;
+        let container = document.querySelector('.dashboard-container');
+    const htmlTag = document.getElementsByTagName("html")[0];
     const bodyTag = document.body;
 
     if (!container) {
@@ -18,7 +19,7 @@ function generateDashboardUi(){
     }
   
     const html = `
-          <div id="signIn" class="flex flex-col space-y-6"><h4>This is the dasboard</h4></div>
+          <div id="signIn" class="flex h-full w-full flex-col space-y-6"><h4>This is the dasboard </h4></div>
     
    
           
