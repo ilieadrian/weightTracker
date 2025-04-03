@@ -1,6 +1,17 @@
 import { auth, db } from "./firebaseConfig";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
+
+
+// onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//         console.log("User is still logged in:", user);
+        //window.location.href = "/dashboard.html"; 
+//     } else {
+//         console.log("User is logged out");
+//         window.location.href = "/index.html"; // Redirect to login page
+//     }
+// });
 
 console.log("hello from login.js")
 
@@ -43,8 +54,6 @@ if (signUpBtn) {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            console.log("User Created:", user);
-
             const userData = { email, name };
             const docRef = doc(db, "users", user.uid);
             await setDoc(docRef, userData);
@@ -81,7 +90,6 @@ if (signInBtn) {
             const user = userCredential.user;
                     
             showMessage("Successfully logged in", "signInMessage", "successMessage");
-            localStorage.setItem('loggedInUserId', user.uid);
             window.location.href = "/dashboard.html"; 
         } catch (error) {
             if (error.code === "auth/invalid-credential") {

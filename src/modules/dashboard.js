@@ -1,9 +1,49 @@
 import "../styles.css";
 import { auth, db } from "./firebaseConfig";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { getDoc, doc } from "firebase/firestore";
+
 
 console.log("Hello from dashboard")
 
-function generateDashboardUi(){
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+      console.log("No user is logged in");
+      window.location.href = "/index.html";  // Redirect to login page
+      return;
+  }
+
+  try {
+      const docRef = doc(db, "users", user.uid); // Use Firebase's `user.uid`
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+          const userData = docSnap.data();
+          generateDashboardUi(userData.name, userData.email);
+      } else {
+          console.log("No document found matching id");
+      }
+  } catch (error) {
+      console.error("Error getting document:", error);
+  }
+});
+
+// const logoutButton=document.getElementById('logout');
+
+// logoutButton.addEventListener('click',()=>{
+//   localStorage.removeItem('loggedInUserId');
+//   signOut(auth)
+//   .then(()=>{
+//       window.location.href='index.html';
+//   })
+//   .catch((error)=>{
+//       console.error('Error Signing out:', error);
+//   })
+// })
+
+
+
+function generateDashboardUi(name,email){
         let container = document.querySelector('.dashboard-container');
     const htmlTag = document.getElementsByTagName("html")[0];
     const bodyTag = document.body;
@@ -19,7 +59,10 @@ function generateDashboardUi(){
     }
   
     const html = `
-          <div id="signIn" class="flex h-full w-full flex-col space-y-6"><h4>This is the dasboard </h4></div>
+          <div id="signIn" class="flex h-full w-full flex-col space-y-6">
+            <p>Hello ${name}. You are now loggen in with the email adress: ${email}</p>
+          
+          </div>
     
    
           
@@ -31,4 +74,3 @@ function generateDashboardUi(){
   console.log("Dashboard Ui generated")
 }
 
-generateDashboardUi()
