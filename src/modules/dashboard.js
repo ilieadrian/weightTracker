@@ -3,9 +3,7 @@ import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getDoc, doc } from "firebase/firestore";
 
-
 console.log("Hello from dashboard")
-
 
 function generateDashboardUi(){
     console.log("auth.currentUser", auth.user)
@@ -16,9 +14,7 @@ function generateDashboardUi(){
     bodyTag.classList.add("h-full");
 
     if (!container) {
-       
-    
-    container = document.createElement("div");
+      container = document.createElement("div");
       container.classList.add("min-h-full");
       container.id = 'dashboardContainer'
       document.body.appendChild(container);
@@ -42,10 +38,8 @@ function generateDashboardUi(){
           </div>
           <div class="hidden md:block">
             <div class="ml-4 flex items-center md:ml-6">
-              
-
-              <!-- Profile -->
-                <div class="flex rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 focus:outline-hidden" role="menu" aria-orientation="horizontal" aria-labelledby="user-menu-button" tabindex="-1">
+                <!-- Profile -->
+                <div class="flex rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5" role="menu" aria-orientation="horizontal" aria-labelledby="user-menu-button" tabindex="-1">
                     <!-- Active: "bg-gray-100 outline-hidden", Not Active: "" -->
                     <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Ionel Sofronea</a>
                     <p class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">|</p>
@@ -73,28 +67,20 @@ function generateDashboardUi(){
       </div>
 
       <!-- Mobile menu, show/hide based on menu state. -->
-      <div class="md:hidden" id="mobile-menu">
+      <div class="md:hidden hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
           <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
           <a href="#" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Dashboard</a>
           <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
         </div>
         <div class="border-t border-gray-700 pt-4 pb-3">
-          <div class="flex items-center px-5">
-            <div class="shrink-0">
-              <img class="size-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-            </div>
+          <div class="flex items-center px-2">
+            
             <div class="ml-3">
               <div class="text-base/5 font-medium text-white">Tom Cook</div>
               <div class="text-sm font-medium text-gray-400">tom@example.com</div>
             </div>
-            <button type="button" class="relative ml-auto shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
-              <span class="absolute -inset-1.5"></span>
-              <span class="sr-only">View notifications</span>
-              <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-              </svg>
-            </button>
+            
           </div>
           <div class="mt-3 space-y-1 px-2">
             <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your Profile</a>
@@ -114,18 +100,13 @@ function generateDashboardUi(){
       <!-- Your content -->
       <p id="pending-message">Getting data! Please wait</p>
 
-
-
-
-
-
     </div>
 </main>
 </div>
   `;
 
-
   container.innerHTML = html;
+  console.log("the dashboard has rendered")
 }
 
 // function updateUserData(name, email) {
@@ -155,8 +136,6 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-
-
 // const logoutButton=document.getElementById('logout');
 
 // logoutButton.addEventListener('click',()=>{
@@ -170,6 +149,17 @@ onAuthStateChanged(auth, async (user) => {
 //   })
 // })
 
-
 generateDashboardUi()
 
+document.addEventListener("DOMContentLoaded", function () {
+  const menuButton = document.querySelector(".md\\:hidden button"); 
+  const menuOpenIcon = menuButton.querySelector("svg:first-of-type"); // First SVG (Menu open icon)
+  const menuCloseIcon = menuButton.querySelector("svg:last-of-type"); // Second SVG (Menu close icon)
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  menuButton.addEventListener("click", function () {
+    menuOpenIcon.classList.toggle("hidden");
+    menuCloseIcon.classList.toggle("hidden");
+    mobileMenu.classList.toggle("hidden");
+  });
+});
