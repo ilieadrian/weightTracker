@@ -2,18 +2,15 @@ import { auth, db } from "./firebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 
-
-// onAuthStateChanged(auth, (user) => {
-//     if (user) {
-//         console.log("User is still logged in:", user);
-        //window.location.href = "/dashboard.html"; 
-//     } else {
-//         console.log("User is logged out");
-//         window.location.href = "/index.html"; // Redirect to login page
-//     }
-// });
-
 console.log("hello from login.js")
+
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        console.log("User is still logged in");
+        window.location.href = "/dashboard.html";
+        return;
+    }
+});
 
 const signUpBtn = document.getElementById('signUpBtn');
 const signInBtn = document.getElementById('signInButton');
