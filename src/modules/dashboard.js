@@ -6,7 +6,6 @@ import { getDoc, doc } from "firebase/firestore";
 console.log("Hello from dashboard")
 
 function generateDashboardUi(){
-    console.log("auth.currentUser", auth.user)
     let container = document.querySelector('.dashboard-container');
     const htmlTag = document.getElementsByTagName("html")[0];
     const bodyTag = document.body;
@@ -19,6 +18,7 @@ function generateDashboardUi(){
       container.id = 'dashboardContainer'
       document.body.appendChild(container);
     }
+
     //dashboard source https://tailwindcss.com/plus/ui-blocks/application-ui/application-shells/stacked
     const html = `
       <nav class="bg-gray-800">
@@ -41,9 +41,9 @@ function generateDashboardUi(){
                 <!-- Profile -->
                 <div class="flex rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5" role="menu" aria-orientation="horizontal" aria-labelledby="user-menu-button" tabindex="-1">
                     <!-- Active: "bg-gray-100 outline-hidden", Not Active: "" -->
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Ionel Sofronea</a>
-                    <p class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">|</p>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" id="user-profile-link"></a>
+                    <p class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1">|</p>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" id="logout-link">Sign out</a>
                 </div> 
             </div>
           </div>
@@ -84,7 +84,7 @@ function generateDashboardUi(){
           </div>
           <div class="mt-3 space-y-1 px-2">
             <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your Profile</a>
-            <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign out</a>
+            <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white" id="logout-link-mobile">Sign out</a>
           </div>
         </div>
       </div>
@@ -136,18 +136,15 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-// const logoutButton=document.getElementById('logout');
 
-// logoutButton.addEventListener('click',()=>{
-//   localStorage.removeItem('loggedInUserId');
-//   signOut(auth)
-//   .then(()=>{
-//       window.location.href='index.html';
-//   })
-//   .catch((error)=>{
-//       console.error('Error Signing out:', error);
-//   })
-// })
+async function logOut() {
+  try {
+    await signOut(auth);
+    window.location.href = 'index.html';
+  } catch (error) {
+    console.error('Error Signing out:', error);
+  }
+}
 
 generateDashboardUi()
 
@@ -156,6 +153,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const menuOpenIcon = menuButton.querySelector("svg:first-of-type"); // First SVG (Menu open icon)
   const menuCloseIcon = menuButton.querySelector("svg:last-of-type"); // Second SVG (Menu close icon)
   const mobileMenu = document.getElementById("mobile-menu");
+  const logoutButton=document.getElementById('logout-link');
+  const logoutButtonMobile=document.getElementById('logout-link-mobile');
+
+  logoutButton.addEventListener("click", logOut);
+  logoutButtonMobile.addEventListener("click", logOut);
 
   menuButton.addEventListener("click", function () {
     menuOpenIcon.classList.toggle("hidden");
