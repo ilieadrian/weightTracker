@@ -1,16 +1,18 @@
 import { auth, db } from "./firebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, collection, addDoc } from "firebase/firestore";
 
 console.log("hello from login.js")
 
-onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        console.log("User is still logged in");
-        window.location.href = "/dashboard.html";
-        return;
-    }
-});
+//  onAuthStateChanged(auth, async (user) => {
+
+//     console.log("user", user)
+//     if (user) {
+//         console.log("User is still logged in");
+//         window.location.href = "/dashboard.html";
+//         return;
+//     }
+// });
 
 const signUpBtn = document.getElementById('signUpBtn');
 const signInBtn = document.getElementById('signInButton');
@@ -34,6 +36,7 @@ passwordReset.addEventListener("click", function () {
     alert("Functionality to be implemented")
 });
 
+
 if (signUpBtn) {
     signUpBtn.addEventListener('click', async (e) => {
         e.preventDefault(); 
@@ -50,11 +53,18 @@ if (signUpBtn) {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-
-            const userData = { email, name };
+            const userData={
+                name: name,
+                email: email,
+                createdAt: new Date()
+            };
             const docRef = doc(db, "users", user.uid);
-            await setDoc(docRef, userData);
-            
+
+            await setDoc(docRef,userData);
+
+            const weightsCollectionRef = collection(db, "users", user.uid, "weights");
+            console.log("Collection Path:", weightsCollectionRef.path);
+
             window.location.href = "index.html"; 
         } catch (error) {
             console.error("Error:", error);
@@ -64,6 +74,7 @@ if (signUpBtn) {
                 showMessage(" Password should be at least 6 characters!", "signUpMessage", null);
             }            
             else {
+                console.error("Sign in error:", error);
                 showMessage("Unable to create user", "signUpMessage", null);
             }
         }
@@ -85,7 +96,6 @@ if (signInBtn) {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-                    
             window.location.href = "/dashboard.html"; 
         } catch (error) {
             if (error.code === "auth/invalid-credential") {
@@ -95,6 +105,7 @@ if (signInBtn) {
             } else if (error.code === "auth/too-many-requests") {
                 showMessage("Too many failed attempts. Try again later.", "signInMessage",  "login");
             } else {
+                console.error("Sign in error:", error);
                 showMessage("Something went wrong. Please try again.", "signInMessage", "login");
             }
         }

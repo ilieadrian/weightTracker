@@ -1,7 +1,7 @@
 import "../styles.css";
 import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { getDoc, doc } from "firebase/firestore";
+import { getDoc, getDocs, doc, collection, addDoc  } from "firebase/firestore";
 
 console.log("Hello from dashboard")
 
@@ -77,8 +77,8 @@ function generateDashboardUi(){
           <div class="flex items-center px-2">
             
             <div class="ml-3">
-              <div class="text-base/5 font-medium text-white">Tom Cook</div>
-              <div class="text-sm font-medium text-gray-400">tom@example.com</div>
+              <div class="text-base/5 font-medium text-white" id="mobile-menu-name"></div>
+              <div class="text-sm font-medium text-gray-400" id="mobile-menu-email"></div>
             </div>
             
           </div>
@@ -96,8 +96,8 @@ function generateDashboardUi(){
       </div>
     </header>
     <main class="min-h-full">
-    <div class="mx-auto max-w-7xl flex flex-col items-center justify-center px-4 py-6 sm:px-6 lg:px-8">
-      <!-- Your content -->
+    <div id="content-container" class="mx-auto max-w-7xl flex flex-col items-center justify-center px-4 py-6 sm:px-6 lg:px-8">
+
       <p id="pending-message">Getting data! Please wait</p>
 
     </div>
@@ -109,12 +109,54 @@ function generateDashboardUi(){
   console.log("the dashboard has rendered")
 }
 
-// function updateUserData(name, email) {
-//     document.getElementById("userName").textContent = name || "Unknown User";
-//     document.getElementById("userEmail").textContent = email || "No Email Available";
-// }
+function updateUserData(userData, useruid) {
+    document.getElementById("user-profile-link").textContent = userData.name || "Unknown User";
+    document.getElementById("mobile-menu-name").textContent = userData.name || "Unknown User";
+    document.getElementById("mobile-menu-email").textContent = userData.email || "No Email Available";
+    const contentContainer = document.getElementById("content-container");
+
+
+    const html = `
+    <a href="#" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Wellcome to the app</h5>
+    <p class="font-normal text-gray-700 dark:text-gray-400">Name: ${userData.name}</p>
+    <p class="font-normal text-gray-700 dark:text-gray-400">Email: ${userData.email}</p>
+    </a>
+
+
+    `;
+//     
+    contentContainer.innerHTML = html;
+    console.log("userData", useruid)
+
+    getWeightData(useruid).then((weights) => {
+      console.log("Weights for user:", weights);
+    });
+
+
+    console.log("the dashboard has RERENDERED")
+}
+
+async function getWeightData(useruid) {
+  try {
+    const weightsCollectionRef = collection(db, "users", useruid, "weights");
+    const querySnapshot = await getDocs(weightsCollectionRef);
+    
+    const data = [];
+    querySnapshot.forEach((doc) => {
+      data.push({ id: doc.id, ...doc.data() });
+    });
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching weights:", error);
+    return [];
+  }
+}
 
 onAuthStateChanged(auth, async (user) => {
+  // console.log("user", user)
   if (!user) {
       console.log("No user is logged in");
       window.location.href = "/index.html";
@@ -125,9 +167,11 @@ onAuthStateChanged(auth, async (user) => {
       const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
 
+      console.log(docSnap)
+
       if (docSnap.exists()) {
           const userData = docSnap.data();
-          // updateUserData(userData.name, userData.email);
+          updateUserData(userData, user.uid);
       } else {
           console.log("No document found matching id");
       }
@@ -135,7 +179,6 @@ onAuthStateChanged(auth, async (user) => {
       console.error("Error getting document:", error);
   }
 });
-
 
 async function logOut() {
   try {
