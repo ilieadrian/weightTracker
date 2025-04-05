@@ -13,6 +13,9 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
+  content: [
+    "./node_modules/flowbite/**/*.js"
+  ],
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
@@ -27,6 +30,9 @@ module.exports = {
       chunks: ["dashboard"],
       title: "Dashboard - Weight tracker",
     }),
+    [
+      require('flowbite/plugin')
+    ],
   ],
   mode: "development",
   watch: true,
