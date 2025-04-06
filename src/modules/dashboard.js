@@ -1,28 +1,27 @@
 import "../styles.css";
 import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { getDoc, getDocs, doc, collection, addDoc  } from "firebase/firestore";
-import { initFlowbite } from 'flowbite';
+import { getDoc, getDocs, doc, collection, addDoc } from "firebase/firestore";
+import { initFlowbite } from "flowbite";
 
-console.log("Hello from dashboard")
+console.log("Hello from dashboard");
 
+function generateDashboardUi() {
+  let container = document.querySelector(".dashboard-container");
+  const htmlTag = document.getElementsByTagName("html")[0];
+  const bodyTag = document.body;
+  htmlTag.classList.add("h-full", "bg-gray-100");
+  bodyTag.classList.add("h-full");
 
-function generateDashboardUi(){
-    let container = document.querySelector('.dashboard-container');
-    const htmlTag = document.getElementsByTagName("html")[0];
-    const bodyTag = document.body;
-    htmlTag.classList.add("h-full","bg-gray-100");
-    bodyTag.classList.add("h-full");
+  if (!container) {
+    container = document.createElement("div");
+    container.classList.add("min-h-full");
+    container.id = "dashboardContainer";
+    document.body.appendChild(container);
+  }
 
-    if (!container) {
-      container = document.createElement("div");
-      container.classList.add("min-h-full");
-      container.id = 'dashboardContainer'
-      document.body.appendChild(container);
-    }
-
-    //dashboard source https://tailwindcss.com/plus/ui-blocks/application-ui/application-shells/stacked
-    const html = `
+  //dashboard source https://tailwindcss.com/plus/ui-blocks/application-ui/application-shells/stacked
+  const html = `
       <nav class="bg-gray-800">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
@@ -110,21 +109,49 @@ function generateDashboardUi(){
 </div>
 
 <!-- drawer component -->
-<div id="drawer-top-example" class="fixed top-0 left-0 right-0 z-40 w-full p-4 transition-transform -translate-y-full bg-white dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-top-label">
+<div id="drawer-top-example" class="text-center fixed top-0 left-0 right-0 z-40 w-full p-4 transition-transform -translate-y-full bg-white dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-top-label">
     <h5 id="drawer-top-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"><svg class="w-4 h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
     <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-  </svg>Top drawer</h5>
+  </svg>Add new record</h5>
     <button type="button" data-drawer-hide="drawer-top-example" aria-controls="drawer-top-example" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white" >
       <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
       </svg>
       <span class="sr-only">Close menu</span>
    </button>
-    <p class="max-w-lg mb-6 text-sm text-gray-500 dark:text-gray-400">Supercharge your hiring by taking advantage of our <a href="#" class="text-blue-600 underline font-medium dark:text-blue-500 hover:no-underline">limited-time sale</a> for Flowbite Docs + Job Board. Unlimited access to over 190K top-ranked candidates and the #1 design job board.</p>
-   <a href="#" class="px-4 py-2 me-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Learn more</a>
-   <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Get access <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-  </svg></a>
+
+    
+    
+    
+
+  <form class="max-w-sm mx-auto">
+
+  
+<div class="relative max-w-sm mb-5">
+
+  <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+      <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+    </svg>
+  </div>
+   <input id="datepicker-autohide" datepicker datepicker-autohide datepicker-format="dd-mm-yyyy" datepicker-buttons datepicker-autoselect-today type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+</div>
+
+    <div class="mb-5">
+      <label for="weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight:</label>
+      <input type="number" id="weight" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+    </div>
+
+    <div class="mb-5">
+      <label for="comments" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comments:</label>
+      <input type="text" id="comments" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+    </div>
+    
+      <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add record</a>
+  </form>
+
+
+    
 </div>
 
 
@@ -135,7 +162,7 @@ function generateDashboardUi(){
   `;
 
   container.innerHTML = html;
-  console.log("the dashboard has rendered")
+  console.log("the dashboard has rendered");
 }
 
 // function updateUserData(userData, useruid) {
@@ -143,7 +170,6 @@ function generateDashboardUi(){
 //     document.getElementById("mobile-menu-name").textContent = userData.name || "Unknown User";
 //     document.getElementById("mobile-menu-email").textContent = userData.email || "No Email Available";
 //     const contentContainer = document.getElementById("content-container");
-
 
 //     const html = `
 //     <a href="#" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -153,13 +179,12 @@ function generateDashboardUi(){
 //     <p class="font-normal text-gray-700 dark:text-gray-400">Email: ${userData.email}</p>
 //     </a>
 
-
 //     `;
-// //     
+// //
 
 //       // contentContainer.innerHTML = '';
 //       const card = document.createElement("div");
-      
+
 //       card.classList.add("block", "max-w-sm", "p-6", "bg-white", "border", "border-gray-200", "rounded-lg", "shadow-sm", "hover:bg-gray-100", "dark:bg-gray-800", "dark:border-gray-700", "dark:hover:bg-gray-700");
 //       contentContainer.appendChild(card);
 //       contentContainer.innerHTML = html;
@@ -167,7 +192,6 @@ function generateDashboardUi(){
 //     getWeightData(useruid).then((weights) => {
 //       console.log("Weights for user:", weights);
 //     });
-
 
 //     console.log("the dashboard has RERENDERED")
 // }
@@ -220,7 +244,7 @@ function generateDashboardUi(){
 //   try {
 //     const weightsCollectionRef = collection(db, "users", useruid, "weights");
 //     const querySnapshot = await getDocs(weightsCollectionRef);
-    
+
 //     const data = [];
 //     querySnapshot.forEach((doc) => {
 //       data.push({ id: doc.id, ...doc.data() });
@@ -236,46 +260,46 @@ function generateDashboardUi(){
 onAuthStateChanged(auth, async (user) => {
   // console.log("user", user)
   if (!user) {
-      console.log("No user is logged in");
-      window.location.href = "/index.html";
-      return;
+    console.log("No user is logged in");
+    window.location.href = "/index.html";
+    return;
   }
 
   try {
-      const docRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(docRef);
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
 
-      console.log(docSnap)
+    // console.log(docSnap)
 
-      if (docSnap.exists()) {
-          const userData = docSnap.data();
-          // updateUserData(userData, user.uid);
-      } else {
-          console.log("No document found matching id");
-      }
+    if (docSnap.exists()) {
+      const userData = docSnap.data();
+      // updateUserData(userData, user.uid);
+    } else {
+      console.log("No document found matching id");
+    }
   } catch (error) {
-      console.error("Error getting document:", error);
+    console.error("Error getting document:", error);
   }
 });
 
 async function logOut() {
   try {
     await signOut(auth);
-    window.location.href = 'index.html';
+    window.location.href = "index.html";
   } catch (error) {
-    console.error('Error Signing out:', error);
+    console.error("Error Signing out:", error);
   }
 }
 
-generateDashboardUi()
+generateDashboardUi();
 
 document.addEventListener("DOMContentLoaded", function () {
-  const menuButton = document.querySelector(".md\\:hidden button"); 
+  const menuButton = document.querySelector(".md\\:hidden button");
   const menuOpenIcon = menuButton.querySelector("svg:first-of-type"); // First SVG (Menu open icon)
   const menuCloseIcon = menuButton.querySelector("svg:last-of-type"); // Second SVG (Menu close icon)
   const mobileMenu = document.getElementById("mobile-menu");
-  const logoutButton=document.getElementById('logout-link');
-  const logoutButtonMobile=document.getElementById('logout-link-mobile');
+  const logoutButton = document.getElementById("logout-link");
+  const logoutButtonMobile = document.getElementById("logout-link-mobile");
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);

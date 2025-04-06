@@ -1,5 +1,5 @@
 const path = require("path");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -13,29 +13,22 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
-  content: [
-    "./node_modules/flowbite/**/*.js"
-  ],
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
-      template: "./src/index.html", 
-      chunks: ["index"], 
+      template: "./src/index.html",
+      chunks: ["index"],
       title: "Index - Weight tracker",
-      
     }),
     new HtmlWebpackPlugin({
       filename: "dashboard.html",
-      template: "./src/index.html", 
+      template: "./src/index.html",
       chunks: ["dashboard"],
       title: "Dashboard - Weight tracker",
     }),
-    [
-      require('flowbite/plugin')
-    ],
   ],
   mode: "development",
-  watch: true,
+  // watch: true,
   module: {
     rules: [
       {
@@ -60,6 +53,6 @@ module.exports = {
     open: "index.html",
     hot: false,
     port: 3000,
-    historyApiFallback: true, 
+    historyApiFallback: true,
   },
 };

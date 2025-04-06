@@ -1,21 +1,36 @@
-console.log("hello from frontend js")
+console.log("hello from frontend js");
 
-function generateLoginUi(){
-    let container = document.querySelector('.container');
-    const htmlTag = document.getElementsByTagName("html")[0];;
-    const bodyTag = document.body;
-      
-    if (!container) {
-       htmlTag.classList.add("h-full")
-       bodyTag.classList.add("h-full", "flex", "items-center", "justify-center", "bg-gray-100");
-      
-      container = document.createElement("div");
-      container.classList.add("container", "w-full", "max-w-md", "bg-white", "shadow-md", "rounded-lg", "p-6", "m-2");
-      container.id = 'authContainer'
-      document.body.appendChild(container);
-    }
-  
-    const html = `
+function generateLoginUi() {
+  let container = document.querySelector(".container");
+  const htmlTag = document.getElementsByTagName("html")[0];
+  const bodyTag = document.body;
+
+  if (!container) {
+    htmlTag.classList.add("h-full");
+    bodyTag.classList.add(
+      "h-full",
+      "flex",
+      "items-center",
+      "justify-center",
+      "bg-gray-100",
+    );
+
+    container = document.createElement("div");
+    container.classList.add(
+      "container",
+      "w-full",
+      "max-w-md",
+      "bg-white",
+      "shadow-md",
+      "rounded-lg",
+      "p-6",
+      "m-2",
+    );
+    container.id = "authContainer";
+    document.body.appendChild(container);
+  }
+
+  const html = `
           <div id="signIn" class="flex flex-col space-y-6">
     
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -106,10 +121,8 @@ function generateLoginUi(){
         
             `;
 
-
   container.innerHTML = html;
-  console.log("Login Ui generated")
+  console.log("Login Ui generated");
 }
 
-generateLoginUi()
-
+generateLoginUi();

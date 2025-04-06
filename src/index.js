@@ -1,12 +1,6 @@
-
 import "./styles.css";
-import "./modules/frontend"
+import "./modules/frontend";
 import "./modules/login";
-import 'flowbite';
+import "flowbite";
 
-
-console.log("hello from index.js")
-
-
-
-
+console.log("hello from index.js");

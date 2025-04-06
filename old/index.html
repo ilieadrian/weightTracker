@@ -1,65 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
     <title>Weight Tracker</title>
-</head>
-<body>
+  </head>
+  <body>
     <main>
-            <form id="form-id">
-                <div class="date form-item form-control">
-                    <div class="input-container">
-                        <label for="date">Date: *</label>
-                        <input type="date" id="date-timepicker" name="Date of the input"> 
-                    </div>
-                    <p class="form-error" id="date-timepicker-form-error">This field is required!</p>
-                </div>
-            
-                <div class="weight form-item form-control">
-                    <div class="input-container">
-                        <label for="weight">Weight: *</label>
-                        <input type="number" id="weight" name="weight" placeholder="Kilograms">
-                    </div>
-                    <p class="form-error" id="weight-form-error">This field is required. Only whole or decimal numbers!</p>
-                </div>
+      <form id="form-id">
+        <div class="date form-item form-control">
+          <div class="input-container">
+            <label for="date">Date: *</label>
+            <input type="date" id="date-timepicker" name="Date of the input" />
+          </div>
+          <p class="form-error" id="date-timepicker-form-error">
+            This field is required!
+          </p>
+        </div>
 
-                <div class="comments form-item">
-                    <div class="input-container">
-                        <label for="weight">Comments:</label>
-                        <input type="text" id="comment" name="comments" placeholder="Optional" maxlength="20">
-                    </div>
-                </div>
-                <button id="submit-btn">Submit</button>
-                <p class="form-error" id="duplicate-error">Duplicate record detected, please check the date.</p>
-            </form>
+        <div class="weight form-item form-control">
+          <div class="input-container">
+            <label for="weight">Weight: *</label>
+            <input
+              type="number"
+              id="weight"
+              name="weight"
+              placeholder="Kilograms"
+            />
+          </div>
+          <p class="form-error" id="weight-form-error">
+            This field is required. Only whole or decimal numbers!
+          </p>
+        </div>
 
-            <ul id="table-header">
-                <li class="header">
-                    <!-- <p class="table-item">#</p> -->
-                    <p class="table-item">Date</p>
-                    <p class="table-item">Weight</p>
-                    <p class="table-item">Evolution</p>
-                    <p class="table-item">Actions</p>
-                </li>
-                
-            </ul>
-            <ul id="table"></ul>                
-            <div id="delete-modal" class="modal">
-                
-            </div>
+        <div class="comments form-item">
+          <div class="input-container">
+            <label for="weight">Comments:</label>
+            <input
+              type="text"
+              id="comment"
+              name="comments"
+              placeholder="Optional"
+              maxlength="20"
+            />
+          </div>
+        </div>
+        <button id="submit-btn">Submit</button>
+        <p class="form-error" id="duplicate-error">
+          Duplicate record detected, please check the date.
+        </p>
+      </form>
+
+      <ul id="table-header">
+        <li class="header">
+          <!-- <p class="table-item">#</p> -->
+          <p class="table-item">Date</p>
+          <p class="table-item">Weight</p>
+          <p class="table-item">Evolution</p>
+          <p class="table-item">Actions</p>
+        </li>
+      </ul>
+      <ul id="table"></ul>
+      <div id="delete-modal" class="modal"></div>
     </main>
-    <p class="attribution">Coded by <a href="http://ilieadrian.com">Ilie Adrian</a></p>
-</body>
-<!-- <script src="js/crud.js"></script>
+    <p class="attribution">
+      Coded by <a href="http://ilieadrian.com">Ilie Adrian</a>
+    </p>
+  </body>
+  <!-- <script src="js/crud.js"></script>
 <script src="js/modal.js"></script>
 <script src="js/validation.js"></script> -->
-<script src="js/script.js"></script>
-
-
+  <script src="js/script.js"></script>
 </html>
 
 <!-- <div class="modal-content">
