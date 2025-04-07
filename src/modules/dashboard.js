@@ -101,10 +101,7 @@ function generateDashboardUi() {
 
       ${generateNewRecordDrawer()}   
 
-
-
-
-
+      ${generateRecordsTable()} 
 
 
     </div>
@@ -122,7 +119,7 @@ function generateNewRecordDrawer(){
   <!-- drawer init and toggle -->
   <div class="text-center">
     <button class="overflow-y-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button" data-drawer-target="drawer-top-example" data-drawer-show="drawer-top-example" data-drawer-placement="top" aria-controls="drawer-top-example">
-    Show top drawer
+    Add new record
     </button>
   </div>
 
@@ -138,38 +135,127 @@ function generateNewRecordDrawer(){
           <span class="sr-only">Close menu</span>
       </button>
         
-        
-
       <form class="max-w-sm mx-auto">
-
       
-    <div class="relative max-w-sm mb-5">
+      <div class="relative max-w-sm mb-5">
 
-      <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-        </svg>
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+          </svg>
+        </div>
+        <input id="datepicker-autohide" datepicker datepicker-autohide datepicker-format="dd-mm-yyyy" datepicker-buttons datepicker-autoselect-today type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date *" required />
       </div>
-      <input id="datepicker-autohide" datepicker datepicker-autohide datepicker-format="dd-mm-yyyy" datepicker-buttons datepicker-autoselect-today type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
-    </div>
         
         <div class="mb-5">
-          <label for="weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight:</label>
+          <label for="weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight *</label>
           <input type="number" id="weight" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
         </div>
 
         <div class="mb-5">
-          <label for="comments" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comments:</label>
-          <input type="text" id="comments" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+          <label for="comments" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comments </label>
+          <input type="text" id="comments" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
         
           <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add record</a>
       </form>
-
-
         
     </div>
-   
+  `;
+
+  return html;
+}
+
+function generateRecordsTable(){
+  const html = `
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                  <th scope="col" class="px-6 py-3">
+                      Date
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Color
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Weight
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Evolution
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Actions
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      Apple MacBook Pro 17"
+                  </th>
+                  <td class="px-6 py-4">
+                      Yes
+                  </td>
+                  <td class="px-6 py-4">
+                      $2999
+                  </td>
+                  <td class="px-6 py-4">
+                      3.0 lb.
+                  </td>
+                  <td class="flex items-center px-6 py-4">
+                      <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                      <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
+                  </td>
+              </tr>
+
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      Apple MacBook Pro 17"
+                  </th>
+                  <td class="px-6 py-4">
+                      Yes
+                  </td>
+                  <td class="px-6 py-4">
+                      $2999
+                  </td>
+                  <td class="px-6 py-4">
+                      3.0 lb.
+                  </td>
+                  <td class="flex items-center px-6 py-4">
+                      <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                      <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
+                  </td>
+              </tr>
+
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      Apple MacBook Pro 17"
+                  </th>
+                  <td class="px-6 py-4">
+                      Yes
+                  </td>
+                  <td class="px-6 py-4">
+                      $2999
+                  </td>
+                  <td class="px-6 py-4">
+                      3.0 lb.
+                  </td>
+                  <td class="flex items-center px-6 py-4">
+                      <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                      <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
+                  </td>
+              </tr>
+              
+          </tbody>
+      </table>
+
+  
+</div>
+
   `;
 
   return html;
