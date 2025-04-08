@@ -99,11 +99,9 @@ function generateDashboardUi() {
     <main class="min-h-full">
     <div id="content-container" class="mx-auto max-w-7xl flex flex-col items-center justify-center px-4 py-6 sm:px-6 lg:px-8">
 
-      ${generateNewRecordDrawer()}   
-
-      ${generateRecordsTable()} 
-
-
+      ${generateNewRecordDrawer()}
+      ${generateRecordsTable()}
+      
     </div>
 </main>
 </div>
@@ -113,8 +111,8 @@ function generateDashboardUi() {
   console.log("the dashboard has rendered");
 }
 
-function generateNewRecordDrawer(){
-  const html =`
+function generateNewRecordDrawer() {
+  const html = `
 
   <!-- drawer init and toggle -->
   <div class="text-center">
@@ -166,17 +164,14 @@ function generateNewRecordDrawer(){
   return html;
 }
 
-function generateRecordsTable(){
+function generateRecordsTable() {
   const html = `
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <div class="relative shadow-md sm:rounded-lg mt-5">
+      <table class="min-w-[700px] w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                   <th scope="col" class="px-6 py-3">
                       Date
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      Color
                   </th>
                   <th scope="col" class="px-6 py-3">
                       Weight
@@ -189,169 +184,78 @@ function generateRecordsTable(){
                   </th>
               </tr>
           </thead>
-          <tbody>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      Apple MacBook Pro 17"
-                  </th>
-                  <td class="px-6 py-4">
-                      Yes
-                  </td>
-                  <td class="px-6 py-4">
-                      $2999
-                  </td>
-                  <td class="px-6 py-4">
-                      3.0 lb.
-                  </td>
-                  <td class="flex items-center px-6 py-4">
-                      <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                      <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
-                  </td>
-              </tr>
-
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      Apple MacBook Pro 17"
-                  </th>
-                  <td class="px-6 py-4">
-                      Yes
-                  </td>
-                  <td class="px-6 py-4">
-                      $2999
-                  </td>
-                  <td class="px-6 py-4">
-                      3.0 lb.
-                  </td>
-                  <td class="flex items-center px-6 py-4">
-                      <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                      <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
-                  </td>
-              </tr>
-
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      Apple MacBook Pro 17"
-                  </th>
-                  <td class="px-6 py-4">
-                      Yes
-                  </td>
-                  <td class="px-6 py-4">
-                      $2999
-                  </td>
-                  <td class="px-6 py-4">
-                      3.0 lb.
-                  </td>
-                  <td class="flex items-center px-6 py-4">
-                      <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                      <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
-                  </td>
-              </tr>
+          <tbody id="t-body">
               
           </tbody>
-      </table>
-
-  
-</div>
-
+        </table>
+      </div>
   `;
 
   return html;
 }
 
-// function updateUserData(userData, useruid) {
-//     document.getElementById("user-profile-link").textContent = userData.name || "Unknown User";
-//     document.getElementById("mobile-menu-name").textContent = userData.name || "Unknown User";
-//     document.getElementById("mobile-menu-email").textContent = userData.email || "No Email Available";
-//     const contentContainer = document.getElementById("content-container");
+async function updateUserData(userData, useruid) {
+  document.getElementById("user-profile-link").textContent =
+    userData.name || "Unknown User";
+  document.getElementById("mobile-menu-name").textContent =
+    userData.name || "Unknown User";
+  document.getElementById("mobile-menu-email").textContent =
+    userData.email || "No Email Available";
+  const table = document.getElementById("t-body");
+  const contentContainer = document.getElementById("content-container");
 
-//     const html = `
-//     <a href="#" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+  const weights = await getWeightData(useruid);
 
-//     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Wellcome to the app</h5>
-//     <p class="font-normal text-gray-700 dark:text-gray-400">Name: ${userData.name}</p>
-//     <p class="font-normal text-gray-700 dark:text-gray-400">Email: ${userData.email}</p>
-//     </a>
+  if (weights.length === 0) {
+    contentContainer.innerHTML +=
+      "<p class='text-gray-500 mt-4'>No weight entries found.</p>";
+    return;
+  }
 
-//     `;
-// //
+  weights.forEach((entry) => {
+    const tableRow = document.createElement("tr");
+    tableRow.className =
+      "bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600";
+    tableRow.id = entry.id;
+    const date = entry.date?.toDate?.() || new Date(entry.date);
 
-//       // contentContainer.innerHTML = '';
-//       const card = document.createElement("div");
+    tableRow.innerHTML = `
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      ${date.toLocaleDateString()}
+                  </th>
+                  <td class="px-6 py-4">
+                      ${entry.weight}
+                  </td>
+                  <td class="px-6 py-4">
+                      3.0 lb.
+                  </td>
+                  <td class="flex items-center px-6 py-4">
+                      <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                      <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
+                  </td>
+    `;
 
-//       card.classList.add("block", "max-w-sm", "p-6", "bg-white", "border", "border-gray-200", "rounded-lg", "shadow-sm", "hover:bg-gray-100", "dark:bg-gray-800", "dark:border-gray-700", "dark:hover:bg-gray-700");
-//       contentContainer.appendChild(card);
-//       contentContainer.innerHTML = html;
+    table.appendChild(tableRow);
+  });
 
-//     getWeightData(useruid).then((weights) => {
-//       console.log("Weights for user:", weights);
-//     });
+  console.log("Dashboard rendered");
+}
 
-//     console.log("the dashboard has RERENDERED")
-// }
+async function getWeightData(useruid) {
+  const weightsRef = collection(db, "users", useruid, "weights");
+  const querySnapshot = await getDocs(weightsRef);
 
-// async function updateUserData(userData, useruid) {
-//   document.getElementById("user-profile-link").textContent = userData.name || "Unknown User";
-//   document.getElementById("mobile-menu-name").textContent = userData.name || "Unknown User";
-//   document.getElementById("mobile-menu-email").textContent = userData.email || "No Email Available";
+  const weights = [];
 
-//   const contentContainer = document.getElementById("content-container");
-//   contentContainer.innerHTML = ""; // Clear previous content
+  querySnapshot.forEach((doc) => {
+    weights.push({
+      id: doc.id,
+      ...doc.data(),
+    });
+  });
 
-//   // Create user welcome card
-//   const welcomeCard = document.createElement("a");
-//   welcomeCard.href = "#";
-//   welcomeCard.className = "block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700";
-//   welcomeCard.innerHTML = `
-//     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Welcome to the app</h5>
-//     <p class="font-normal text-gray-700 dark:text-gray-400">Name: ${userData.name}</p>
-//     <p class="font-normal text-gray-700 dark:text-gray-400">Email: ${userData.email}</p>
-//   `;
-//   contentContainer.appendChild(welcomeCard);
-
-//   // Fetch and render weights
-//   const weights = await getWeightData(useruid);
-
-//   if (weights.length === 0) {
-//     contentContainer.innerHTML += "<p class='text-gray-500 mt-4'>No weight entries found.</p>";
-//     return;
-//   }
-
-//   weights.forEach((entry) => {
-//     const weightCard = document.createElement("div");
-//     weightCard.className = "mt-4 block max-w-sm p-4 bg-white border border-gray-300 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700";
-
-//     const date = entry.date?.toDate?.() || new Date(entry.date); // Convert Firestore timestamp if needed
-
-//     weightCard.innerHTML = `
-//       <p class="text-gray-800 dark:text-gray-200">Weight: <strong>${entry.weight} kg</strong></p>
-//       <p class="text-gray-600 dark:text-gray-400 text-sm">Date: ${date.toLocaleDateString()}</p>
-//     `;
-
-//     contentContainer.appendChild(weightCard);
-//   });
-
-//   console.log("Dashboard rendered");
-// }
-
-// async function getWeightData(useruid) {
-//   try {
-//     const weightsCollectionRef = collection(db, "users", useruid, "weights");
-//     const querySnapshot = await getDocs(weightsCollectionRef);
-
-//     const data = [];
-//     querySnapshot.forEach((doc) => {
-//       data.push({ id: doc.id, ...doc.data() });
-//     });
-
-//     return data;
-//   } catch (error) {
-//     console.error("Error fetching weights:", error);
-//     return [];
-//   }
-// }
+  return weights;
+}
 
 onAuthStateChanged(auth, async (user) => {
   // console.log("user", user)
@@ -369,7 +273,7 @@ onAuthStateChanged(auth, async (user) => {
 
     if (docSnap.exists()) {
       const userData = docSnap.data();
-      // updateUserData(userData, user.uid);
+      updateUserData(userData, user.uid);
     } else {
       console.log("No document found matching id");
     }
