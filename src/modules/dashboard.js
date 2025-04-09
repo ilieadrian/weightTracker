@@ -98,22 +98,35 @@ function generateDashboardUi() {
     </header>
     <main class="min-h-full">
     <div id="content-container" class="mx-auto max-w-7xl flex flex-col items-center justify-center px-4 py-6 sm:px-6 lg:px-8">
-
       ${generateNewRecordDrawer()}
-      ${generateRecordsTable()}
-      
+
+      ${generateRecordsTable()}  
+     
     </div>
 </main>
 </div>
   `;
 
   container.innerHTML = html;
+
+  initFlowbite();
   console.log("the dashboard has rendered");
 }
 
+// async function registerNewRecord(){
+//   const datePicker = document.getElementById('datepicker-autohide')
+//   const weight = document.getElementById('weight')
+//   const comments = document.getElementById('comments')
+//   const submitBtn = document.getElementById('weight-submit-button');
+
+//   submitBtn.addEventListener("click", () => {
+//     console.log(datePicker,weight, comments )
+//   })
+
+// }
+
 function generateNewRecordDrawer() {
   const html = `
-
   <!-- drawer init and toggle -->
   <div class="text-center">
     <button class="overflow-y-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button" data-drawer-target="drawer-top-example" data-drawer-show="drawer-top-example" data-drawer-placement="top" aria-controls="drawer-top-example">
@@ -155,12 +168,12 @@ function generateNewRecordDrawer() {
           <input type="text" id="comments" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
         
-          <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add record</a>
-      </form>
+        <button type="button" id="weight-submit-button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add record</button>      </form>
         
     </div>
   `;
 
+  console.log("the drawer has rendered");
   return html;
 }
 
@@ -190,55 +203,8 @@ function generateRecordsTable() {
         </table>
       </div>
   `;
-
+  console.log("the recordstable has rendered");
   return html;
-}
-
-async function updateUserData(userData, useruid) {
-  document.getElementById("user-profile-link").textContent =
-    userData.name || "Unknown User";
-  document.getElementById("mobile-menu-name").textContent =
-    userData.name || "Unknown User";
-  document.getElementById("mobile-menu-email").textContent =
-    userData.email || "No Email Available";
-  const table = document.getElementById("t-body");
-  const contentContainer = document.getElementById("content-container");
-
-  const weights = await getWeightData(useruid);
-
-  if (weights.length === 0) {
-    contentContainer.innerHTML +=
-      "<p class='text-gray-500 mt-4'>No weight entries found.</p>";
-    return;
-  }
-
-  weights.forEach((entry) => {
-    const tableRow = document.createElement("tr");
-    tableRow.className =
-      "bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600";
-    tableRow.id = entry.id;
-    const date = entry.date?.toDate?.() || new Date(entry.date);
-
-    tableRow.innerHTML = `
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      ${date.toLocaleDateString()}
-                  </th>
-                  <td class="px-6 py-4">
-                      ${entry.weight}
-                  </td>
-                  <td class="px-6 py-4">
-                      3.0 lb.
-                  </td>
-                  <td class="flex items-center px-6 py-4">
-                      <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                      <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
-                  </td>
-    `;
-
-    table.appendChild(tableRow);
-  });
-
-  console.log("Dashboard rendered");
 }
 
 async function getWeightData(useruid) {
@@ -255,6 +221,59 @@ async function getWeightData(useruid) {
   });
 
   return weights;
+}
+
+async function updateUserData(userData, useruid) {
+  document.getElementById("user-profile-link").textContent =
+    userData.name || "Unknown User";
+  document.getElementById("mobile-menu-name").textContent =
+    userData.name || "Unknown User";
+  document.getElementById("mobile-menu-email").textContent =
+    userData.email || "No Email Available";
+  const table = document.getElementById("t-body");
+  const contentContainer = document.getElementById("content-container");
+
+  const weights = await getWeightData(useruid);
+
+  if (weights.length === 0) {
+    table.innerHTML +=
+      `<tr>
+        <td colspan="4" class="text-center py-4">
+          <p class="text-gray-500">No weight entries found.</p>
+        </td>
+      </tr>
+      `;
+  } else {
+
+  weights.forEach((entry) => {
+    const tableRow = document.createElement("tr");
+    tableRow.className =
+      "bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600";
+    tableRow.id = entry.id;
+    const date = entry.date?.toDate?.() || new Date(entry.date);
+
+    tableRow.innerHTML = `
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      ${date.toLocaleDateString("en-GB")}
+                  </th>
+                  <td class="px-6 py-4">
+                      ${entry.weight}
+                  </td>
+                  <td class="px-6 py-4">
+                      To be added
+                  </td>
+                  <td class="flex items-center px-6 py-4">
+                      <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                      <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
+                  </td>
+    `;
+
+    table.appendChild(tableRow);
+  });
+
+}
+
+  console.log("Dashboard rendered with user data");
 }
 
 onAuthStateChanged(auth, async (user) => {
