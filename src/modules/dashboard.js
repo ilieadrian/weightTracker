@@ -113,17 +113,14 @@ function generateDashboardUi() {
   console.log("the dashboard has rendered");
 }
 
-// async function registerNewRecord(){
-//   const datePicker = document.getElementById('datepicker-autohide')
-//   const weight = document.getElementById('weight')
-//   const comments = document.getElementById('comments')
-//   const submitBtn = document.getElementById('weight-submit-button');
+async function registerNewRecord(){
+  const datePicker = document.getElementById('datepicker-autohide').value
+  const weight = document.getElementById('weight-input').value.trim();
+  const comments = document.getElementById('comments-input').value.trim()
 
-//   submitBtn.addEventListener("click", () => {
-//     console.log(datePicker,weight, comments )
-//   })
+  console.log(datePicker, weight, comments)
 
-// }
+}
 
 function generateNewRecordDrawer() {
   const html = `
@@ -159,13 +156,13 @@ function generateNewRecordDrawer() {
       </div>
         
         <div class="mb-5">
-          <label for="weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight *</label>
-          <input type="number" id="weight" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+          <label for="weight-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight *</label>
+          <input type="number" id="weight-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
         </div>
 
         <div class="mb-5">
-          <label for="comments" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comments </label>
-          <input type="text" id="comments" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <label for="comments-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comments </label>
+          <input type="text" id="comments-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
         
         <button type="button" id="weight-submit-button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add record</button>      </form>
@@ -203,7 +200,7 @@ function generateRecordsTable() {
         </table>
       </div>
   `;
-  console.log("the recordstable has rendered");
+  console.log("the recordsTable has rendered");
   return html;
 }
 
@@ -319,9 +316,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const mobileMenu = document.getElementById("mobile-menu");
   const logoutButton = document.getElementById("logout-link");
   const logoutButtonMobile = document.getElementById("logout-link-mobile");
+  const drawerSubmitBtn = document.getElementById('weight-submit-button');
+
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
+  drawerSubmitBtn.addEventListener("click", registerNewRecord)
 
   menuButton.addEventListener("click", function () {
     menuOpenIcon.classList.toggle("hidden");
