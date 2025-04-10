@@ -3,6 +3,7 @@ import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getDoc, getDocs, doc, collection, addDoc } from "firebase/firestore";
 import { initFlowbite } from "flowbite";
+let userData = null;
 
 console.log("Hello from dashboard");
 
@@ -118,8 +119,10 @@ async function registerNewRecord(){
   const weight = document.getElementById('weight-input').value.trim();
   const comments = document.getElementById('comments-input').value.trim()
 
-  console.log(datePicker, weight, comments)
+//   const weightsCollectionRef = collection(db, "users", user.uid, "weights");
+// console.log("Collection Path:", weightsCollectionRef.path);
 
+  console.log(userData)
 }
 
 function generateNewRecordDrawer() {
@@ -228,7 +231,6 @@ async function updateUserData(userData, useruid) {
   document.getElementById("mobile-menu-email").textContent =
     userData.email || "No Email Available";
   const table = document.getElementById("t-body");
-  const contentContainer = document.getElementById("content-container");
 
   const weights = await getWeightData(useruid);
 
@@ -267,7 +269,7 @@ async function updateUserData(userData, useruid) {
 
     table.appendChild(tableRow);
   });
-
+   
 }
 
   console.log("Dashboard rendered with user data");
@@ -288,7 +290,7 @@ onAuthStateChanged(auth, async (user) => {
     // console.log(docSnap)
 
     if (docSnap.exists()) {
-      const userData = docSnap.data();
+      userData = docSnap.data();
       updateUserData(userData, user.uid);
     } else {
       console.log("No document found matching id");
