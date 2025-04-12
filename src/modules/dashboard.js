@@ -3,7 +3,6 @@ import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getDoc, getDocs, doc, collection, addDoc } from "firebase/firestore";
 import { initFlowbite } from "flowbite";
-let userData = null;
 
 console.log("Hello from dashboard");
 
@@ -119,10 +118,14 @@ async function registerNewRecord(){
   const weight = document.getElementById('weight-input').value.trim();
   const comments = document.getElementById('comments-input').value.trim()
 
+  // try {
+  //   // const recordData = awa
+  // }
+
 //   const weightsCollectionRef = collection(db, "users", user.uid, "weights");
 // console.log("Collection Path:", weightsCollectionRef.path);
 
-  console.log(userData)
+  // console.log(recordData)
 }
 
 function generateNewRecordDrawer() {
@@ -290,7 +293,7 @@ onAuthStateChanged(auth, async (user) => {
     // console.log(docSnap)
 
     if (docSnap.exists()) {
-      userData = docSnap.data();
+      const userData = docSnap.data();
       updateUserData(userData, user.uid);
     } else {
       console.log("No document found matching id");
