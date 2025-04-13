@@ -4,6 +4,8 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getDoc, getDocs, doc, collection, addDoc } from "firebase/firestore";
 import { initFlowbite } from "flowbite";
 
+const useruidTest = "ERBAsjMPe1RBmbARqFTRIx8qJeq1";
+
 console.log("Hello from dashboard");
 
 function generateDashboardUi() {
@@ -118,9 +120,22 @@ async function registerNewRecord(){
   const weight = document.getElementById('weight-input').value.trim();
   const comments = document.getElementById('comments-input').value.trim()
 
-  // try {
-  //   // const recordData = awa
-  // }
+  const weightsCollectionRef = collection(db, "users", user.uid, "weights");
+
+  try {
+    // Reference to user's subcollection
+    const weightsCollectionRef = collection(db, "users", user.uid, "weights");
+
+    const docRef = await addDoc(weightsCollectionRef, {
+      date: datePicker,
+      weight: weight,
+      comments: comments,
+    });
+
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
 
 //   const weightsCollectionRef = collection(db, "users", user.uid, "weights");
 // console.log("Collection Path:", weightsCollectionRef.path);
