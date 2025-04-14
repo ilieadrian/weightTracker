@@ -4,6 +4,8 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getDoc, getDocs, doc, collection, addDoc } from "firebase/firestore";
 import { initFlowbite } from "flowbite";
 
+let data;
+
 
 console.log("Hello from dashboard");
 
@@ -122,7 +124,6 @@ async function registerNewRecord(){
   // const weightsCollectionRef = collection(db, "users", user.uid, "weights");
 
   try {
-    let data = sessionStorage.getItem('uid');
     const weightsCollectionRef = collection(db, "users", data, "weights");
 
     const docRef = await addDoc(weightsCollectionRef, {
@@ -308,7 +309,7 @@ onAuthStateChanged(auth, async (user) => {
 
     if (docSnap.exists()) {
       const userData = docSnap.data();
-      sessionStorage.setItem('uid', user.uid);
+      data = user.uid;
       updateUserData(userData, user.uid);
     } else {
       console.log("No document found matching id");
