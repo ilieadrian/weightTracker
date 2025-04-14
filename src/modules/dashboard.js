@@ -4,7 +4,6 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getDoc, getDocs, doc, collection, addDoc } from "firebase/firestore";
 import { initFlowbite } from "flowbite";
 
-const useruidTest = "ERBAsjMPe1RBmbARqFTRIx8qJeq1";
 
 console.log("Hello from dashboard");
 
@@ -120,11 +119,11 @@ async function registerNewRecord(){
   const weight = document.getElementById('weight-input').value.trim();
   const comments = document.getElementById('comments-input').value.trim()
 
-  const weightsCollectionRef = collection(db, "users", user.uid, "weights");
+  // const weightsCollectionRef = collection(db, "users", user.uid, "weights");
 
   try {
-    // Reference to user's subcollection
-    const weightsCollectionRef = collection(db, "users", user.uid, "weights");
+    let data = sessionStorage.getItem('uid');
+    const weightsCollectionRef = collection(db, "users", data, "weights");
 
     const docRef = await addDoc(weightsCollectionRef, {
       date: datePicker,
@@ -287,7 +286,6 @@ async function updateUserData(userData, useruid) {
 
     table.appendChild(tableRow);
   });
-   
 }
 
   console.log("Dashboard rendered with user data");
@@ -303,12 +301,14 @@ onAuthStateChanged(auth, async (user) => {
 
   try {
     const docRef = doc(db, "users", user.uid);
+    
     const docSnap = await getDoc(docRef);
 
     // console.log(docSnap)
 
     if (docSnap.exists()) {
       const userData = docSnap.data();
+      sessionStorage.setItem('uid', user.uid);
       updateUserData(userData, user.uid);
     } else {
       console.log("No document found matching id");
