@@ -4,7 +4,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getDoc, getDocs, doc, collection, addDoc } from "firebase/firestore";
 import { initFlowbite } from "flowbite";
 
-let data;
+let userUid;
 
 
 console.log("Hello from dashboard");
@@ -120,19 +120,25 @@ async function registerNewRecord(){
   const datePicker = document.getElementById('datepicker-autohide').value
   const weight = document.getElementById('weight-input').value.trim();
   const comments = document.getElementById('comments-input').value.trim()
+  const drawer = document.getElementById('drawer-top-example')
 
   // const weightsCollectionRef = collection(db, "users", user.uid, "weights");
 
   try {
-    const weightsCollectionRef = collection(db, "users", data, "weights");
+    // const weightsCollectionRef = collection(db, "users", userUid, "weights");
 
-    const docRef = await addDoc(weightsCollectionRef, {
-      date: datePicker,
-      weight: weight,
-      comments: comments,
-    });
+    // const docRef = await addDoc(weightsCollectionRef, {
+    //   date: datePicker,
+    //   weight: weight,
+    //   comments: comments,
+    // });
 
-    console.log("Document written with ID: ", docRef.id);
+    const drawerInstance = FlowbiteDrawer.getInstance(drawer);
+drawerInstance.hide();
+        generateRecordsTable()
+    
+
+    // console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -309,7 +315,7 @@ onAuthStateChanged(auth, async (user) => {
 
     if (docSnap.exists()) {
       const userData = docSnap.data();
-      data = user.uid;
+      userUid = user.uid;
       updateUserData(userData, user.uid);
     } else {
       console.log("No document found matching id");
