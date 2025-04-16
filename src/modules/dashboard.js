@@ -120,9 +120,6 @@ async function registerNewRecord(){
   const datePicker = document.getElementById('datepicker-autohide').value
   const weight = document.getElementById('weight-input').value.trim();
   const comments = document.getElementById('comments-input').value.trim()
-  const drawer = document.getElementById('drawer-top-example')
-
-  // const weightsCollectionRef = collection(db, "users", user.uid, "weights");
 
   try {
     // const weightsCollectionRef = collection(db, "users", userUid, "weights");
@@ -133,9 +130,8 @@ async function registerNewRecord(){
     //   comments: comments,
     // });
 
-    const drawerInstance = FlowbiteDrawer.getInstance(drawer);
-drawerInstance.hide();
-        generateRecordsTable()
+        closeRecordDrawer();
+        generateRecordsTable();
     
 
     // console.log("Document written with ID: ", docRef.id);
@@ -143,8 +139,8 @@ drawerInstance.hide();
     console.error("Error adding document: ", e);
   }
 
-//   const weightsCollectionRef = collection(db, "users", user.uid, "weights");
-// console.log("Collection Path:", weightsCollectionRef.path);
+  //   const weightsCollectionRef = collection(db, "users", user.uid, "weights");
+  // console.log("Collection Path:", weightsCollectionRef.path);
 
   // console.log(recordData)
 }
@@ -199,6 +195,12 @@ function generateNewRecordDrawer() {
 
   console.log("the drawer has rendered");
   return html;
+}
+
+function closeRecordDrawer(){
+  const drawer = document.getElementById('drawer-top-example')
+
+
 }
 
 function generateRecordsTable() {
