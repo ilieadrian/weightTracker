@@ -200,6 +200,7 @@ function generateNewRecordDrawer() {
 function closeRecordDrawer(){
   const drawer = document.getElementById('drawer-top-example')
 
+  drawer.classList.add('hidden');
 
 }
 
