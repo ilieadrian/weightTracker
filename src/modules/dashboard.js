@@ -2,7 +2,7 @@ import "../styles.css";
 import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getDoc, getDocs, doc, collection, addDoc } from "firebase/firestore";
-import { initFlowbite } from "flowbite";
+import { initFlowbite, Drawer } from "flowbite";
 
 let userUid;
 
@@ -198,9 +198,12 @@ function generateNewRecordDrawer() {
 }
 
 function closeRecordDrawer(){
-  const drawer = document.getElementById('drawer-top-example')
+  const drawerEl = document.getElementById('drawer-top-example');
 
-  drawer.classList.add('hidden');
+  if (drawerEl) {
+    const drawerInstance = new Drawer(drawerEl);
+    drawerInstance.hide();
+  }
 
 }
 
