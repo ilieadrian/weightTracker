@@ -124,18 +124,18 @@ async function registerNewRecord(){
   const comments = document.getElementById('comments-input').value.trim()
 
   try {
-    // const weightsCollectionRef = collection(db, "users", userUid, "weights");
+    const weightsCollectionRef = collection(db, "users", userUid, "weights");
 
-    // const docRef = await addDoc(weightsCollectionRef, {
-    //   date: datePicker,
-    //   weight: weight,
-    //   comments: comments,
-    // });
+    const docRef = await addDoc(weightsCollectionRef, {
+      date: datePicker,
+      weight: weight,
+      comments: comments,
+    });
     console.log("Closing Drawer")
         generateRecordsTable();
     
 
-    // console.log("Document written with ID: ", docRef.id);
+    console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -193,6 +193,9 @@ function generateNewRecordDrawer() {
         
     </div>
   `;
+  //code for the dispapearing button afyer click
+  // <button type="button" data-drawer-hide="drawer-top-example" id="weight-submit-button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add record</button>      </form>
+
 
   console.log("the drawer has rendered");
 
@@ -271,11 +274,10 @@ async function updateUserData(userData, useruid) {
     tableRow.className =
       "bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600";
     tableRow.id = entry.id;
-    const date = entry.date?.toDate?.() || new Date(entry.date);
 
     tableRow.innerHTML = `
                   <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      ${date.toLocaleDateString("en-GB")}
+                      ${entry.date}
                   </th>
                   <td class="px-6 py-4">
                       ${entry.weight}
@@ -341,10 +343,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const mobileMenu = document.getElementById("mobile-menu");
   const logoutButton = document.getElementById("logout-link");
   const logoutButtonMobile = document.getElementById("logout-link-mobile");
+  const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
 
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
+  weightRecordSubmitBtn.addEventListener("click", registerNewRecord)
 
   menuButton.addEventListener("click", function () {
     menuOpenIcon.classList.toggle("hidden");
@@ -353,11 +357,4 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-//The code to add data
-// const weightsCollectionRef = collection(db, "users", user.uid, "weights");
-// console.log("Collection Path:", weightsCollectionRef.path);
 
-// await addDoc(weightsCollectionRef, {
-//     weight: 72,
-//     date: new Date()
-// });
