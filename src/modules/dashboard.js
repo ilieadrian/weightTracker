@@ -5,6 +5,7 @@ import { getDoc, getDocs, doc, collection, addDoc } from "firebase/firestore";
 import { initFlowbite, Drawer } from "flowbite";
 
 let userUid;
+let drawerInstance;
 
 
 console.log("Hello from dashboard");
@@ -117,6 +118,7 @@ function generateDashboardUi() {
 }
 
 async function registerNewRecord(){
+  console.log("registerNewRecord FIRED")
   const datePicker = document.getElementById('datepicker-autohide').value
   const weight = document.getElementById('weight-input').value.trim();
   const comments = document.getElementById('comments-input').value.trim()
@@ -129,8 +131,7 @@ async function registerNewRecord(){
     //   weight: weight,
     //   comments: comments,
     // });
-
-        closeRecordDrawer();
+    console.log("Closing Drawer")
         generateRecordsTable();
     
 
@@ -188,23 +189,14 @@ function generateNewRecordDrawer() {
           <input type="text" id="comments-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
         
-        <button type="button" id="weight-submit-button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add record</button>      </form>
+        <button type="button" data-drawer-hide="drawer-top-example" id="weight-submit-button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add record</button>      </form>
         
     </div>
   `;
 
   console.log("the drawer has rendered");
+
   return html;
-}
-
-function closeRecordDrawer(){
-  const drawerEl = document.getElementById('drawer-top-example');
-
-  if (drawerEl) {
-    const drawerInstance = new Drawer(drawerEl);
-    drawerInstance.hide();
-  }
-
 }
 
 function generateRecordsTable() {
@@ -349,12 +341,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const mobileMenu = document.getElementById("mobile-menu");
   const logoutButton = document.getElementById("logout-link");
   const logoutButtonMobile = document.getElementById("logout-link-mobile");
-  const drawerSubmitBtn = document.getElementById('weight-submit-button');
 
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
-  drawerSubmitBtn.addEventListener("click", registerNewRecord)
 
   menuButton.addEventListener("click", function () {
     menuOpenIcon.classList.toggle("hidden");
