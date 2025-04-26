@@ -117,11 +117,26 @@ function generateDashboardUi() {
   console.log("the dashboard has rendered");
 }
 
-async function registerNewRecord(){
-  console.log("registerNewRecord FIRED")
+function validateWeightRecord(){
+  console.log("validateWeightRecord FIRED")
   const datePicker = document.getElementById('datepicker-autohide').value
   const weight = document.getElementById('weight-input').value.trim();
   const comments = document.getElementById('comments-input').value.trim()
+  console.log(datePicker, weight)
+
+  if(datePicker && weight){
+    registerNewRecord(datePicker, weight, comments)
+  } else {
+    console.log("input is not valid");
+    return
+  }
+}
+
+async function registerNewRecord(datePicker, weight, comments){
+  console.log("registerNewRecord FIRED")
+  // const datePicker = document.getElementById('datepicker-autohide').value
+  // const weight = document.getElementById('weight-input').value.trim();
+  // const comments = document.getElementById('comments-input').value.trim()
 
   try {
     const weightsCollectionRef = collection(db, "users", userUid, "weights");
@@ -346,7 +361,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
-  weightRecordSubmitBtn.addEventListener("click", registerNewRecord)
+  weightRecordSubmitBtn.addEventListener("click", validateWeightRecord)
 
   menuButton.addEventListener("click", function () {
     menuOpenIcon.classList.toggle("hidden");
