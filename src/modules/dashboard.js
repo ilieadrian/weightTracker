@@ -2,11 +2,9 @@ import "../styles.css";
 import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getDoc, getDocs, doc, collection, addDoc, orderBy, query } from "firebase/firestore";
-import { initFlowbite, Drawer } from "flowbite";
+import { initFlowbite } from "flowbite";
 
 let userUid;
-let drawerInstance;
-
 
 console.log("Hello from dashboard");
 
@@ -134,9 +132,6 @@ function validateWeightRecord(){
 
 async function registerNewRecord(datePicker, weight, comments){
   console.log("registerNewRecord FIRED")
-  // const datePicker = document.getElementById('datepicker-autohide').value
-  // const weight = document.getElementById('weight-input').value.trim();
-  // const comments = document.getElementById('comments-input').value.trim()
 
   try {
     const weightsCollectionRef = collection(db, "users", userUid, "weights");
@@ -146,19 +141,13 @@ async function registerNewRecord(datePicker, weight, comments){
       weight: weight,
       comments: comments,
     });
-    console.log("Closing Drawer")
-        generateRecordsTable();
-    
-
-    console.log("Document written with ID: ", docRef.id);
+      console.log("Closing Drawer")
+      generateRecordsTable();
+      console.log("Document written with ID: ", docRef.id);
   } catch (e) {
-    console.error("Error adding document: ", e);
+      console.error("Error adding document: ", e);
   }
 
-  //   const weightsCollectionRef = collection(db, "users", user.uid, "weights");
-  // console.log("Collection Path:", weightsCollectionRef.path);
-
-  // console.log(recordData)
 }
 
 function generateNewRecordDrawer() {
