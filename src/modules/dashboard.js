@@ -116,28 +116,84 @@ function generateDashboardUi() {
 }
 
 function validateWeightRecord(){
-  //get elements
   console.log("validateWeightRecord FIRED")
-  const datePicker = document.getElementById('datepicker-autohide').value
-  const weight = document.getElementById('weight-input').value.trim();
+
+  //get elements
+  const datePicker = document.getElementById('datepicker-autohide');
+  const weight = document.getElementById('weight-input');
   const comments = document.getElementById('comments-input').value.trim()
   const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
-  console.log(datePicker, weight)
 
+  const datePickerValue = datePicker.value
+  const weightValue = weight.value.trim();
+
+
+  const activeButtonClasses = [
+    "inline-flex",
+    "items-center",
+    "px-4",
+    "py-2",
+    "text-sm",
+    "font-medium",
+    "text-white",
+    "bg-blue-700",
+    "rounded-lg",
+    "hover:bg-blue-800",
+    "focus:ring-4",
+    "focus:ring-blue-300",
+    "dark:bg-blue-600",
+    "dark:hover:bg-blue-700",
+    "focus:outline-none",
+    "dark:focus:ring-blue-800",
+  ];
+  
+  const disabledButtonClasses = [
+    "bg-gray-100",
+    "border",
+    "border-gray-300",
+    "text-gray-900",
+    "text-sm",
+    "rounded-lg",
+    "focus:ring-blue-500",
+    "focus:border-blue-500",
+    "block",
+    "w-full",
+    "p-2.5",
+    "cursor-not-allowed",
+    "dark:bg-gray-700",
+    "dark:border-gray-600",
+    "dark:placeholder-gray-400",
+    "dark:text-gray-400",
+    "dark:focus:ring-blue-500",
+    "dark:focus:border-blue-500",
+  ];
+
+  console.log(datePickerValue, weightValue)
 
   //the inputs are invalid
 
-
   //the inputs are invalid
 
+  //control activate/deactivate the button
+  if(datePickerValue && weightValue){
+    console.log("The button is now active")
+    weightRecordSubmitBtn.classList.remove(...disabledButtonClasses);
+    weightRecordSubmitBtn.classList.add(...activeButtonClasses);
+    weightRecordSubmitBtn.disabled = false;
 
-  //activate the button
-
-  if(datePicker && weight){
-    registerNewRecord(datePicker, weight, comments)
-    weightRecordSubmitBtn.classList.add()
   } else {
-    weight.classList.add("bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500")
+    weightRecordSubmitBtn.classList.remove(...activeButtonClasses);
+    weightRecordSubmitBtn.classList.add(...disabledButtonClasses);
+    weightRecordSubmitBtn.disabled = true;
+
+  }
+
+
+  if(datePickerValue && weightValue){
+    registerNewRecord(datePicker, weight, comments)
+    // weightRecordSubmitBtn.classList.add()
+  } else {
+    // weight.classList.add("bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500")
     console.log("input is not valid");
     return
   }
@@ -380,7 +436,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   datePicker.addEventListener("change", validateWeightRecord)
   weight.addEventListener("change", validateWeightRecord)
-  // weightRecordSubmitBtn.addEventListener("click", validateWeightRecord)
+  weightRecordSubmitBtn.addEventListener("click", validateWeightRecord)
   
 
   menuButton.addEventListener("click", function () {
