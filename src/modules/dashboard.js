@@ -115,6 +115,14 @@ function generateDashboardUi() {
   console.log("the dashboard has rendered");
 }
 
+function unlockWeightRecordSubmitBtn(){
+  const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
+
+    //active button code
+  //        <button type="button" data-drawer-hide="drawer-top-example" id="weight-submit-button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add record</button>      </form>
+
+}
+
 function validateWeightRecord(){
   console.log("validateWeightRecord FIRED")
   const datePicker = document.getElementById('datepicker-autohide').value
@@ -134,16 +142,17 @@ async function registerNewRecord(datePicker, weight, comments){
   console.log("registerNewRecord FIRED")
 
   try {
-    const weightsCollectionRef = collection(db, "users", userUid, "weights");
+    console.log("Adding input to DB temporary disabled")
+    // const weightsCollectionRef = collection(db, "users", userUid, "weights");
 
-    const docRef = await addDoc(weightsCollectionRef, {
-      date: datePicker,
-      weight: weight,
-      comments: comments,
-    });
-      console.log("Closing Drawer")
-      generateRecordsTable();
-      console.log("Document written with ID: ", docRef.id);
+    // const docRef = await addDoc(weightsCollectionRef, {
+    //   date: datePicker,
+    //   weight: weight,
+    //   comments: comments,
+    // });
+    //   console.log("Closing Drawer")
+    //   generateRecordsTable();
+    //   console.log("Document written with ID: ", docRef.id);
   } catch (e) {
       console.error("Error adding document: ", e);
   }
@@ -193,10 +202,16 @@ function generateNewRecordDrawer() {
           <input type="text" id="comments-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
         
-        <button type="button" data-drawer-hide="drawer-top-example" id="weight-submit-button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add record</button>      </form>
+        <button type="button" data-drawer-hide="drawer-top-example" id="weight-submit-button" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>Add record</button>      
+        
+        </form>
         
     </div>
   `;
+
+  //active button code
+  //        <button type="button" data-drawer-hide="drawer-top-example" id="weight-submit-button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add record</button>      </form>
+
 
   console.log("the drawer has rendered");
 
@@ -338,6 +353,9 @@ async function logOut() {
 
 generateDashboardUi();
 
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
   const menuButton = document.querySelector(".md\\:hidden button");
   const menuOpenIcon = menuButton.querySelector("svg:first-of-type"); // First SVG (Menu open icon)
@@ -350,7 +368,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
-  weightRecordSubmitBtn.addEventListener("click", validateWeightRecord)
+
+
+  const datePicker = document.getElementById('datepicker-autohide')
+  const weight = document.getElementById('weight-input')
+
+  datePicker.addEventListener("change", unlockWeightRecordSubmitBtn)
+  weight.addEventListener("change", unlockWeightRecordSubmitBtn)
+  // weightRecordSubmitBtn.addEventListener("click", validateWeightRecord)
+  
 
   menuButton.addEventListener("click", function () {
     menuOpenIcon.classList.toggle("hidden");
