@@ -115,24 +115,29 @@ function generateDashboardUi() {
   console.log("the dashboard has rendered");
 }
 
-function unlockWeightRecordSubmitBtn(){
-  const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
-
-    //active button code
-  //        <button type="button" data-drawer-hide="drawer-top-example" id="weight-submit-button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add record</button>      </form>
-
-}
-
 function validateWeightRecord(){
+  //get elements
   console.log("validateWeightRecord FIRED")
   const datePicker = document.getElementById('datepicker-autohide').value
   const weight = document.getElementById('weight-input').value.trim();
   const comments = document.getElementById('comments-input').value.trim()
+  const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
   console.log(datePicker, weight)
+
+
+  //the inputs are invalid
+
+
+  //the inputs are invalid
+
+
+  //activate the button
 
   if(datePicker && weight){
     registerNewRecord(datePicker, weight, comments)
+    weightRecordSubmitBtn.classList.add()
   } else {
+    weight.classList.add("bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500")
     console.log("input is not valid");
     return
   }
@@ -373,8 +378,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const datePicker = document.getElementById('datepicker-autohide')
   const weight = document.getElementById('weight-input')
 
-  datePicker.addEventListener("change", unlockWeightRecordSubmitBtn)
-  weight.addEventListener("change", unlockWeightRecordSubmitBtn)
+  datePicker.addEventListener("change", validateWeightRecord)
+  weight.addEventListener("change", validateWeightRecord)
   // weightRecordSubmitBtn.addEventListener("click", validateWeightRecord)
   
 
