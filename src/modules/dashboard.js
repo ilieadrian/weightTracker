@@ -122,11 +122,41 @@ function validateWeightRecord(){
   const datePicker = document.getElementById('datepicker-autohide');
   const weight = document.getElementById('weight-input');
   const comments = document.getElementById('comments-input').value.trim()
-  const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
 
   const datePickerValue = datePicker.value
   const weightValue = weight.value.trim();
 
+
+
+
+  console.log(datePickerValue, weightValue)
+
+  //the inputs are invalid
+
+  //the inputs are invalid
+
+  //control activate/deactivate the button
+  if(datePickerValue && weightValue){
+    setSubmitButtonState("active")
+
+  } else {
+    setSubmitButtonState()
+
+  }
+
+
+  if(datePickerValue && weightValue){
+    registerNewRecord(datePicker, weight, comments)
+    // weightRecordSubmitBtn.classList.add()
+  } else {
+    // weight.classList.add("bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500")
+    console.log("input is not valid");
+    return
+  }
+}
+
+function setSubmitButtonState(active){
+  const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
 
   const activeButtonClasses = [
     "text-white",
@@ -142,34 +172,15 @@ function validateWeightRecord(){
     "cursor-not-allowed",
   ];
 
-  console.log(datePickerValue, weightValue)
-
-  //the inputs are invalid
-
-  //the inputs are invalid
-
-  //control activate/deactivate the button
-  if(datePickerValue && weightValue){
-    console.log("The button is now active")
+  if(active){
     weightRecordSubmitBtn.classList.remove(...disabledButtonClasses);
     weightRecordSubmitBtn.classList.add(...activeButtonClasses);
     weightRecordSubmitBtn.disabled = false;
-
   } else {
     weightRecordSubmitBtn.classList.remove(...activeButtonClasses);
     weightRecordSubmitBtn.classList.add(...disabledButtonClasses);
     weightRecordSubmitBtn.disabled = true;
 
-  }
-
-
-  if(datePickerValue && weightValue){
-    registerNewRecord(datePicker, weight, comments)
-    // weightRecordSubmitBtn.classList.add()
-  } else {
-    // weight.classList.add("bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500")
-    console.log("input is not valid");
-    return
   }
 }
 
