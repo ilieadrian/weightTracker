@@ -64,6 +64,7 @@ if (signUpBtn) {
         name: name,
         email: email,
         createdAt: new Date(),
+        
       };
       const docRef = doc(db, "users", user.uid);
 

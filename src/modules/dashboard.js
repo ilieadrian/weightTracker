@@ -126,28 +126,17 @@ function validateWeightRecord(){
 
   console.log(datePickerValue, weightValue)
 
-  //the inputs are invalid
-
-  //the inputs are invalid
-
-  //control activate/deactivate the button
   if(datePickerValue && weightValue){
+    registerNewRecord(datePicker, weight, comments)
+
     setSubmitButtonState("active")
     setDrawerFieldsState("valid")
 
   } else {
+    console.log("input is not valid");
     setSubmitButtonState()
     setDrawerFieldsState()
-  }
-
-
-  if(datePickerValue && weightValue){
-    registerNewRecord(datePicker, weight, comments)
-    // weightRecordSubmitBtn.classList.add()
-  } else {
-    // weight.classList.add("bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500")
-    console.log("input is not valid");
-    return
+    return;
   }
 }
 
