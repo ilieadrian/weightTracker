@@ -117,17 +117,12 @@ function generateDashboardUi() {
 
 function validateWeightRecord(){
   console.log("validateWeightRecord FIRED")
-
-  //get elements
   const datePicker = document.getElementById('datepicker-autohide');
   const weight = document.getElementById('weight-input');
   const comments = document.getElementById('comments-input').value.trim()
 
   const datePickerValue = datePicker.value
   const weightValue = weight.value.trim();
-
-
-
 
   console.log(datePickerValue, weightValue)
 
@@ -138,10 +133,11 @@ function validateWeightRecord(){
   //control activate/deactivate the button
   if(datePickerValue && weightValue){
     setSubmitButtonState("active")
+    setDrawerFieldsState("valid")
 
   } else {
     setSubmitButtonState()
-
+    setDrawerFieldsState()
   }
 
 
@@ -157,13 +153,11 @@ function validateWeightRecord(){
 
 function setSubmitButtonState(active){
   const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
-
   const activeButtonClasses = [
     "text-white",
     "bg-blue-700",
     "hover:bg-blue-800",
   ];
-  
   const disabledButtonClasses = [
     "bg-gray-100",
     "border",
@@ -181,6 +175,14 @@ function setSubmitButtonState(active){
     weightRecordSubmitBtn.classList.add(...disabledButtonClasses);
     weightRecordSubmitBtn.disabled = true;
 
+  }
+}
+
+function setDrawerFieldsState(valid) {
+  if(valid){
+    console.log("Fields are valid")
+  } else {
+    console.log("fields are unvalid")
   }
 }
 
