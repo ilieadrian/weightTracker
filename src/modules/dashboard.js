@@ -129,43 +129,17 @@ function validateWeightRecord(){
 
 
   const activeButtonClasses = [
-    "inline-flex",
-    "items-center",
-    "px-4",
-    "py-2",
-    "text-sm",
-    "font-medium",
     "text-white",
     "bg-blue-700",
-    "rounded-lg",
     "hover:bg-blue-800",
-    "focus:ring-4",
-    "focus:ring-blue-300",
-    "dark:bg-blue-600",
-    "dark:hover:bg-blue-700",
-    "focus:outline-none",
-    "dark:focus:ring-blue-800",
   ];
   
   const disabledButtonClasses = [
     "bg-gray-100",
     "border",
     "border-gray-300",
-    "text-gray-900",
-    "text-sm",
-    "rounded-lg",
-    "focus:ring-blue-500",
-    "focus:border-blue-500",
-    "block",
-    "w-full",
-    "p-2.5",
+    "text-gray-400",
     "cursor-not-allowed",
-    "dark:bg-gray-700",
-    "dark:border-gray-600",
-    "dark:placeholder-gray-400",
-    "dark:text-gray-400",
-    "dark:focus:ring-blue-500",
-    "dark:focus:border-blue-500",
   ];
 
   console.log(datePickerValue, weightValue)
@@ -263,7 +237,7 @@ function generateNewRecordDrawer() {
           <input type="text" id="comments-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
         
-        <button type="button" data-drawer-hide="drawer-top-example" id="weight-submit-button" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>Add record</button>      
+        <button type="button" data-drawer-hide="drawer-top-example" id="weight-submit-button" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 inline-flex items-center p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>Add record</button>      
         
         </form>
         
@@ -414,9 +388,6 @@ async function logOut() {
 
 generateDashboardUi();
 
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
   const menuButton = document.querySelector(".md\\:hidden button");
   const menuOpenIcon = menuButton.querySelector("svg:first-of-type"); // First SVG (Menu open icon)
@@ -429,7 +400,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
-
 
   const datePicker = document.getElementById('datepicker-autohide')
   const weight = document.getElementById('weight-input')
