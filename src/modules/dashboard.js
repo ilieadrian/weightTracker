@@ -120,7 +120,6 @@ function validateWeightRecord(){
   const datePicker = document.getElementById('datepicker-autohide');
   const weight = document.getElementById('weight-input');
   const comments = document.getElementById('comments-input').value.trim()
-
   const datePickerValue = datePicker.value
   const weightValue = weight.value.trim();
 
@@ -128,7 +127,6 @@ function validateWeightRecord(){
 
   if(datePickerValue && weightValue){
     registerNewRecord(datePicker, weight, comments)
-
     setSubmitButtonState("active")
     setDrawerFieldsState("valid")
 
@@ -168,6 +166,10 @@ function setSubmitButtonState(active){
 }
 
 function setDrawerFieldsState(valid) {
+  const datePicker = document.getElementById('datepicker-autohide');
+  const weight = document.getElementById('weight-input');
+
+  
   if(valid){
     console.log("Fields are valid")
   } else {
@@ -227,12 +229,13 @@ function generateNewRecordDrawer() {
           </svg>
         </div>
         <input id="datepicker-autohide" datepicker datepicker-autohide datepicker-format="dd-mm-yyyy" datepicker-buttons datepicker-autoselect-today type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date *" required />
-      </div>
+        </div>
+
         
-        <div class="mb-5">
+        <div class="mb-5" id="weight-input-container">
           <label for="weight-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight *</label>
           <input type="number" id="weight-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-        </div>
+          </div>
 
         <div class="mb-5">
           <label for="comments-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comments </label>
@@ -245,10 +248,6 @@ function generateNewRecordDrawer() {
         
     </div>
   `;
-
-  //active button code
-  //        <button type="button" data-drawer-hide="drawer-top-example" id="weight-submit-button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add record</button>      </form>
-
 
   console.log("the drawer has rendered");
 
