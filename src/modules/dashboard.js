@@ -129,7 +129,6 @@ function validateWeightRecord(){
     registerNewRecord(datePicker, weight, comments)
     setSubmitButtonState("active")
     setDrawerFieldsState("valid")
-
   } else {
     console.log("input is not valid");
     setSubmitButtonState()
@@ -169,10 +168,43 @@ function setDrawerFieldsState(valid) {
   const datePicker = document.getElementById('datepicker-autohide');
   const weight = document.getElementById('weight-input');
 
+
+  const validDatePickerClasses = [
+    "bg-gray-50",
+    "border-gray-300",
+    "text-gray-900",
+    "focus:ring-blue-500",
+    "focus:border-blue-500",
+     // padding for the left icon
+    "dark:border-gray-600",
+    "dark:placeholder-gray-400",
+    "dark:text-white",
+    "dark:focus:ring-blue-500",
+    "dark:focus:border-blue-500",
+  ];
+
+  const errorDatePickerClasses = [
+    "bg-red-50",
+    "border-red-500",
+    "text-red-900",
+    "placeholder-red-700",
+    "focus:ring-red-500",
+    "focus:border-red-500",
+    "dark:text-red-500",
+    "dark:placeholder-red-500",
+    "dark:border-red-500",
+  ];
   
   if(valid){
+
+    datePicker.classList.remove(...errorDatePickerClasses);
+    datePicker.classList.add(...validDatePickerClasses);
+
+    datePicker
     console.log("Fields are valid")
   } else {
+    // datePicker.classList.remove(...validDatePickerClasses);
+    datePicker.classList.add(...errorDatePickerClasses);
     console.log("fields are unvalid")
   }
 }
