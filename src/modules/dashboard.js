@@ -166,6 +166,9 @@ function setSubmitButtonState(active){
 
 function setDrawerFieldsState(valid) {
   const datePicker = document.getElementById('datepicker-autohide');
+  console.log("datePicker", datePicker.value)
+
+
   const weight = document.getElementById('weight-input');
 
 
@@ -195,7 +198,7 @@ function setDrawerFieldsState(valid) {
     "dark:border-red-500",
   ];
   
-  if(valid){
+  if(valid && datePicker === ""){
 
     datePicker.classList.remove(...errorDatePickerClasses);
     datePicker.classList.add(...validDatePickerClasses);
@@ -203,7 +206,7 @@ function setDrawerFieldsState(valid) {
     datePicker
     console.log("Fields are valid")
   } else {
-    // datePicker.classList.remove(...validDatePickerClasses);
+    datePicker.classList.remove(...validDatePickerClasses);
     datePicker.classList.add(...errorDatePickerClasses);
     console.log("fields are unvalid")
   }
@@ -437,7 +440,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const datePicker = document.getElementById('datepicker-autohide')
   const weight = document.getElementById('weight-input')
 
-  datePicker.addEventListener("change", validateWeightRecord)
+  datePicker.addEventListener("changeDate", validateWeightRecord)
   weight.addEventListener("change", validateWeightRecord)
   weightRecordSubmitBtn.addEventListener("click", validateWeightRecord)
   
