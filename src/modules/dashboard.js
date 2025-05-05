@@ -2,7 +2,8 @@ import "../styles.css";
 import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getDoc, getDocs, doc, collection, addDoc, orderBy, query } from "firebase/firestore";
-import { initFlowbite } from "flowbite";
+import { initFlowbite, Datepicker } from "flowbite";
+
 
 let userUid;
 
@@ -171,7 +172,6 @@ function setDrawerFieldsState(valid) {
 
   const weight = document.getElementById('weight-input');
 
-
   const validDatePickerClasses = [
     "bg-gray-50",
     "border-gray-300",
@@ -198,12 +198,10 @@ function setDrawerFieldsState(valid) {
     "dark:border-red-500",
   ];
   
-  if(valid && datePicker === ""){
+  if(valid && datePicker){
 
     datePicker.classList.remove(...errorDatePickerClasses);
     datePicker.classList.add(...validDatePickerClasses);
-
-    datePicker
     console.log("Fields are valid")
   } else {
     datePicker.classList.remove(...validDatePickerClasses);
@@ -232,6 +230,8 @@ async function registerNewRecord(datePicker, weight, comments){
   }
 
 }
+
+
 
 function generateNewRecordDrawer() {
   const html = `
@@ -263,7 +263,7 @@ function generateNewRecordDrawer() {
             <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
           </svg>
         </div>
-        <input id="datepicker-autohide" datepicker datepicker-autohide datepicker-format="dd-mm-yyyy" datepicker-buttons datepicker-autoselect-today type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date *" required />
+        <input id="datepicker-autohide" datepicker datepicker-autohide datepicker-format="dd-mm-yyyy" datepicker-buttons datepicker-autoselect-today type="text" class="date_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date *" required />
         </div>
 
         
@@ -443,6 +443,16 @@ document.addEventListener("DOMContentLoaded", function () {
   datePicker.addEventListener("changeDate", validateWeightRecord)
   weight.addEventListener("change", validateWeightRecord)
   weightRecordSubmitBtn.addEventListener("click", validateWeightRecord)
+
+
+  //work @datepicker trigger
+  //do not forget to remove the class from the drawer generator code
+  // document.querySelectorAll(".date_input").forEach((input) => {
+  //   input.addEventListener("changeDate", function () {
+  //     const event = new Event("change", { bubbles: true });
+  //     this.dispatchEvent(event);
+  //   });
+  // });
   
 
   menuButton.addEventListener("click", function () {
