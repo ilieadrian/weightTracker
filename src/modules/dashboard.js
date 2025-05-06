@@ -2,8 +2,7 @@ import "../styles.css";
 import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getDoc, getDocs, doc, collection, addDoc, orderBy, query } from "firebase/firestore";
-import { initFlowbite, Datepicker } from "flowbite";
-
+import { initFlowbite } from "flowbite";
 
 let userUid;
 
@@ -198,8 +197,7 @@ function setDrawerFieldsState(valid) {
     "dark:border-red-500",
   ];
   
-  if(valid && datePicker){
-
+  if(datePicker.value.trim() !== ""){
     datePicker.classList.remove(...errorDatePickerClasses);
     datePicker.classList.add(...validDatePickerClasses);
     console.log("Fields are valid")
