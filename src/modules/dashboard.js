@@ -166,18 +166,14 @@ function setSubmitButtonState(active){
 
 function setDrawerFieldsState(valid) {
   const datePicker = document.getElementById('datepicker-autohide');
-  console.log("datePicker", datePicker.value)
-
-
   const weight = document.getElementById('weight-input');
 
-  const validDatePickerClasses = [
+  const validClasses = [
     "bg-gray-50",
     "border-gray-300",
     "text-gray-900",
     "focus:ring-blue-500",
     "focus:border-blue-500",
-     // padding for the left icon
     "dark:border-gray-600",
     "dark:placeholder-gray-400",
     "dark:text-white",
@@ -185,7 +181,7 @@ function setDrawerFieldsState(valid) {
     "dark:focus:border-blue-500",
   ];
 
-  const errorDatePickerClasses = [
+  const errorClasses = [
     "bg-red-50",
     "border-red-500",
     "text-red-900",
@@ -198,13 +194,19 @@ function setDrawerFieldsState(valid) {
   ];
   
   if(datePicker.value.trim() !== ""){
-    datePicker.classList.remove(...errorDatePickerClasses);
-    datePicker.classList.add(...validDatePickerClasses);
-    console.log("Fields are valid")
+    datePicker.classList.remove(...errorClasses);
+    datePicker.classList.add(...validClasses);
   } else {
-    datePicker.classList.remove(...validDatePickerClasses);
-    datePicker.classList.add(...errorDatePickerClasses);
-    console.log("fields are unvalid")
+    datePicker.classList.remove(...validClasses);
+    datePicker.classList.add(...errorClasses);
+  }
+
+  if(weight.value.trim() !== ""){
+    weight.classList.remove(...errorClasses);
+    weight.classList.add(...validClasses);
+  } else {
+    weight.classList.remove(...validClasses);
+    weight.classList.add(...errorClasses);
   }
 }
 
