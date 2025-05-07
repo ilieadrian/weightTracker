@@ -1,7 +1,15 @@
 import "../styles.css";
 import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { getDoc, getDocs, doc, collection, addDoc, orderBy, query } from "firebase/firestore";
+import {
+  getDoc,
+  getDocs,
+  doc,
+  collection,
+  addDoc,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { initFlowbite } from "flowbite";
 
 let userUid;
@@ -115,26 +123,26 @@ function generateDashboardUi() {
   console.log("the dashboard has rendered");
 }
 
-function validateWeightRecord(){
-  console.log("validateWeightRecord FIRED")
-  const datePicker = document.getElementById('datepicker-autohide');
-  const weight = document.getElementById('weight-input');
+function validateWeightRecord() {
+  console.log("validateWeightRecord FIRED");
+  const datePicker = document.getElementById("datepicker-autohide");
+  const weight = document.getElementById("weight-input");
   //const commentsValue = document.getElementById('comments-input').value.trim()
-  const datePickerValue = datePicker.value
+  const datePickerValue = datePicker.value;
   const weightValue = weight.value.trim();
 
-  if(datePickerValue && weightValue){
-    registerNewRecord(datePicker, weight, comments)
-    setSubmitButtonState("active")
-    setDrawerFieldsState("valid")
+  if (datePickerValue && weightValue) {
+    registerNewRecord(datePicker, weight, comments);
+    setSubmitButtonState("active");
+    setDrawerFieldsState("valid");
   } else {
-    setSubmitButtonState()
-    setDrawerFieldsState()
+    setSubmitButtonState();
+    setDrawerFieldsState();
     return;
   }
 }
 
-function setSubmitButtonState(active){
+function setSubmitButtonState(active) {
   const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
   const activeButtonClasses = [
     "text-white",
@@ -149,7 +157,7 @@ function setSubmitButtonState(active){
     "cursor-not-allowed",
   ];
 
-  if(active){
+  if (active) {
     weightRecordSubmitBtn.classList.remove(...disabledButtonClasses);
     weightRecordSubmitBtn.classList.add(...activeButtonClasses);
     weightRecordSubmitBtn.disabled = false;
@@ -157,13 +165,12 @@ function setSubmitButtonState(active){
     weightRecordSubmitBtn.classList.remove(...activeButtonClasses);
     weightRecordSubmitBtn.classList.add(...disabledButtonClasses);
     weightRecordSubmitBtn.disabled = true;
-
   }
 }
 
 function setDrawerFieldsState(valid) {
-  const datePicker = document.getElementById('datepicker-autohide');
-  const weight = document.getElementById('weight-input');
+  const datePicker = document.getElementById("datepicker-autohide");
+  const weight = document.getElementById("weight-input");
 
   const validClasses = [
     "bg-gray-50",
@@ -189,8 +196,8 @@ function setDrawerFieldsState(valid) {
     "dark:placeholder-red-500",
     "dark:border-red-500",
   ];
-  
-  if(datePicker.value.trim() !== ""){
+
+  if (datePicker.value.trim() !== "") {
     datePicker.classList.remove(...errorClasses);
     datePicker.classList.add(...validClasses);
   } else {
@@ -198,7 +205,7 @@ function setDrawerFieldsState(valid) {
     datePicker.classList.add(...errorClasses);
   }
 
-  if(weight.value.trim() !== ""){
+  if (weight.value.trim() !== "") {
     weight.classList.remove(...errorClasses);
     weight.classList.add(...validClasses);
   } else {
@@ -207,11 +214,11 @@ function setDrawerFieldsState(valid) {
   }
 }
 
-async function registerNewRecord(datePicker, weight, comments){
-  console.log("registerNewRecord FIRED")
+async function registerNewRecord(datePicker, weight, comments) {
+  console.log("registerNewRecord FIRED");
 
   try {
-    console.log("Adding input to DB temporary disabled")
+    console.log("Adding input to DB temporary disabled");
     // const weightsCollectionRef = collection(db, "users", userUid, "weights");
 
     // const docRef = await addDoc(weightsCollectionRef, {
@@ -223,9 +230,8 @@ async function registerNewRecord(datePicker, weight, comments){
     //   generateRecordsTable();
     //   console.log("Document written with ID: ", docRef.id);
   } catch (e) {
-      console.error("Error adding document: ", e);
+    console.error("Error adding document: ", e);
   }
-
 }
 
 function generateNewRecordDrawer() {
@@ -343,22 +349,20 @@ async function updateUserData(userData, useruid) {
   const weights = await getWeightData(useruid);
 
   if (weights.length === 0) {
-    table.innerHTML +=
-      `<tr>
+    table.innerHTML += `<tr>
         <td colspan="4" class="text-center py-4">
           <p class="text-gray-500">No weight entries found.</p>
         </td>
       </tr>
       `;
   } else {
+    weights.forEach((entry) => {
+      const tableRow = document.createElement("tr");
+      tableRow.className =
+        "bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600";
+      tableRow.id = entry.id;
 
-  weights.forEach((entry) => {
-    const tableRow = document.createElement("tr");
-    tableRow.className =
-      "bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600";
-    tableRow.id = entry.id;
-
-    tableRow.innerHTML = `
+      tableRow.innerHTML = `
                   <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       ${entry.date}
                   </th>
@@ -374,9 +378,9 @@ async function updateUserData(userData, useruid) {
                   </td>
     `;
 
-    table.appendChild(tableRow);
-  });
-}
+      table.appendChild(tableRow);
+    });
+  }
 
   console.log("Dashboard rendered with user data");
 }
@@ -391,7 +395,7 @@ onAuthStateChanged(auth, async (user) => {
 
   try {
     const docRef = doc(db, "users", user.uid);
-    
+
     const docSnap = await getDoc(docRef);
 
     // console.log(docSnap)
@@ -431,12 +435,12 @@ document.addEventListener("DOMContentLoaded", function () {
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
 
-  const datePicker = document.getElementById('datepicker-autohide')
-  const weight = document.getElementById('weight-input')
+  const datePicker = document.getElementById("datepicker-autohide");
+  const weight = document.getElementById("weight-input");
 
-  datePicker.addEventListener("changeDate", validateWeightRecord)
-  weight.addEventListener("change", validateWeightRecord)
-  weightRecordSubmitBtn.addEventListener("click", validateWeightRecord)
+  datePicker.addEventListener("changeDate", validateWeightRecord);
+  weight.addEventListener("change", validateWeightRecord);
+  weightRecordSubmitBtn.addEventListener("click", validateWeightRecord);
 
   menuButton.addEventListener("click", function () {
     menuOpenIcon.classList.toggle("hidden");
@@ -444,5 +448,3 @@ document.addEventListener("DOMContentLoaded", function () {
     mobileMenu.classList.toggle("hidden");
   });
 });
-
-

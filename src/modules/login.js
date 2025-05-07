@@ -24,8 +24,7 @@ const signUpLink = document.getElementById("signUpLink");
 const signInLink = document.getElementById("signInLink");
 const signInForm = document.getElementById("signIn");
 const signUpForm = document.getElementById("signup");
-const passwordResetBtn = document.getElementById('email-pswd-rest-btn');
-
+const passwordResetBtn = document.getElementById("email-pswd-rest-btn");
 
 signUpLink.addEventListener("click", function () {
   signInForm.classList.toggle("hidden");
@@ -63,7 +62,6 @@ if (signUpBtn) {
         name: name,
         email: email,
         createdAt: new Date(),
-        
       };
       const docRef = doc(db, "users", user.uid);
 
@@ -173,19 +171,21 @@ function showMessage(message, divId, login) {
   }
 }
 
+function checkEmailToReset() {
+  const email = document.getElementById("reset-email").value.trim();
+  let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
-function checkEmailToReset(){
-  const email = document.getElementById("reset-email")
-
-  forgotPassword(email)
+  if (reg.test(email) == false) {
+    event.preventDefault();
+    console.log("Invalid Email Address");
+    // return;
+  } else {
+    forgotPassword(email);
+  }
 }
 
-function forgotPassword(){
-  const email = document.getElementById("reset-email")
-  
+function forgotPassword() {
+  const email = document.getElementById("reset-email");
 
-  
-
-  console.log("Email to be reseted", email.value)
+  console.log("Email to be reseted", email.value);
 }
-
