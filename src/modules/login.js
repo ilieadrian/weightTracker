@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { setDoc, doc, collection, addDoc } from "firebase/firestore";
 
@@ -208,7 +209,31 @@ function checkEmailToReset() {
 }
 
 function forgotPassword() {
-  const email = document.getElementById("reset-email");
+  const email = document.getElementById("reset-email").value.trim();
 
   console.log("Email to be reseted", email.value);
+
+  console.log(auth)
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+
+      // Password reset email sent!
+      // ..
+      alert("Email is sent")
+
+    })
+    .catch((error) => {
+
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode)
+
+
+      showMessage(null, null, null, errorMessage)
+      // ..
+    });
+
+  
+
+
 }
