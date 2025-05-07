@@ -142,6 +142,7 @@ if (signInBtn) {
 function showMessage(message, divId, login, pswReset) {
   const messageDiv = document.getElementById("divId");
   const loginMessageDiv = document.getElementById("loginDivId");
+  const resetEmailDivId = document.getElementById("resetEmailDivId");
 
   if (login !== null) {
     loginMessageDiv.classList.add(
@@ -174,8 +175,21 @@ function showMessage(message, divId, login, pswReset) {
   }
 
   if(pswReset){
-    console.log(pswReset)
-  }
+    resetEmailDivId.classList.add(
+      "bg-red-100",
+      "border",
+      "border-red-400",
+      "text-red-700",
+      "px-4",
+      "py-3",
+      "rounded",
+      "relative",
+      "col-span-2",
+    );
+    resetEmailDivId.style.display = "block";
+    resetEmailDivId.innerHTML = pswReset;
+    resetEmailDivId.style.opacity = 1;
+  } 
 }
 
 function checkEmailToReset() {
@@ -183,11 +197,12 @@ function checkEmailToReset() {
   let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
   if (reg.test(email) == false) {
-    event.preventDefault();
-    showMessage(null, null, null, "Invalid Email Address")
-    // console.log("Invalid Email Address");
-    // return;
-  } else {
+    console.log(email)
+    showMessage(null, null, null, "Invalid Email Address");
+    return;
+    } else {
+    //closes the modal by simulating a click on it  
+    document.querySelector('[data-modal-toggle="crud-modal"]').click();
     forgotPassword(email);
   }
 }
