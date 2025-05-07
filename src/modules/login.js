@@ -110,9 +110,12 @@ if (signInBtn) {
       const user = userCredential.user;
       window.location.href = "/dashboard.html";
     } catch (error) {
-      if (error.code === "auth/invalid-credential") {
+      if (error.code === "auth/invalid-email") {
+        showMessage("Invalid email", "signInMessage", "login");
+      } else if(error.code === "auth/invalid-credential") {
         showMessage("Incorrect Email or Password", "signInMessage", "login");
-      } else if (error.code === "auth/user-not-found") {
+      }
+        else if (error.code === "auth/user-not-found") {
         showMessage(
           "No account found with this email",
           "signInMessage",
@@ -136,7 +139,7 @@ if (signInBtn) {
   });
 }
 
-function showMessage(message, divId, login) {
+function showMessage(message, divId, login, pswReset) {
   const messageDiv = document.getElementById("divId");
   const loginMessageDiv = document.getElementById("loginDivId");
 
@@ -169,6 +172,10 @@ function showMessage(message, divId, login) {
     messageDiv.innerHTML = message;
     messageDiv.style.opacity = 1;
   }
+
+  if(pswReset){
+    console.log(pswReset)
+  }
 }
 
 function checkEmailToReset() {
@@ -177,7 +184,8 @@ function checkEmailToReset() {
 
   if (reg.test(email) == false) {
     event.preventDefault();
-    console.log("Invalid Email Address");
+    showMessage(null, null, null, "Invalid Email Address")
+    // console.log("Invalid Email Address");
     // return;
   } else {
     forgotPassword(email);
