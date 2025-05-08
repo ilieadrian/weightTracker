@@ -141,6 +141,7 @@ if (signInBtn) {
 }
 
 function showMessage(message, divId, login, pswReset) {
+  console.log("showMessage called")
   const messageDiv = document.getElementById("divId");
   const loginMessageDiv = document.getElementById("loginDivId");
   const resetEmailDivId = document.getElementById("resetEmailDivId");
@@ -191,38 +192,67 @@ function showMessage(message, divId, login, pswReset) {
     resetEmailDivId.innerHTML = pswReset;
     resetEmailDivId.style.opacity = 1;
   } 
+
+  if(pswReset === "succesMessage"){
+    resetEmailDivId.classList.remove(
+      "bg-red-100",
+      "border",
+      "border-red-400",
+      "text-red-700",
+      "px-4",
+      "py-3",
+      "rounded",
+      "relative",
+      "col-span-2",
+    );
+    resetEmailDivId.classList.add(
+      "bg-green-50",
+      "border",
+      "border-green-500",
+      "text-green-900",
+      "px-4",
+      "py-3",
+      "rounded",
+      "relative",
+      "col-span-2",
+    );
+    resetEmailDivId.style.display = "block";
+    resetEmailDivId.innerHTML = "An email was sent";
+    resetEmailDivId.style.opacity = 1;
+  }
 }
 
 function checkEmailToReset() {
-  const email = document.getElementById("reset-email").value.trim();
+  resetModal();
+    
+
+  const email = document.getElementById("reset-email");
+  const emailValue = document.getElementById("reset-email").value.trim();
   let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
-  if (reg.test(email) == false) {
-    console.log(email)
+  if (reg.test(emailValue) == false) {
+    console.log(emailValue)
     showMessage(null, null, null, "Invalid Email Address");
     return;
     } else {
     //closes the modal by simulating a click on it  
-    document.querySelector('[data-modal-toggle="crud-modal"]').click();
-    forgotPassword(email);
+    // document.querySelector('[data-modal-toggle="crud-modal"]').click();
+    forgotPassword(emailValue);
   }
 }
 
-function forgotPassword() {
-  const email = document.getElementById("reset-email").value.trim();
-
-  console.log("Email to be reseted", email.value);
-
-  console.log(auth)
+function forgotPassword(email) {
   sendPasswordResetEmail(auth, email)
     .then(() => {
 
       // Password reset email sent!
       // ..
-      alert("Email is sent")
+      showMessage(null, null, null, "succesMessage");
+      console.log("Email is sent to", email)
 
     })
     .catch((error) => {
+      console.log("Error case")
 
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -236,4 +266,11 @@ function forgotPassword() {
   
 
 
+}
+
+function resetModal() {
+  document.getElementById("reset-email").value = "";
+  const errorBox = document.getElementById("resetEmailDivId");
+  errorBox.textContent = "";
+  errorBox.classList.add("hidden"); // hide it again
 }
