@@ -6,6 +6,7 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 import { setDoc, doc, collection, addDoc } from "firebase/firestore";
+import { Modal } from "flowbite";
 
 console.log("hello from login.js");
 
@@ -222,8 +223,23 @@ function showMessage(message, divId, login, pswReset) {
   }
 }
 
+
+
 function checkEmailToReset() {
-  resetModal();
+  // const modalEl = document.getElementById('crud-modal');
+  // modalEl.classList.add('hidden');
+
+  //    document.querySelector('[data-modal-hide="crud-modal"]').click();
+
+
+
+ // const modalElement = document.getElementById('crud-modal');
+//const modal = new Modal(modalElement);
+
+//modal.hide()
+
+//console.log(modal)
+
     
 
   const email = document.getElementById("reset-email");
@@ -242,6 +258,8 @@ function checkEmailToReset() {
 }
 
 function forgotPassword(email) {
+ 
+
   sendPasswordResetEmail(auth, email)
     .then(() => {
 
@@ -268,9 +286,4 @@ function forgotPassword(email) {
 
 }
 
-function resetModal() {
-  document.getElementById("reset-email").value = "";
-  const errorBox = document.getElementById("resetEmailDivId");
-  errorBox.textContent = "";
-  errorBox.classList.add("hidden"); // hide it again
-}
+
