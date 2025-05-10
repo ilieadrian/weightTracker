@@ -10,6 +10,48 @@ import { Modal } from "flowbite";
 
 console.log("hello from login.js");
 
+
+const $targetEl = document.getElementById('crud-modal');
+
+const options = {
+    placement: 'center',
+    backdrop: 'dynamic',
+    backdropClasses:
+        'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+    closable: true,
+    onHide: () => {
+        console.log('modal is hidden');
+        const emailInput = document.getElementById('reset-email');
+    if (emailInput) emailInput.value = '';
+
+    // Hide and clear any error messages
+    const errorBox = document.getElementById('resetEmailDivId');
+    if (errorBox) {
+        errorBox.textContent = '';
+        errorBox.classList.add('hidden');
+    }
+    },
+    onShow: () => {
+        console.log('modal is shown');
+    },
+    onToggle: () => {
+        console.log('modal has been toggled');
+    },
+};
+
+// instance options object
+const instanceOptions = {
+  id: 'crud-modal',
+  override: true
+};
+
+const modal = new Modal($targetEl, options, instanceOptions);
+
+const passwordReset = document.getElementById("passwordReset")
+
+passwordReset.addEventListener("click", () => {
+  modal.show();
+})
 //  onAuthStateChanged(auth, async (user) => {
 
 //     console.log("user", user)
@@ -226,22 +268,6 @@ function showMessage(message, divId, login, pswReset) {
 
 
 function checkEmailToReset() {
-  // const modalEl = document.getElementById('crud-modal');
-  // modalEl.classList.add('hidden');
-
-  //    document.querySelector('[data-modal-hide="crud-modal"]').click();
-
-
-
- // const modalElement = document.getElementById('crud-modal');
-//const modal = new Modal(modalElement);
-
-//modal.hide()
-
-//console.log(modal)
-
-    
-
   const email = document.getElementById("reset-email");
   const emailValue = document.getElementById("reset-email").value.trim();
   let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -258,8 +284,6 @@ function checkEmailToReset() {
 }
 
 function forgotPassword(email) {
- 
-
   sendPasswordResetEmail(auth, email)
     .then(() => {
 
