@@ -180,7 +180,7 @@ function generateLoginUi() {
           <div class="flex items-center justify-between">
             <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
             <div class="text-sm">
-              <a href="#" id="passwordReset">Forgot password?</a>    
+              <a href="#" id="passwordReset" class="mb-2 font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>    
             </div>
               
           </div>
