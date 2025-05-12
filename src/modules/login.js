@@ -6,52 +6,11 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 import { setDoc, doc, collection, addDoc } from "firebase/firestore";
-import { Modal } from "flowbite";
+import modal from "./frontend.js";
 
 console.log("hello from login.js");
 
 
-const $targetEl = document.getElementById('crud-modal');
-
-const options = {
-    placement: 'center',
-    backdrop: 'dynamic',
-    backdropClasses:
-        'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
-    closable: true,
-    onHide: () => {
-        console.log('modal is hidden');
-        const emailInput = document.getElementById('reset-email');
-    if (emailInput) emailInput.value = '';
-
-    // Hide and clear any error messages
-    const errorBox = document.getElementById('resetEmailDivId');
-    if (errorBox) {
-        errorBox.textContent = '';
-        errorBox.classList.add('hidden');
-    }
-    },
-    onShow: () => {
-        console.log('modal is shown');
-    },
-    onToggle: () => {
-        console.log('modal has been toggled');
-    },
-};
-
-// instance options object
-const instanceOptions = {
-  id: 'crud-modal',
-  override: true
-};
-
-const modal = new Modal($targetEl, options, instanceOptions);
-
-const passwordReset = document.getElementById("passwordReset")
-
-passwordReset.addEventListener("click", () => {
-  modal.show();
-})
 //  onAuthStateChanged(auth, async (user) => {
 
 //     console.log("user", user)
@@ -69,6 +28,11 @@ const signInLink = document.getElementById("signInLink");
 const signInForm = document.getElementById("signIn");
 const signUpForm = document.getElementById("signup");
 const passwordResetBtn = document.getElementById("email-pswd-rest-btn");
+const passwordResetModalLauncher = document.getElementById("passwordReset");
+
+passwordResetModalLauncher.addEventListener("click", () => {
+  modal.show();
+});
 
 signUpLink.addEventListener("click", function () {
   signInForm.classList.toggle("hidden");
@@ -156,10 +120,9 @@ if (signInBtn) {
     } catch (error) {
       if (error.code === "auth/invalid-email") {
         showMessage("Invalid email", "signInMessage", "login");
-      } else if(error.code === "auth/invalid-credential") {
+      } else if (error.code === "auth/invalid-credential") {
         showMessage("Incorrect Email or Password", "signInMessage", "login");
-      }
-        else if (error.code === "auth/user-not-found") {
+      } else if (error.code === "auth/user-not-found") {
         showMessage(
           "No account found with this email",
           "signInMessage",
@@ -184,7 +147,7 @@ if (signInBtn) {
 }
 
 function showMessage(message, divId, login, pswReset) {
-  console.log("showMessage called")
+  console.log("showMessage called");
   const messageDiv = document.getElementById("divId");
   const loginMessageDiv = document.getElementById("loginDivId");
   const resetEmailDivId = document.getElementById("resetEmailDivId");
@@ -219,7 +182,7 @@ function showMessage(message, divId, login, pswReset) {
     messageDiv.style.opacity = 1;
   }
 
-  if(pswReset){
+  if (pswReset) {
     resetEmailDivId.classList.add(
       "bg-red-100",
       "border",
@@ -234,9 +197,9 @@ function showMessage(message, divId, login, pswReset) {
     resetEmailDivId.style.display = "block";
     resetEmailDivId.innerHTML = pswReset;
     resetEmailDivId.style.opacity = 1;
-  } 
+  }
 
-  if(pswReset === "succesMessage"){
+  if (pswReset === "succesMessage") {
     resetEmailDivId.classList.remove(
       "bg-red-100",
       "border",
@@ -265,19 +228,17 @@ function showMessage(message, divId, login, pswReset) {
   }
 }
 
-
-
 function checkEmailToReset() {
   const email = document.getElementById("reset-email");
   const emailValue = document.getElementById("reset-email").value.trim();
   let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
   if (reg.test(emailValue) == false) {
-    console.log(emailValue)
+    console.log(emailValue);
     showMessage(null, null, null, "Invalid Email Address");
     return;
-    } else {
-    //closes the modal by simulating a click on it  
+  } else {
+    //closes the modal by simulating a click on it
     // document.querySelector('[data-modal-toggle="crud-modal"]').click();
     forgotPassword(emailValue);
   }
@@ -286,28 +247,19 @@ function checkEmailToReset() {
 function forgotPassword(email) {
   sendPasswordResetEmail(auth, email)
     .then(() => {
-
       // Password reset email sent!
       // ..
       showMessage(null, null, null, "succesMessage");
-      console.log("Email is sent to", email)
-
+      console.log("Email is sent to", email);
     })
     .catch((error) => {
-      console.log("Error case")
+      console.log("Error case");
 
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(errorCode)
+      console.log(errorCode);
 
-
-      showMessage(null, null, null, errorMessage)
+      showMessage(null, null, null, errorMessage);
       // ..
     });
-
-  
-
-
 }
-
-
