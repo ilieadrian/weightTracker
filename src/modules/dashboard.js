@@ -110,8 +110,7 @@ function generateDashboardUi() {
     <div id="content-container" class="mx-auto max-w-7xl flex flex-col items-center justify-center px-4 py-6 sm:px-6 lg:px-8">
       ${generateNewRecordDrawer()}
 
-      ${generateRecordsTable()}  
-     
+      ${generateRecordsTable()} 
     </div>
 </main>
 </div>
@@ -129,32 +128,25 @@ function handleSubmit() {
   const commentsValue = document.getElementById("comments-input").value.trim();
 
   registerNewRecord(datePickerValue, weightValue, commentsValue);
-  // Optional: remove listener after use
-  // weightRecordSubmitBtn.removeEventListener("click", handleSubmit);
-}
+  }
 
 function validateWeightRecord() {
   console.log("validateWeightRecord FIRED");
   const datePicker = document.getElementById("datepicker-autohide");
   const weight = document.getElementById("weight-input");
-  const commentsValue = document.getElementById('comments-input').value.trim()
   const datePickerValue = datePicker.value;
   const weightValue = weight.value.trim();
   const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
   
-
-    weightRecordSubmitBtn.removeEventListener("click", handleSubmit);
+  weightRecordSubmitBtn.removeEventListener("click", handleSubmit);
   if (datePickerValue && weightValue) {
-
     weightRecordSubmitBtn.addEventListener("click", handleSubmit);
-
     setSubmitButtonState("active");
     setDrawerFieldsState("valid");
 
   } else {
     setSubmitButtonState();
     setDrawerFieldsState();
-    // weightRecordSubmitBtn.removeEventListener("click", handleSubmit);
     return;
   }
 }
@@ -231,22 +223,19 @@ function setDrawerFieldsState(valid) {
   }
 }
 
-async function registerNewRecord(datePickerValue, weightValue, commentsValue) {
-  console.log("registerNewRecord FIRED", datePickerValue, weightValue, commentsValue);
-
-
+async function registerNewRecord(date, weight, comments) {
   try {
-    console.log("Adding input to DB temporary disabled");
-    // const weightsCollectionRef = collection(db, "users", userUid, "weights");
+    console.log("Start adding input to DB");
+    
+    const weightsCollectionRef = collection(db, "users", userUid, "weights");
 
-    // const docRef = await addDoc(weightsCollectionRef, {
-    //   date: datePicker,
-    //   weight: weight,
-    //   comments: comments,
-    // });
-    //   console.log("Closing Drawer")
-    //   generateRecordsTable();
-    //   console.log("Document written with ID: ", docRef.id);
+    const docRef = await addDoc(weightsCollectionRef, {
+      date: date,
+      weight: weight,
+      comments: comments,
+    });
+      console.log("Closing Drawer")
+      console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -403,6 +392,25 @@ async function updateUserData(userData, useruid) {
   console.log("Dashboard rendered with user data");
 }
 
+
+async function getUserData(user){
+  try {
+      const docRef = doc(db, "users", user.uid);
+
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+        userUid = user.uid;
+        updateUserData(userData, user.uid);
+      } else {
+        console.log("No document found matching id");
+      }
+    } catch (error) {
+      console.error("Error getting document:", error);
+    }
+}
+
 onAuthStateChanged(auth, async (user) => {
   // console.log("user", user)
   if (!user) {
@@ -411,23 +419,7 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
 
-  try {
-    const docRef = doc(db, "users", user.uid);
-
-    const docSnap = await getDoc(docRef);
-
-    // console.log(docSnap)
-
-    if (docSnap.exists()) {
-      const userData = docSnap.data();
-      userUid = user.uid;
-      updateUserData(userData, user.uid);
-    } else {
-      console.log("No document found matching id");
-    }
-  } catch (error) {
-    console.error("Error getting document:", error);
-  }
+  getUserData(user)
 });
 
 async function logOut() {
