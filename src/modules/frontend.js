@@ -206,8 +206,6 @@ function passwordResetModalControl() {
   };
 
   modal = new Modal($targetEl, options, instanceOptions);
-
-  console.log("getModalElemnts() runned");
 }
 
 generateLoginUi();

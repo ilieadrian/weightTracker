@@ -123,21 +123,38 @@ function generateDashboardUi() {
   console.log("the dashboard has rendered");
 }
 
+function handleSubmit() {
+  const datePickerValue = document.getElementById("datepicker-autohide").value;
+  const weightValue = document.getElementById("weight-input").value.trim();
+  const commentsValue = document.getElementById("comments-input").value.trim();
+
+  registerNewRecord(datePickerValue, weightValue, commentsValue);
+  // Optional: remove listener after use
+  // weightRecordSubmitBtn.removeEventListener("click", handleSubmit);
+}
+
 function validateWeightRecord() {
   console.log("validateWeightRecord FIRED");
   const datePicker = document.getElementById("datepicker-autohide");
   const weight = document.getElementById("weight-input");
-  //const commentsValue = document.getElementById('comments-input').value.trim()
+  const commentsValue = document.getElementById('comments-input').value.trim()
   const datePickerValue = datePicker.value;
   const weightValue = weight.value.trim();
+  const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
+  
 
+    weightRecordSubmitBtn.removeEventListener("click", handleSubmit);
   if (datePickerValue && weightValue) {
-    registerNewRecord(datePicker, weight, comments);
+
+    weightRecordSubmitBtn.addEventListener("click", handleSubmit);
+
     setSubmitButtonState("active");
     setDrawerFieldsState("valid");
+
   } else {
     setSubmitButtonState();
     setDrawerFieldsState();
+    // weightRecordSubmitBtn.removeEventListener("click", handleSubmit);
     return;
   }
 }
@@ -214,8 +231,9 @@ function setDrawerFieldsState(valid) {
   }
 }
 
-async function registerNewRecord(datePicker, weight, comments) {
-  console.log("registerNewRecord FIRED");
+async function registerNewRecord(datePickerValue, weightValue, commentsValue) {
+  console.log("registerNewRecord FIRED", datePickerValue, weightValue, commentsValue);
+
 
   try {
     console.log("Adding input to DB temporary disabled");
@@ -430,7 +448,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const mobileMenu = document.getElementById("mobile-menu");
   const logoutButton = document.getElementById("logout-link");
   const logoutButtonMobile = document.getElementById("logout-link-mobile");
-  const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
@@ -440,8 +457,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   datePicker.addEventListener("changeDate", validateWeightRecord);
   weight.addEventListener("change", validateWeightRecord);
-  weightRecordSubmitBtn.addEventListener("click", validateWeightRecord);
-
+    
   menuButton.addEventListener("click", function () {
     menuOpenIcon.classList.toggle("hidden");
     menuCloseIcon.classList.toggle("hidden");
