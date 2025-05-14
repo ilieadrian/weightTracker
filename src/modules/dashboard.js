@@ -341,10 +341,9 @@ function parseDDMMYYYY(dateString) {
   return new Date(year, month - 1, day); // month is 0-based
 }
 
-
 async function getWeightData(useruid) {
   const weightsRef = collection(db, "users", useruid, "weights");
-  const weightsRefOrdered = query(weightsRef, orderBy("date", "desc"));
+  const weightsRefOrdered = query(weightsRef, orderBy("timestamp", "desc"));
   const querySnapshot = await getDocs(weightsRefOrdered);
 
   const weights = [];
