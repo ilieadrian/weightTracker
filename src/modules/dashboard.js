@@ -360,26 +360,22 @@ async function getWeightData(useruid) {
 
 async function updateWeightsTable(useruid){
   const table = document.getElementById("t-body");
-
   const weights = await getWeightData(useruid);
-
+  
+  table.innerHTML = "";
   if (weights.length === 0) {
-      tableRow.innerHTML = ``;
-
-    table.innerHTML += `<tr>
-        <td colspan="4" class="text-center py-4">
-          <p class="text-gray-500">No weight entries found.</p>
-        </td>
-      </tr>
-      `;
+      table.innerHTML += `<tr>
+          <td colspan="4" class="text-center py-4">
+            <p class="text-gray-500">No weight entries found.</p>
+          </td>
+        </tr>
+        `;
   } else {
     weights.forEach((entry) => {
       const tableRow = document.createElement("tr");
       tableRow.className =
         "bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600";
       tableRow.id = entry.id;
-
-      
 
       tableRow.innerHTML = `
                   <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
