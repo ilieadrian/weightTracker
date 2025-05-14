@@ -321,14 +321,24 @@ async function registerNewRecord(date, weight, comments) {
       weight: weight,
       comments: comments,
     });
-      // getUserDBData(currentUserData)
+
+    ///
+    //    const userDocRef = doc(db, "users", userUid);
+    // const userDocSnap = await getDoc(userDocRef);
+
+    // if (userDocSnap.exists()) {
+    //   const userData = userDocSnap.data();
+    //   await updateUserData(userData, userUid);
+    //}
+
+
+      updateWeightsTable(userUid);
       console.log("Closing Drawer")
       console.log("Document written with ID: ", docRef.id);
   } catch (error) {
     console.error("Error adding document: ", error);
   }
 }
-
 
 
 async function getWeightData(useruid) {
@@ -348,18 +358,14 @@ async function getWeightData(useruid) {
   return weights;
 }
 
-async function updateUserData(userData, useruid) {
-  document.getElementById("user-profile-link").textContent =
-    userData.name || "Unknown User";
-  document.getElementById("mobile-menu-name").textContent =
-    userData.name || "Unknown User";
-  document.getElementById("mobile-menu-email").textContent =
-    userData.email || "No Email Available";
+async function updateWeightsTable(useruid){
   const table = document.getElementById("t-body");
 
   const weights = await getWeightData(useruid);
 
   if (weights.length === 0) {
+      tableRow.innerHTML = ``;
+
     table.innerHTML += `<tr>
         <td colspan="4" class="text-center py-4">
           <p class="text-gray-500">No weight entries found.</p>
@@ -372,6 +378,8 @@ async function updateUserData(userData, useruid) {
       tableRow.className =
         "bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600";
       tableRow.id = entry.id;
+
+      
 
       tableRow.innerHTML = `
                   <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -391,7 +399,58 @@ async function updateUserData(userData, useruid) {
 
       table.appendChild(tableRow);
     });
+
+    console.log("Table rendered from updateWeightsTable()");
   }
+
+}
+
+async function updateUserData(userData, useruid) {
+  document.getElementById("user-profile-link").textContent =
+    userData.name || "Unknown User";
+  document.getElementById("mobile-menu-name").textContent =
+    userData.name || "Unknown User";
+  document.getElementById("mobile-menu-email").textContent =
+    userData.email || "No Email Available";
+
+  updateWeightsTable(useruid)
+
+  // const weights = await getWeightData(useruid);
+
+
+  // if (weights.length === 0) {
+  //   table.innerHTML += `<tr>
+  //       <td colspan="4" class="text-center py-4">
+  //         <p class="text-gray-500">No weight entries found.</p>
+  //       </td>
+  //     </tr>
+  //     `;
+  // } else {
+  //   weights.forEach((entry) => {
+  //     const tableRow = document.createElement("tr");
+  //     tableRow.className =
+  //       "bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600";
+  //     tableRow.id = entry.id;
+
+  //     tableRow.innerHTML = `
+  //                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+  //                     ${entry.date}
+  //                 </th>
+  //                 <td class="px-6 py-4">
+  //                     ${entry.weight}
+  //                 </td>
+  //                 <td class="px-6 py-4">
+  //                     To be added
+  //                 </td>
+  //                 <td class="flex items-center px-6 py-4">
+  //                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+  //                     <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
+  //                 </td>
+  //   `;
+
+  //     table.appendChild(tableRow);
+  //   });
+  // }
 
   console.log("Dashboard rendered with user data");
 }
