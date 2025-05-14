@@ -9,6 +9,7 @@ import {
   addDoc,
   orderBy,
   query,
+  Timestamp
 } from "firebase/firestore";
 import { initFlowbite } from "flowbite";
 
@@ -318,8 +319,11 @@ async function registerNewRecord(date, weight, comments) {
     console.log("Start adding input to DB");
     
     const weightsCollectionRef = collection(db, "users", userUid, "weights");
-
+    const dateObj = parseDDMMYYYY(date);
+    const timestamp = Timestamp.fromDate(dateObj);
+    
     const docRef = await addDoc(weightsCollectionRef, {
+      timestamp: timestamp,
       date: date,
       weight: weight,
       comments: comments,
@@ -330,6 +334,11 @@ async function registerNewRecord(date, weight, comments) {
   } catch (error) {
     console.error("Error adding document: ", error);
   }
+}
+
+function parseDDMMYYYY(dateString) {
+  const [day, month, year] = dateString.split("-");
+  return new Date(year, month - 1, day); // month is 0-based
 }
 
 
@@ -357,7 +366,7 @@ async function updateWeightsTable(useruid){
   table.innerHTML = "";
   if (weights.length === 0) {
       table.innerHTML += `<tr>
-          <td colspan="4" class="text-center py-4">
+          <td colspan="5" class="text-center py-4">
             <p class="text-gray-500">No weight entries found.</p>
           </td>
         </tr>
