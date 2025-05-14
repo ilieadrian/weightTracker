@@ -195,6 +195,9 @@ function generateRecordsTable() {
                       Evolution
                   </th>
                   <th scope="col" class="px-6 py-3">
+                      Comments
+                  </th>
+                  <th scope="col" class="px-6 py-3">
                       Actions
                   </th>
               </tr>
@@ -321,17 +324,6 @@ async function registerNewRecord(date, weight, comments) {
       weight: weight,
       comments: comments,
     });
-
-    ///
-    //    const userDocRef = doc(db, "users", userUid);
-    // const userDocSnap = await getDoc(userDocRef);
-
-    // if (userDocSnap.exists()) {
-    //   const userData = userDocSnap.data();
-    //   await updateUserData(userData, userUid);
-    //}
-
-
       updateWeightsTable(userUid);
       console.log("Closing Drawer")
       console.log("Document written with ID: ", docRef.id);
@@ -386,6 +378,9 @@ async function updateWeightsTable(useruid){
                   </td>
                   <td class="px-6 py-4">
                       To be added
+                  </td>
+                  <td class="px-6 py-4">
+                      ${entry.comments}
                   </td>
                   <td class="flex items-center px-6 py-4">
                       <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
