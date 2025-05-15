@@ -4,7 +4,6 @@ let modal;
 
 console.log("hello from frontend js");
 
-
 function generateLoginUi() {
   let container = document.querySelector(".container");
   const htmlTag = document.getElementsByTagName("html")[0];

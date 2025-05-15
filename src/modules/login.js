@@ -10,7 +10,6 @@ import modal from "./frontend.js";
 
 console.log("hello from login.js");
 
-
 //  onAuthStateChanged(auth, async (user) => {
 
 //     console.log("user", user)
