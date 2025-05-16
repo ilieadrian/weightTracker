@@ -420,24 +420,9 @@ function generatePagination(){
           <li>
         <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">1</a>
       </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-      </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">3</a>
-      </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-      </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-      </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
-      </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">999</a>
-      </li>
+       
+      ${paginationLogic()}
+
       <li>
         <a href="#" id="next-btn" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
       </li>
@@ -476,7 +461,7 @@ function generatePagination(){
   //     </li>
   //   </ul>
   // `;
-  paginationLogic()
+  // paginationLogic()
   return html;
   
 }
@@ -484,44 +469,55 @@ function generatePagination(){
 async function paginationLogic() {
   //define function parameters
   const pageSize = 5;
-  let pages = [];
+  let pagesArr = [];
+  let isActivePage = 1;
+  let data = await getWeightData(userUid);
+
   // let lastVisible = null;
   // let firstVisible = null;
   // let prevStack = [];
 
   //get controlls and container
   const recordsContainer = document.getElementById("records-container");
+  
   const prevBtn = document.getElementById("prev-btn");
   const nextBtn = document.getElementById("next-btn");
 
-  //get the data
-  let data = await getWeightData(userUid);
-
   //get the number of pages
-  let pagesss = calculatePages(data.length, pageSize)
+  let navPages = calculatePages(data.length, pageSize)
 
-  console.log(pagesss)
+
+  let liArr = [];
+  for (let i = 1; i <= navPages; i++) {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <a href="#" id="page-${i}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+        ${i}
+      </a>`;
+    liArr.push(li);
+  }
+  console.log(liArr)
+  return liArr;
+
+  //generate the nav with the correct ammount of pages
+
+  // console.log(navPages)
   console.log(data.length)
  //loop over the data and split it in coresponding pages
     // data.forEach(item => {
     //   console.log(item)
     // });
   
-    //get the number of the total elements and split in exact pages & remainder if is it an odd number
     //
 
-  //generate the numbers of pages based of the loop results
 
   //atach events to the navigation
 
-  //handle page switching
+  //handle page switching and active page
 
 }
 
 function calculatePages(length, pageSize){
-
-  
-
   if(length < pageSize){
     return 1
   } else {
