@@ -404,24 +404,22 @@ async function updateWeightsTable(useruid){
   );
   const paginationContainer = document.getElementById("pagination-container");
   if (paginationContainer) {
-  paginationContainer.innerHTML = generatePagination();
+  paginationContainer.innerHTML = await generatePagination();
 }
    console.log("Table rendered from updateWeightsTable()");
   }
   
 }
 
-function generatePagination(){
+async function generatePagination(){
   const html = `
     <ul id="records-container" class="inline-flex -space-x-px text-sm">
       <li>
         <a href="#" id="prev-btn" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
       </li>
-          <li>
-        <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">1</a>
-      </li>
-       
-      ${paginationLogic()}
+
+      ${await paginationLogic()}   
+
 
       <li>
         <a href="#" id="next-btn" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
@@ -461,9 +459,7 @@ function generatePagination(){
   //     </li>
   //   </ul>
   // `;
-  // paginationLogic()
   return html;
-  
 }
 
 async function paginationLogic() {
@@ -472,48 +468,52 @@ async function paginationLogic() {
   let pagesArr = [];
   let isActivePage = 1;
   let data = await getWeightData(userUid);
+  console.log("data.length", data.length)
 
   // let lastVisible = null;
   // let firstVisible = null;
   // let prevStack = [];
 
   //get controlls and container
-  const recordsContainer = document.getElementById("records-container");
   
+  const recordsContainer = document.getElementById("records-container");
   const prevBtn = document.getElementById("prev-btn");
   const nextBtn = document.getElementById("next-btn");
 
   //get the number of pages
   let navPages = calculatePages(data.length, pageSize)
 
-
+  //generate the nav with the correct ammount of pages
   let liArr = [];
+
   for (let i = 1; i <= navPages; i++) {
     const li = document.createElement("li");
-    li.innerHTML = `
-      <a href="#" id="page-${i}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+
+    if(i === isActivePage){
+      li.innerHTML = `
+      <a href="#" id="${i}" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
         ${i}
       </a>`;
+    } else { li.innerHTML = `
+      <a href="#" id="${i}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+        ${i}
+      </a>`
+    }
+    
     liArr.push(li);
   }
-  console.log(liArr)
-  return liArr;
+  const liHTML = liArr.map(el => el.outerHTML).join("");
+  console.log(liHTML)
 
-  //generate the nav with the correct ammount of pages
+  return liHTML;
 
-  // console.log(navPages)
-  console.log(data.length)
- //loop over the data and split it in coresponding pages
-    // data.forEach(item => {
-    //   console.log(item)
-    // });
-  
-    //
 
 
   //atach events to the navigation
 
-  //handle page switching and active page
+  //display the weight for the page selected 
+
+  //handle page switching and change active page
 
 }
 
@@ -535,43 +535,6 @@ async function updateUserData(userData, useruid) {
     userData.email || "No Email Available";
 
   updateWeightsTable(useruid)
-
-  // const weights = await getWeightData(useruid);
-
-
-  // if (weights.length === 0) {
-  //   table.innerHTML += `<tr>
-  //       <td colspan="4" class="text-center py-4">
-  //         <p class="text-gray-500">No weight entries found.</p>
-  //       </td>
-  //     </tr>
-  //     `;
-  // } else {
-  //   weights.forEach((entry) => {
-  //     const tableRow = document.createElement("tr");
-  //     tableRow.className =
-  //       "bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600";
-  //     tableRow.id = entry.id;
-
-  //     tableRow.innerHTML = `
-  //                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-  //                     ${entry.date}
-  //                 </th>
-  //                 <td class="px-6 py-4">
-  //                     ${entry.weight}
-  //                 </td>
-  //                 <td class="px-6 py-4">
-  //                     To be added
-  //                 </td>
-  //                 <td class="flex items-center px-6 py-4">
-  //                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-  //                     <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
-  //                 </td>
-  //   `;
-
-  //     table.appendChild(tableRow);
-  //   });
-  // }
 
   console.log("Dashboard rendered with user data");
 }
