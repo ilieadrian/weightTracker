@@ -157,7 +157,6 @@ function generateNewRecordDrawer() {
         </div>
         <input id="datepicker-autohide" datepicker datepicker-autohide datepicker-format="dd-mm-yyyy" datepicker-buttons datepicker-autoselect-today type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date *" required />
         </div>
-
         
         <div class="mb-5" id="weight-input-container">
           <label for="weight-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight *</label>
@@ -330,7 +329,6 @@ async function registerNewRecord(date, weight, comments) {
       comments: comments,
     });
       updateWeightsTable(userUid);
-      console.log("Closing Drawer")
       console.log("Document written with ID: ", docRef.id);
   } catch (error) {
     console.error("Error adding document: ", error);
@@ -404,29 +402,35 @@ async function updateWeightsTable(useruid){
   );
   const paginationContainer = document.getElementById("pagination-container");
   if (paginationContainer) {
-  paginationContainer.innerHTML = await generatePagination();
-}
-   console.log("Table rendered from updateWeightsTable()");
+    paginationContainer.innerHTML = await generatePagination();
   }
+    console.log("Table rendered from updateWeightsTable()");
+  }
+
+  const recordsContainer = document.getElementById("records-container");
+
+  recordsContainer.addEventListener("click", (event) => {
+    console.log("recordsContainer.addEventListener atached")
+    generatePagination(event.target.id);
+  })
   
 }
 
-async function generatePagination(){
+async function generatePagination(page){
   const html = `
     <ul id="records-container" class="inline-flex -space-x-px text-sm">
       <li>
         <a href="#" id="prev-btn" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
       </li>
 
-      ${await paginationLogic()}   
-
+      ${await paginationLogic(page)}   
 
       <li>
         <a href="#" id="next-btn" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
       </li>
     </ul>
   `;
-
+  console.log("Fired generatePagination with page", page)
  // the code with all the pages in pagination
   // const html = `
   //   <ul class="inline-flex -space-x-px text-sm">
@@ -462,11 +466,11 @@ async function generatePagination(){
   return html;
 }
 
-async function paginationLogic() {
+async function paginationLogic(page) {
   //define function parameters
   const pageSize = 5;
   let pagesArr = [];
-  let isActivePage = 1;
+  let activePage = page || 1;
   let data = await getWeightData(userUid);
   console.log("data.length", data.length)
 
@@ -476,7 +480,7 @@ async function paginationLogic() {
 
   //get controlls and container
   
-  const recordsContainer = document.getElementById("records-container");
+  // const recordsContainer = document.getElementById("records-container");
   const prevBtn = document.getElementById("prev-btn");
   const nextBtn = document.getElementById("next-btn");
 
@@ -485,16 +489,17 @@ async function paginationLogic() {
 
   //generate the nav with the correct ammount of pages
   let liArr = [];
+    console.log("Fired paginationLogic with page,", page, "active page", activePage)
 
   for (let i = 1; i <= navPages; i++) {
     const li = document.createElement("li");
-
-    if(i === isActivePage){
+    if(i === activePage){
       li.innerHTML = `
       <a href="#" id="${i}" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
         ${i}
       </a>`;
-    } else { li.innerHTML = `
+    } else { 
+      li.innerHTML = `
       <a href="#" id="${i}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
         ${i}
       </a>`
@@ -503,18 +508,15 @@ async function paginationLogic() {
     liArr.push(li);
   }
   const liHTML = liArr.map(el => el.outerHTML).join("");
-  console.log(liHTML)
+  // console.log(liHTML)
 
   return liHTML;
-
-
 
   //atach events to the navigation
 
   //display the weight for the page selected 
 
   //handle page switching and change active page
-
 }
 
 function calculatePages(length, pageSize){
@@ -523,7 +525,6 @@ function calculatePages(length, pageSize){
   } else {
     return Math.ceil(length / pageSize); 
   }
-  
 }
 
 async function updateUserData(userData, useruid) {
@@ -538,7 +539,6 @@ async function updateUserData(userData, useruid) {
 
   console.log("Dashboard rendered with user data");
 }
-
 
 async function getUserDBData(user){
   try {
