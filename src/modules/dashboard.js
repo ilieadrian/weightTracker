@@ -359,7 +359,7 @@ async function getWeightData(useruid) {
   return weights;
 }
 
-async function updateWeightsTable(useruid){
+async function updateWeightsTable(useruid, secondParam){
   const table = document.getElementById("t-body");
   const weights = await getWeightData(useruid);
   
@@ -400,10 +400,13 @@ async function updateWeightsTable(useruid){
       table.appendChild(tableRow);
     });
 
+    
+
   const paginationContainer = document.getElementById("pagination-container");
   if (paginationContainer) {
     console.log("about to call await generatePagination()")
-    paginationContainer.innerHTML = await generatePagination();
+    paginationContainer.innerHTML = await generatePagination(secondParam);
+    
   }
 
   const xyz = document.getElementById("pagination-container");
@@ -413,7 +416,8 @@ async function updateWeightsTable(useruid){
     const target = event.target;
     console.log("recordsContainer.addEventListener atached")
     console.log("about to call await generatePagination() after click")
-    generatePagination(target.id);
+    // generatePagination(target.id);
+    updateWeightsTable(userUid, target.id )
   })
   }
   console.log("Table rendered from updateWeightsTable()");
