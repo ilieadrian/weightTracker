@@ -359,7 +359,7 @@ async function getWeightData(useruid) {
   return weights;
 }
 
-async function updateWeightsTable(useruid, secondParam){
+async function updateWeightsTable(useruid, selectedPage){
   const table = document.getElementById("t-body");
   const weights = await getWeightData(useruid);
   
@@ -399,28 +399,48 @@ async function updateWeightsTable(useruid, secondParam){
     `;
       table.appendChild(tableRow);
     });
-
+  handlePagination(selectedPage)
+  // const paginationContainer = document.getElementById("pagination-container");
+  // if (paginationContainer) {
+  //   console.log("about to call await generatePagination()")
+  //   paginationContainer.innerHTML = await generatePagination(secondParam);
     
+  // }
 
+  // const xyz = document.getElementById("pagination-container");
+  
+  // //this lisner needs to be removed first, it ataches multiple times
+  // xyz.addEventListener("click", (event) => {
+
+  //   const target = event.target;
+  //   console.log("recordsContainer.addEventListener atached")
+  //   console.log("about to call await generatePagination() after click")
+  //   // generatePagination(target.id);
+  //   updateWeightsTable(userUid, target.id )
+  // })
+  }
+  console.log("Table rendered from updateWeightsTable()");
+}
+
+async function handlePagination(selectedPage){
   const paginationContainer = document.getElementById("pagination-container");
   if (paginationContainer) {
     console.log("about to call await generatePagination()")
-    paginationContainer.innerHTML = await generatePagination(secondParam);
+    paginationContainer.innerHTML = await generatePagination(selectedPage);
     
   }
 
   const xyz = document.getElementById("pagination-container");
   
+  //this lisner needs to be removed first, it ataches multiple times
   xyz.addEventListener("click", (event) => {
 
     const target = event.target;
     console.log("recordsContainer.addEventListener atached")
     console.log("about to call await generatePagination() after click")
     // generatePagination(target.id);
-    updateWeightsTable(userUid, target.id )
+    updateWeightsTable(userUid, target.id)
   })
-  }
-  console.log("Table rendered from updateWeightsTable()");
 }
 
 async function generatePagination(page){
