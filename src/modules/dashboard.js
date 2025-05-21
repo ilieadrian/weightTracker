@@ -14,6 +14,7 @@ import {
 import { initFlowbite } from "flowbite";
 
 let userUid;
+let cachedWeights = [];
 let currentUserData;
 
 console.log("Hello from dashboard");
@@ -361,11 +362,16 @@ async function getWeightData(useruid) {
 
 async function updateWeightsTable(useruid, selectedPage){
   const table = document.getElementById("t-body");
-  const weights = await getWeightData(useruid);
+
+  if (!cachedWeights.length) {
+    cachedWeights = await getWeightData(useruid);
+  }
+
+  // const weights = await getWeightData(useruid);
   
   table.innerHTML = "";
 
-  if (weights.length === 0) {
+  if (cachedWeights.length === 0) {
       table.innerHTML += `<tr>
           <td colspan="5" class="text-center py-4">
             <p class="text-gray-500">No weight entries found.</p>
@@ -373,7 +379,7 @@ async function updateWeightsTable(useruid, selectedPage){
         </tr>
         `;
   } else {
-    weights.forEach((entry) => {
+    cachedWeights.forEach((entry) => {
       const tableRow = document.createElement("tr");
       tableRow.className =
         "bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600";
@@ -566,6 +572,7 @@ async function logOut() {
   try {
     await signOut(auth);
     window.location.href = "index.html";
+    cachedWeights = [];
   } catch (error) {
     console.error("Error Signing out:", error);
   }
