@@ -15,7 +15,8 @@ import { initFlowbite } from "flowbite";
 
 let userUid;
 let cachedWeights = [];
-let currentUserData;
+let paginationListenerAttached = false;
+// let currentUserData;
 
 console.log("Hello from dashboard");
 
@@ -437,8 +438,13 @@ async function handlePagination(selectedPage){
 
   const paginatioContainerClick = document.getElementById("pagination-container");
 
-  paginatioContainerClick.removeEventListener("click", handlePaginationClick)
-  paginatioContainerClick.addEventListener("click", handlePaginationClick)
+  if (!paginationListenerAttached) {
+      paginatioContainerClick.addEventListener("click", handlePaginationClick);
+      paginationListenerAttached = true;
+    }
+
+  // paginatioContainerClick.removeEventListener("click", handlePaginationClick)
+  // paginatioContainerClick.addEventListener("click", handlePaginationClick)
 }
 
 function handlePaginationClick(){
@@ -546,7 +552,7 @@ async function getUserDBData(user){
       if (docSnap.exists()) {
         const userData = docSnap.data();
         userUid = user.uid;
-        currentUserData = user;
+        //currentUserData = user;
 
         updateUserData(userData, user.uid);
       } else {
