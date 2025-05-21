@@ -427,25 +427,20 @@ async function handlePagination(selectedPage){
   if (paginationContainer) {
     console.log("about to call await generatePagination()")
     paginationContainer.innerHTML = await generatePagination(selectedPage);
-    
   }
 
-  const xyz = document.getElementById("pagination-container");
-  
-  //this lisner needs to be removed first, it ataches multiple times
-  xyz.addEventListener("click", (event) => {
+  const paginatioContainerClick = document.getElementById("pagination-container");
 
-    const target = event.target;
-    console.log("recordsContainer.addEventListener atached")
-    console.log("about to call await generatePagination() after click")
-    // generatePagination(target.id);
+  paginatioContainerClick.removeEventListener("click", handlePaginationClick)
+  paginatioContainerClick.addEventListener("click", handlePaginationClick)
+}
+
+function handlePaginationClick(){
+  const target = event.target;
     updateWeightsTable(userUid, target.id)
-  })
 }
 
 async function generatePagination(page){
-    console.log("Fired generatePagination(page) with page", page)
-
   const html = `
       <li>
         <a href="#" id="prev-btn" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
