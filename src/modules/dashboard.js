@@ -368,8 +368,7 @@ async function updateWeightsTable(useruid, selectedPage){
     cachedWeights = await getWeightData(useruid);
   }
 
-  // const weights = await getWeightData(useruid);
-  
+
   table.innerHTML = "";
 
   if (cachedWeights.length === 0) {
