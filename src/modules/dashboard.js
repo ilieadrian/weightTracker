@@ -473,7 +473,17 @@ async function paginationLogic(page) {
   let pagesArr = [];
   let activePage = Number(page) || 1;
   let data = await getWeightData(userUid);
-  // console.log("data.length", data.length)
+
+
+
+//
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
+
+    const pageWeights = cachedWeights.slice(start, end);
+  console.log("pageWeights", pageWeights)
+
+  //
 
   // let lastVisible = null;
   // let firstVisible = null;
