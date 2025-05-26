@@ -15,8 +15,10 @@ import { initFlowbite } from "flowbite";
 
 let userUid;
 let cachedWeights = [];
+let pagesArr = []
 let paginationListenerAttached = false;
 // let currentUserData;
+
 
 console.log("Hello from dashboard");
 
@@ -475,12 +477,12 @@ async function paginationLogic(page) {
   let data = await getWeightData(userUid);
 
 
-
+console.log("cachedWeights", cachedWeights)
 //
   const start = (page - 1) * pageSize;
   const end = start + pageSize;
 
-    const pageWeights = cachedWeights.slice(start, end);
+  const pageWeights = cachedWeights.slice(start, end);
   console.log("pageWeights", pageWeights)
 
   //
