@@ -476,16 +476,7 @@ async function paginationLogic(page) {
   let activePage = Number(page) || 1;
   let data = await getWeightData(userUid);
 
-
-console.log("cachedWeights", cachedWeights)
-//
-  const start = (page - 1) * pageSize;
-  const end = start + pageSize;
-
-  const pageWeights = cachedWeights.slice(start, end);
-  console.log("pageWeights", pageWeights)
-
-  //
+  displayPages(pageSize, page)
 
   // let lastVisible = null;
   // let firstVisible = null;
@@ -531,6 +522,18 @@ console.log("cachedWeights", cachedWeights)
   //display the weight for the page selected 
 
   //handle page switching and change active page
+}
+
+function displayPages(pageSize, page){
+console.log("cachedWeights from test test", cachedWeights)
+//
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
+
+  const pageWeights = cachedWeights.slice(start, end);
+  console.log("pageWeights from test test", pageWeights)
+
+  //
 }
 
 function calculatePages(length, pageSize){
