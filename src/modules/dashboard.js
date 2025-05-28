@@ -476,7 +476,9 @@ async function paginationLogic(page) {
   let activePage = Number(page) || 1;
   let data = await getWeightData(userUid);
 
-  displayPages(pageSize, page)
+
+  console.log("Page in pagination login", activePage)
+  displayPages(pageSize, activePage)
 
   // let lastVisible = null;
   // let firstVisible = null;
@@ -525,13 +527,14 @@ async function paginationLogic(page) {
 }
 
 function displayPages(pageSize, page){
-console.log("cachedWeights from test test", cachedWeights)
-//
-  const start = (page - 1) * pageSize;
-  const end = start + pageSize;
+  const pages = [];
 
-  const pageWeights = cachedWeights.slice(start, end);
-  console.log("pageWeights from test test", pageWeights)
+  for (let i = 0; i < cachedWeights.length; i += pageSize) {
+    const chunk = cachedWeights.slice(i, i + pageSize);
+    pages.push(chunk);
+  }
+
+  console.log(pages[page-1]);
 
   //
 }
