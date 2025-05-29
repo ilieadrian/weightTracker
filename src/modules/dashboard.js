@@ -14,7 +14,7 @@ import {
 import { initFlowbite } from "flowbite";
 
 let userUid;
-const pageSize = 5;
+const pageSize = 10;
 let cachedWeights = [];
 let pagesArr = []
 let paginationListenerAttached = false;
@@ -370,11 +370,7 @@ async function updateWeightsTable(useruid, selectedPage){
     cachedWeights = await getWeightData(useruid);
   }
 
-  
-
-
   table.innerHTML = "";
-
 
   if (cachedWeights.length === 0) {
       table.innerHTML += `<tr>
@@ -384,33 +380,16 @@ async function updateWeightsTable(useruid, selectedPage){
         </tr>
         `;
   } else {
-    splitIntoPages(selectedPage)
 
-      handlePagination(selectedPage);
     if(!selectedPage){
       selectedPage = 1;
-      renderPage(table, selectedPage)
     }
-    
-    // const paginationContainer = document.getElementById("pagination-container");
-  // if (paginationContainer) {
-  //   console.log("about to call await generatePagination()")
-  //   paginationContainer.innerHTML = await generatePagination(secondParam);
-    
-  // }
 
-  // const xyz = document.getElementById("pagination-container");
-  
-  // //this lisner needs to be removed first, it ataches multiple times
-  // xyz.addEventListener("click", (event) => {
-
-  //   const target = event.target;
-  //   console.log("recordsContainer.addEventListener atached")
-  //   console.log("about to call await generatePagination() after click")
-  //   // generatePagination(target.id);
-  //   updateWeightsTable(userUid, target.id )
-  // })
+    splitIntoPages(selectedPage)
+    handlePagination(selectedPage);
+    renderPage(table, selectedPage)
   }
+  
   console.log("Table rendered from updateWeightsTable()");
 }
 
@@ -427,9 +406,6 @@ async function handlePagination(selectedPage){
       paginatioContainerClick.addEventListener("click", handlePaginationClick);
       paginationListenerAttached = true;
     }
-
-  // paginatioContainerClick.removeEventListener("click", handlePaginationClick)
-  // paginatioContainerClick.addEventListener("click", handlePaginationClick)
 }
 
 function handlePaginationClick(){
@@ -454,14 +430,10 @@ async function generatePagination(page){
 }
 
 async function paginationLogic(page) {
-  //define function parameters
   let pagesArr = [];
   let activePage = Number(page) || 1;
   let data = await getWeightData(userUid);
 
-
-  // console.log("Page in pagination login", activePage)
-  splitIntoPages(activePage)
 
   // let lastVisible = null;
   // let firstVisible = null;
@@ -475,7 +447,6 @@ async function paginationLogic(page) {
   //get the number of pages
   let navPages = calculatePages(data.length, pageSize)
 
-  //generate the nav with the correct ammount of pages
   let liArr = [];
     // console.log("Fired paginationLogic(page) with page,", page, "active page", activePage)
 
@@ -496,15 +467,8 @@ async function paginationLogic(page) {
     liArr.push(li);
   }
   const liHTML = liArr.map(el => el.outerHTML).join("");
-  // console.log(liHTML)
 
   return liHTML;
-
-  //atach events to the navigation
-
-  //display the weight for the page selected 
-
-  //handle page switching and change active page
 }
 
 function renderPage(table, selectedPage){
@@ -512,15 +476,7 @@ function renderPage(table, selectedPage){
 
   splitIntoPages(selectedPage)
 
-
-  console.log("RenderPage fired / selectedPage", selectedPage, "pageIndex", pageIndex )
-
-    console.log("pagesArr in renderPage", pagesArr)
-    console.log("pagesArr in renderPage with index", pagesArr[1])
-
-    if (!pagesArr.length || !pagesArr[pageIndex]) return;
-
-   // console.log("cachedWeights in renderPage", cachedWeights)
+  if (!pagesArr.length || !pagesArr[pageIndex]) return;
 
     pagesArr[pageIndex].forEach((entry) => {
       const tableRow = document.createElement("tr");
@@ -553,16 +509,12 @@ function renderPage(table, selectedPage){
 }
 
 function splitIntoPages(page){
-  console.log("Start spliting in to pages")
   for (let i = 0; i < cachedWeights.length; i += pageSize) {
     const splitedIntoPages = cachedWeights.slice(i, i + pageSize);
     pagesArr.push(splitedIntoPages);
   }
 
-  // console.log("pagesArr[page-1] in splitIntoPages", pagesArr[page-1])
   return pagesArr;
-
-  //
 }
 
 function calculatePages(length, pageSize){
