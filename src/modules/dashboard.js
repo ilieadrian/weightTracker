@@ -14,6 +14,7 @@ import {
 import { initFlowbite } from "flowbite";
 
 let userUid;
+const pageSize = 5;
 let cachedWeights = [];
 let pagesArr = []
 let paginationListenerAttached = false;
@@ -370,8 +371,14 @@ async function updateWeightsTable(useruid, selectedPage){
     cachedWeights = await getWeightData(useruid);
   }
 
+  if(!selectedPage){
+    selectedPage = 1;
+    console.log("!selectedPage", selectedPage)
+  }
+
 
   table.innerHTML = "";
+
 
   if (cachedWeights.length === 0) {
       table.innerHTML += `<tr>
@@ -381,6 +388,10 @@ async function updateWeightsTable(useruid, selectedPage){
         </tr>
         `;
   } else {
+    
+    console.log("pagesArr in else", pagesArr[selectedPage])
+    console.log("cachedWeights in else", cachedWeights)
+    
     cachedWeights.forEach((entry) => {
       const tableRow = document.createElement("tr");
       tableRow.className =
@@ -407,7 +418,9 @@ async function updateWeightsTable(useruid, selectedPage){
     `;
       table.appendChild(tableRow);
     });
-  handlePagination(selectedPage)
+
+  //someFunc(table);
+  handlePagination(selectedPage);
   // const paginationContainer = document.getElementById("pagination-container");
   // if (paginationContainer) {
   //   console.log("about to call await generatePagination()")
@@ -471,14 +484,13 @@ async function generatePagination(page){
 
 async function paginationLogic(page) {
   //define function parameters
-  const pageSize = 5;
   let pagesArr = [];
   let activePage = Number(page) || 1;
   let data = await getWeightData(userUid);
 
 
   console.log("Page in pagination login", activePage)
-  displayPages(pageSize, activePage)
+  splitIntoPages(activePage)
 
   // let lastVisible = null;
   // let firstVisible = null;
@@ -497,10 +509,8 @@ async function paginationLogic(page) {
     console.log("Fired paginationLogic(page) with page,", page, "active page", activePage)
 
   for (let i = 1; i <= navPages; i++) {
-    console.log("Enterning the for loop")
     const li = document.createElement("li");
     if(i === activePage){
-      console.log("identified activePage", activePage)
       li.innerHTML = `
       <a href="#" id="${i}" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
         ${i}
@@ -526,15 +536,15 @@ async function paginationLogic(page) {
   //handle page switching and change active page
 }
 
-function displayPages(pageSize, page){
-  const pages = [];
+function splitIntoPages(page){
 
   for (let i = 0; i < cachedWeights.length; i += pageSize) {
-    const chunk = cachedWeights.slice(i, i + pageSize);
-    pages.push(chunk);
+    const splitIntoPages = cachedWeights.slice(i, i + pageSize);
+    pagesArr.push(splitIntoPages);
   }
 
-  console.log(pages[page-1]);
+  console.log("pagesArr[page-1]", pagesArr[page-1])
+  return pagesArr[page-1];
 
   //
 }
