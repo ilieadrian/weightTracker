@@ -225,7 +225,7 @@ function handleSubmit() {
   const commentsValue = document.getElementById("comments-input").value.trim();
 
   registerNewRecord(datePickerValue, weightValue, commentsValue);
-  }
+}
 
 function validateWeightRecord() {
   console.log("validateWeightRecord FIRED");
@@ -380,11 +380,9 @@ async function updateWeightsTable(useruid, selectedPage){
         </tr>
         `;
   } else {
-
     if(!selectedPage){
       selectedPage = 1;
     }
-
     splitIntoPages(selectedPage)
     handlePagination(selectedPage);
     renderPage(table, selectedPage)
@@ -410,7 +408,19 @@ async function handlePagination(selectedPage){
 
 function handlePaginationClick(){
   const target = event.target;
+  console.log("Callig updateWeightsTable from handlePaginationClick")
+    
+
+  if((target.id === "prev-btn" || target.id === "next-btn")){
+      callFromButtons(target.id)
+  } else {
     updateWeightsTable(userUid, target.id)
+  }
+}
+
+function callFromButtons(selectedPage){
+  console.log("callFromButtons", selectedPage)
+  return;
 }
 
 async function generatePagination(page){
@@ -430,6 +440,7 @@ async function generatePagination(page){
 }
 
 async function paginationLogic(page) {
+  console.log("PaginationLogic fired with page", page)
   let pagesArr = [];
   let activePage = Number(page) || 1;
   let data = await getWeightData(userUid);
@@ -437,7 +448,6 @@ async function paginationLogic(page) {
 
   // let lastVisible = null;
   // let firstVisible = null;
-  // let prevStack = [];
 
   //get controlls and container
   
@@ -509,6 +519,8 @@ function renderPage(table, selectedPage){
 }
 
 function splitIntoPages(page){
+  pagesArr.length = 0;
+
   for (let i = 0; i < cachedWeights.length; i += pageSize) {
     const splitedIntoPages = cachedWeights.slice(i, i + pageSize);
     pagesArr.push(splitedIntoPages);
