@@ -15,6 +15,7 @@ import { initFlowbite } from "flowbite";
 
 let userUid;
 const pageSize = 10;
+let currentPage = 1;
 let cachedWeights = [];
 let pagesArr = []
 let paginationListenerAttached = false;
@@ -408,18 +409,20 @@ async function handlePagination(selectedPage){
 
 function handlePaginationClick(){
   const target = event.target;
+  const selectedPage = target.id;
   console.log("Callig updateWeightsTable from handlePaginationClick")
     
 
-  if((target.id === "prev-btn" || target.id === "next-btn")){
-      callFromButtons(target.id)
+  if((selectedPage === "prev-btn" || selectedPage === "next-btn")){
+    handleNonNumericPagination(selectedPage)
   } else {
-    updateWeightsTable(userUid, target.id)
+    updateWeightsTable(userUid, selectedPage)
   }
 }
 
-function callFromButtons(selectedPage){
-  console.log("callFromButtons", selectedPage)
+function handleNonNumericPagination(selectedPage){
+  console.log("handleNonNumericPagination", currentPage)
+  
   return;
 }
 
@@ -482,6 +485,7 @@ async function paginationLogic(page) {
 }
 
 function renderPage(table, selectedPage){
+    currentPage = selectedPage; // ✅ Track current page globally
   const pageIndex = selectedPage - 1;
 
   splitIntoPages(selectedPage)
