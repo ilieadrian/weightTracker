@@ -335,11 +335,14 @@ async function registerNewRecord(date, weight, comments) {
       weight: weight,
       comments: comments,
     });
-      updateWeightsTable(userUid);
       console.log("Document written with ID: ", docRef.id);
+      await updateWeightsTable(userUid, currentPage)
+
   } catch (error) {
     console.error("Error adding document: ", error);
   }
+
+
 }
 
 function parseDDMMYYYY(dateString) {
@@ -367,10 +370,8 @@ async function getWeightData(useruid) {
 async function updateWeightsTable(useruid, selectedPage){
   const table = document.getElementById("t-body");
 
-  if (!cachedWeights.length) {
-    cachedWeights = await getWeightData(useruid);
-  }
-
+  cachedWeights = await getWeightData(useruid);
+  
   table.innerHTML = "";
 
   if (cachedWeights.length === 0) {
@@ -384,7 +385,6 @@ async function updateWeightsTable(useruid, selectedPage){
     if(!selectedPage){
       selectedPage = 1;
     }
-    splitIntoPages(selectedPage)
     handlePagination(selectedPage);
     renderPage(table, selectedPage)
   }
@@ -489,7 +489,7 @@ async function paginationLogic(page) {
 }
 
 function renderPage(table, selectedPage){
-  currentPage = selectedPage; // ✅ Track current page globally
+  currentPage = selectedPage; 
   const pageIndex = selectedPage - 1;
 
   splitIntoPages(selectedPage)
