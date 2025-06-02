@@ -421,15 +421,13 @@ function handlePaginationClick(){
 }
 
 function handleNonNumericPagination(selectedPage){
-  console.log("handleNonNumericPagination", currentPage, selectedPage)
-  console.log("pagesArr.length", pagesArr.length)
-
   if(selectedPage === "next-btn" && currentPage < pagesArr.length ){
     currentPage++;
-    updateWeightsTable(userUid, currentPage)
+  } else if (selectedPage === "prev-btn" && currentPage > 1) {
+    currentPage--;
   }
-  
-  return;
+
+  updateWeightsTable(userUid, currentPage)
 }
 
 async function generatePagination(page){
