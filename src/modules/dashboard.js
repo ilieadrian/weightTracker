@@ -421,7 +421,13 @@ function handlePaginationClick(){
 }
 
 function handleNonNumericPagination(selectedPage){
-  console.log("handleNonNumericPagination", currentPage)
+  console.log("handleNonNumericPagination", currentPage, selectedPage)
+  console.log("pagesArr.length", pagesArr.length)
+
+  if(selectedPage === "next-btn" && currentPage < pagesArr.length ){
+    currentPage++;
+    updateWeightsTable(userUid, currentPage)
+  }
   
   return;
 }
@@ -485,7 +491,7 @@ async function paginationLogic(page) {
 }
 
 function renderPage(table, selectedPage){
-    currentPage = selectedPage; // ✅ Track current page globally
+  currentPage = selectedPage; // ✅ Track current page globally
   const pageIndex = selectedPage - 1;
 
   splitIntoPages(selectedPage)
