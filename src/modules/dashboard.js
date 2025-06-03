@@ -1,4 +1,5 @@
 import "../styles.css";
+import { helloWorld } from "./crud";
 import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import {
@@ -13,6 +14,8 @@ import {
 } from "firebase/firestore";
 import { initFlowbite } from "flowbite";
 
+
+helloWorld()
 let userUid;
 const pageSize = 10;
 let currentPage = 1;
@@ -515,9 +518,9 @@ function renderPage(table, selectedPage){
                   <td class="px-6 py-4">
                       ${entry.comments}
                   </td>
-                  <td class="flex items-center px-6 py-4">
-                      <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                      <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
+                  <td class="flex items-center px-6 py-4" id="crud-container">
+                      <a href="#" id="edit-${entry.id}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                      <a href="#" id="remove-${entry.id}" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
                   </td>
     `;
       table.appendChild(tableRow);
