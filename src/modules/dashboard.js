@@ -14,10 +14,7 @@ import {
 } from "firebase/firestore";
 import { initFlowbite } from "flowbite";
 
-
-
-
-let userUid;
+export let userUid;
 const pageSize = 10;
 let currentPage = 1;
 let cachedWeights = [];
@@ -345,8 +342,6 @@ async function registerNewRecord(date, weight, comments) {
   } catch (error) {
     console.error("Error adding document: ", error);
   }
-
-
 }
 
 function parseDDMMYYYY(dateString) {
@@ -629,7 +624,3 @@ document.addEventListener("DOMContentLoaded", function () {
     mobileMenu.classList.toggle("hidden");
   });
 });
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   helloWorld();
-// });
