@@ -1,7 +1,7 @@
 import "./styles.css";
 import "./modules/frontend";
 import "./modules/login";
-import "./modules/crud"
+// import "./modules/crud"
 
 
 import "flowbite";

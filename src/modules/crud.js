@@ -1,19 +1,32 @@
+export function setupCrudListeners() {
+  console.log("Setting up CRUD listeners");
 
-export  function helloWorld() {
-    console.log("Hello from crud.jS")
+  const table = document.getElementById("t-body");
 
-//     const crudContainer = document.getElementById("crud-container");
-
-// crudContainer.addEventListener("click", ()=> {
-//     console.log("Edit clicked")
-// })
-
+  if (!table) {
+    console.warn("t-body not found yet");
+    return;
+  }
+  table.removeEventListener("click", getClickedElement);
+  table.addEventListener("click", getClickedElement);
 }
 
+function getClickedElement(e){
+  const container = e.target.closest(".crud-container");
 
-// const crudContainer = document.getElementById("crud-container");
+    if (container) {
+      console.log("Clicked inside .crud-container", container);
 
-// crudContainer.addEventListener("click", ()=> {
-//     console.log("Edit clicked")
-// })
+      if (e.target.id.startsWith("edit-")) {
+        const id = e.target.id.replace("edit-", "");
+        console.log("Edit clicked", id);
+      }
+
+      if (e.target.id.startsWith("remove-")) {
+        const id = e.target.id.replace("remove-", "");
+        console.log("Remove clicked", id);
+      }
+    }
+}
+
 
