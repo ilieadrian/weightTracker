@@ -1,6 +1,8 @@
 import { userUid } from "./dashboard";
 import { db, doc } from "./firebaseConfig";
 import { collection, getDoc, query } from "firebase/firestore";
+import { initFlowbite } from "flowbite";
+
 
 export function setupCrudListeners() {
   console.log("Setting up CRUD listeners");
@@ -41,7 +43,7 @@ function launchEditDrawer(id){
 
   const html = `
   <!-- drawer component -->
-    <div id="drawer-top-example" class="text-center fixed top-0 left-0 right-0 z-40 w-full p-4 transition-transform -translate-y-full bg-white dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-top-label">
+    <div id="drawer-edit" class="text-center fixed top-0 left-0 right-0 z-40 w-full p-4 transition-transform -translate-y-full bg-white dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-edit">
         <h5 id="drawer-top-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"><svg class="w-4 h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
       </svg>Add new record</h5>

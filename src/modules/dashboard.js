@@ -516,7 +516,7 @@ function renderPage(table, selectedPage){
                       ${entry.comments}
                   </td>
                   <td class="crud-container flex items-center px-6 py-4">
-                      <a href="#" id="edit-${entry.id}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline" data-drawer-target="drawer-top-example" data-drawer-show="drawer-top-example" data-drawer-placement="top" aria-controls="drawer-top-example">Edit</a>
+                      <a href="#" id="edit-${entry.id}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline" data-drawer-target="drawer-edit" data-drawer-show="drawer-edit" data-drawer-placement="top" aria-controls="drawer-edit">Edit</a>
                       <a href="#" id="remove-${entry.id}" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
                   </td>
     `;
