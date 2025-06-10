@@ -411,7 +411,6 @@ function handlePaginationClick(){
   const target = event.target;
   const selectedPage = target.id;
   console.log("Callig updateWeightsTable from handlePaginationClick")
-    
 
   if((selectedPage === "prev-btn" || selectedPage === "next-btn")){
     handleNonNumericPagination(selectedPage)
@@ -451,10 +450,6 @@ async function paginationLogic(page) {
   let pagesArr = [];
   let activePage = Number(page) || 1;
   let data = await getWeightData(userUid);
-
-
-  // let lastVisible = null;
-  // let firstVisible = null;
 
   //get controlls and container
   

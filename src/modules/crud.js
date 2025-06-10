@@ -1,8 +1,7 @@
 import { userUid } from "./dashboard";
 import { db, doc } from "./firebaseConfig";
 import { collection, getDoc, query } from "firebase/firestore";
-import { initFlowbite } from "flowbite";
-
+import { Drawer } from "flowbite";
 
 export function setupCrudListeners() {
   console.log("Setting up CRUD listeners");
@@ -17,36 +16,73 @@ export function setupCrudListeners() {
   table.addEventListener("click", getClickedElement);
 }
 
-function getClickedElement(e){
+//remove if not needed
+let drawer;
+//remove if not needed
+
+
+// function getClickedElement(e){
+//   const container = e.target.closest(".crud-container");
+
+//     if (container) {
+//       // console.log("Clicked inside .crud-container", container);
+
+//       if (e.target.id.startsWith("edit-")) {
+//         const id = e.target.id.replace("edit-", "");
+
+//         drawer.show()
+
+//         // console.log("Edit clicked", id);
+//       }
+
+//       if (e.target.id.startsWith("remove-")) {
+//         const id = e.target.id.replace("remove-", "");
+//         // console.log("Remove clicked", id);
+//       }
+//     }
+// }
+
+async function getClickedElement(e) {
   const container = e.target.closest(".crud-container");
 
-    if (container) {
-      // console.log("Clicked inside .crud-container", container);
+  if (container) {
+    if (e.target.id.startsWith("edit-")) {
+      const id = e.target.id.replace("edit-", "");
 
-      if (e.target.id.startsWith("edit-")) {
-        const id = e.target.id.replace("edit-", "");
-
-
-        launchEditDrawer(id);
-
-        // console.log("Edit clicked", id);
+      // Remove old drawer if it exists
+      const oldDrawer = document.getElementById("drawer-edit");
+      if (oldDrawer) {
+        oldDrawer.remove();
       }
 
-      if (e.target.id.startsWith("remove-")) {
-        const id = e.target.id.replace("remove-", "");
-        // console.log("Remove clicked", id);
-      }
+      // Inject new drawer HTML
+      document.body.insertAdjacentHTML("beforeend", createEditDrawer());
+
+      // Re-initialize drawer
+      editModalControl();
+
+      // Fetch data and populate form
+      await getCollection(id);
+
+      // Show drawer
+      drawer.show();
     }
+
+    if (e.target.id.startsWith("remove-")) {
+      const id = e.target.id.replace("remove-", "");
+      // Remove logic here
+    }
+  }
 }
 
-function launchEditDrawer(id){
-
+function createEditDrawer(){
+  console.log("This fired")
   const html = `
   <!-- drawer component -->
     <div id="drawer-edit" class="text-center fixed top-0 left-0 right-0 z-40 w-full p-4 transition-transform -translate-y-full bg-white dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-edit">
         <h5 id="drawer-top-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"><svg class="w-4 h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-      </svg>Add new record</h5>
+      </svg>Edit record</h5>
         <button type="button" data-drawer-hide="drawer-top-example" aria-controls="drawer-top-example" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white" >
           <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -89,21 +125,98 @@ function launchEditDrawer(id){
   // getCollection(id)
 }
 
-async function getCollection(id){
-    const weightDocRef = doc(db, "users", userUid, "weights", id);
+// function editModalControl(){
 
- try {
+//   console.log("Edit modal control fired")
+//   const $targetEl = document.getElementById('drawer-edit');
+
+// // options with default values
+// const options = {
+//     placement: 'right',
+//     backdrop: true,
+//     bodyScrolling: false,
+//     edge: false,
+//     edgeOffset: '',
+//     backdropClasses:
+//         'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-30',
+//     onHide: () => {
+//         console.log('drawer is hidden');
+//     },
+//     onShow: () => {
+//         console.log('drawer is shown');
+//     },
+//     onToggle: () => {
+//         console.log('drawer has been toggled');
+//     },
+// };
+
+// // instance options object
+// const instanceOptions = {
+//   id: 'drawer-edit',
+//   override: true
+// };
+
+
+//   const drawer = new Drawer($targetEl, options, instanceOptions);
+// }
+
+function editModalControl() {
+  const $targetEl = document.getElementById("drawer-edit");
+
+  const options = {
+    placement: "top", // or "right", etc., based on your layout
+    backdrop: true,
+    bodyScrolling: false,
+    edge: false,
+    edgeOffset: "",
+    backdropClasses: "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-30",
+    onHide: () => console.log("drawer is hidden"),
+    onShow: () => console.log("drawer is shown"),
+    onToggle: () => console.log("drawer has been toggled"),
+  };
+
+  const instanceOptions = {
+    id: "drawer-edit",
+    override: true,
+  };
+
+  drawer = new Drawer($targetEl, options, instanceOptions);
+}
+
+// async function getCollection(id){
+//     const weightDocRef = doc(db, "users", userUid, "weights", id);
+
+//  try {
+//     const docSnap = await getDoc(weightDocRef);
+
+//     if (docSnap.exists()) {
+//       console.log(docSnap.data());
+//     } else {
+//       console.log("No such document!");
+//     }
+//   } catch (error) {
+//     console.error("Error getting document:", error);
+//   }
+    
+// }
+
+async function getCollection(id) {
+  const weightDocRef = doc(db, "users", userUid, "weights", id);
+
+  try {
     const docSnap = await getDoc(weightDocRef);
 
     if (docSnap.exists()) {
-      console.log(docSnap.data());
+      const data = docSnap.data();
+      document.getElementById("datepicker-autohide").value = data.date || "";
+      document.getElementById("weight-input").value = data.weight || "";
+      document.getElementById("comments-input").value = data.comments || "";
     } else {
       console.log("No such document!");
     }
   } catch (error) {
     console.error("Error getting document:", error);
   }
-    
 }
-
+ editModalControl()
 

@@ -1,6 +1,7 @@
-import { Modal } from "flowbite";
+import { Modal, Drawer } from "flowbite";
 
 let modal;
+let drawer;
 
 console.log("hello from frontend js");
 
