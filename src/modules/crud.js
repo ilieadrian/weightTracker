@@ -183,40 +183,21 @@ function editModalControl() {
   drawer = new Drawer($targetEl, options, instanceOptions);
 }
 
-// async function getCollection(id){
-//     const weightDocRef = doc(db, "users", userUid, "weights", id);
+async function getCollection(id){
+    const weightDocRef = doc(db, "users", userUid, "weights", id);
 
-//  try {
-//     const docSnap = await getDoc(weightDocRef);
-
-//     if (docSnap.exists()) {
-//       console.log(docSnap.data());
-//     } else {
-//       console.log("No such document!");
-//     }
-//   } catch (error) {
-//     console.error("Error getting document:", error);
-//   }
-    
-// }
-
-async function getCollection(id) {
-  const weightDocRef = doc(db, "users", userUid, "weights", id);
-
-  try {
+ try {
     const docSnap = await getDoc(weightDocRef);
 
     if (docSnap.exists()) {
-      const data = docSnap.data();
-      document.getElementById("datepicker-autohide").value = data.date || "";
-      document.getElementById("weight-input").value = data.weight || "";
-      document.getElementById("comments-input").value = data.comments || "";
+      console.log(docSnap.data());
     } else {
       console.log("No such document!");
     }
   } catch (error) {
     console.error("Error getting document:", error);
   }
+    
 }
- editModalControl()
+
 
