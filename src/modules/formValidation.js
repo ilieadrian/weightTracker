@@ -1,3 +1,5 @@
+import { registerNewRecord } from "./dashboard";
+
 export function handleSubmit() {
   const datePickerValue = document.getElementById("datepicker-autohide").value;
   const weightValue = document.getElementById("weight-input").value.trim();
