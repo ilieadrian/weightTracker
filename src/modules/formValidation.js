@@ -58,6 +58,8 @@ export function setSubmitButtonState(active) {
 export function setDrawerFieldsState(valid) {
   const datePicker = document.getElementById("datepicker-autohide");
   const weight = document.getElementById("weight-input");
+  const datePickerEdit = document.getElementById("datepicker-autohide-edit");
+  const weightEdit = document.getElementById("weight-input-edit");
 
   const validClasses = [
     "bg-gray-50",
@@ -84,19 +86,27 @@ export function setDrawerFieldsState(valid) {
     "dark:border-red-500",
   ];
 
-  if (datePicker.value.trim() !== "") {
+  if (datePicker.value.trim() !== "" || datePickerEdit.value.trim() !== "") {
     datePicker.classList.remove(...errorClasses);
     datePicker.classList.add(...validClasses);
+    datePickerEdit.classList.remove(...errorClasses);
+    datePickerEdit.classList.add(...validClasses);
   } else {
     datePicker.classList.remove(...validClasses);
     datePicker.classList.add(...errorClasses);
+    datePickerEdit.classList.remove(...validClasses);
+    datePickerEdit.classList.add(...errorClasses);
   }
 
-  if (weight.value.trim() !== "") {
+  if (weight.value.trim() !== "" || weightEdit.value.trim() !== "") {
     weight.classList.remove(...errorClasses);
     weight.classList.add(...validClasses);
+    weightEdit.classList.remove(...errorClasses);
+    weightEdit.classList.add(...validClasses);
   } else {
     weight.classList.remove(...validClasses);
     weight.classList.add(...errorClasses);
+    weightEdit.classList.remove(...validClasses);
+    weightEdit.classList.add(...errorClasses);
   }
 }

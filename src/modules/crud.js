@@ -2,6 +2,7 @@ import { userUid } from "./dashboard";
 import { db, doc } from "./firebaseConfig";
 import { collection, getDoc, query } from "firebase/firestore";
 import { Drawer } from "flowbite";
+import { validateWeightRecord } from "./formValidation";
 
 export function setupCrudListeners() {
   console.log("Setting up CRUD listeners");
@@ -58,6 +59,12 @@ async function getClickedElement(e) {
       // Inject new drawer HTML
       document.body.insertAdjacentHTML("beforeend", createEditDrawer());
       initFlowbite()
+      const datePickerEdit = document.getElementById("datepicker-autohide-edit");
+        const weightEdit = document.getElementById("weight-input-edit");
+      
+      
+        datePickerEdit.addEventListener("changeDate", validateWeightRecord);
+        weightEdit.addEventListener("change", validateWeightRecord);
 
       // Re-initialize drawer
       editModalControl();
