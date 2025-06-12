@@ -57,6 +57,7 @@ async function getClickedElement(e) {
 
       // Inject new drawer HTML
       document.body.insertAdjacentHTML("beforeend", createEditDrawer());
+      initFlowbite()
 
       // Re-initialize drawer
       editModalControl();
@@ -172,8 +173,8 @@ function editModalControl() {
     edge: false,
     edgeOffset: "",
     backdropClasses: "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-30",
-    onHide: () => console.log("drawer is hidden"),
-    onShow: () => console.log("drawer is shown"),
+    onHide: () => console.log("edit drawer is hidden"),
+    onShow: () => console.log("edit drawer is shown"),
     onToggle: () => console.log("drawer has been toggled"),
   };
 
