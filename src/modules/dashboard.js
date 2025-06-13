@@ -460,13 +460,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const datePicker = document.getElementById("datepicker-autohide");
   const weight = document.getElementById("weight-input");
 
-   
-
   datePicker.addEventListener("changeDate", validateWeightRecord);
   weight.addEventListener("change", validateWeightRecord);
 
-  
-    
   menuButton.addEventListener("click", function () {
     menuOpenIcon.classList.toggle("hidden");
     menuCloseIcon.classList.toggle("hidden");

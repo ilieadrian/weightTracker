@@ -15,7 +15,7 @@ export function validateWeightRecord() {
   const datePickerValue = datePicker.value;
   const weightValue = weight.value.trim();
   const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
-  
+
   weightRecordSubmitBtn.removeEventListener("click", handleSubmit);
   if (datePickerValue && weightValue) {
     weightRecordSubmitBtn.addEventListener("click", handleSubmit);
@@ -29,8 +29,32 @@ export function validateWeightRecord() {
   }
 }
 
+export function validateEditRecord(){
+  const datePickerEdit = document.getElementById("datepicker-autohide-edit");
+  const weightEdit = document.getElementById("weight-input-edit");
+  const datePickerEditValue = datePickerEdit.value;
+  const weightEditValue = weightEdit.value.trim();
+  const weightEditBtn = document.getElementById("weight-edit-button");
+
+    weightEditBtn.removeEventListener("click", handleSubmit);
+  if (datePickerEditValue && weightEditValue) {
+    weightEditBtn.addEventListener("click", handleSubmit);
+    setSubmitButtonState("active");
+    setDrawerFieldsState("valid");
+
+  } else {
+    setSubmitButtonState();
+    setDrawerFieldsState();
+    return;
+  }
+  }
+
 export function setSubmitButtonState(active) {
   const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
+  const weightEditBtn = document.getElementById("weight-edit-button");
+
+
+  console.log("weightEditBtn", weightEditBtn)
   const activeButtonClasses = [
     "text-white",
     "bg-blue-700",
@@ -48,10 +72,18 @@ export function setSubmitButtonState(active) {
     weightRecordSubmitBtn.classList.remove(...disabledButtonClasses);
     weightRecordSubmitBtn.classList.add(...activeButtonClasses);
     weightRecordSubmitBtn.disabled = false;
+
+    weightEditBtn.classList.remove(...disabledButtonClasses);
+    weightEditBtn.classList.add(...activeButtonClasses);
+    weightEditBtn.disabled = false;
   } else {
     weightRecordSubmitBtn.classList.remove(...activeButtonClasses);
     weightRecordSubmitBtn.classList.add(...disabledButtonClasses);
     weightRecordSubmitBtn.disabled = true;
+
+    weightEditBtn.classList.remove(...activeButtonClasses);
+    weightEditBtn.classList.add(...disabledButtonClasses);
+    weightEditBtn.disabled = true;
   }
 }
 

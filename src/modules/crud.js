@@ -2,7 +2,7 @@ import { userUid } from "./dashboard";
 import { db, doc } from "./firebaseConfig";
 import { collection, getDoc, query } from "firebase/firestore";
 import { Drawer } from "flowbite";
-import { validateWeightRecord } from "./formValidation";
+import { validateWeightRecord, validateEditRecord } from "./formValidation";
 
 export function setupCrudListeners() {
   console.log("Setting up CRUD listeners");
@@ -60,11 +60,10 @@ async function getClickedElement(e) {
       document.body.insertAdjacentHTML("beforeend", createEditDrawer());
       initFlowbite()
       const datePickerEdit = document.getElementById("datepicker-autohide-edit");
-        const weightEdit = document.getElementById("weight-input-edit");
-      
-      
-        datePickerEdit.addEventListener("changeDate", validateWeightRecord);
-        weightEdit.addEventListener("change", validateWeightRecord);
+      const weightEdit = document.getElementById("weight-input-edit");
+            
+      datePickerEdit.addEventListener("changeDate", validateEditRecord);
+      weightEdit.addEventListener("change", validateEditRecord);
 
       // Re-initialize drawer
       editModalControl();
@@ -120,7 +119,7 @@ function createEditDrawer(){
           <input type="text" id="comments-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
         
-        <button type="button" data-drawer-hide="drawer-top-example" id="weight-submit-button" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 inline-flex items-center p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>Add record</button>      
+        <button type="button" data-drawer-hide="drawer-top-example" id="weight-edit-button" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 inline-flex items-center p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>Add record</button>      
         
         </form>
         
