@@ -1,4 +1,5 @@
 import { registerNewRecord } from "./dashboard";
+import { handleEdit } from "./crud";
 
 export function handleSubmit() {
   const datePickerValue = document.getElementById("datepicker-autohide").value;
@@ -30,15 +31,16 @@ export function validateWeightRecord() {
 }
 
 export function validateEditRecord(){
+  console.log("validateEDIT FIRED");
   const datePickerEdit = document.getElementById("datepicker-autohide-edit");
   const weightEdit = document.getElementById("weight-input-edit");
   const datePickerEditValue = datePickerEdit.value;
   const weightEditValue = weightEdit.value.trim();
   const weightEditBtn = document.getElementById("weight-edit-button");
 
-    weightEditBtn.removeEventListener("click", handleSubmit);
+    weightEditBtn.removeEventListener("click", handleEdit);
   if (datePickerEditValue && weightEditValue) {
-    weightEditBtn.addEventListener("click", handleSubmit);
+    weightEditBtn.addEventListener("click", handleEdit);
     setSubmitButtonState("active");
     setDrawerFieldsState("valid");
 
@@ -53,8 +55,6 @@ export function setSubmitButtonState(active) {
   const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
   const weightEditBtn = document.getElementById("weight-edit-button");
 
-
-  console.log("weightEditBtn", weightEditBtn)
   const activeButtonClasses = [
     "text-white",
     "bg-blue-700",
