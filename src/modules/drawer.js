@@ -86,13 +86,13 @@ export function createEditDrawer(){
         </div>
         
         <div class="mb-5" id="weight-input-container">
-          <label for="weight-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight *</label>
+          <label for="weight-input-edit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight *</label>
           <input type="number" id="weight-input-edit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
           </div>
 
         <div class="mb-5">
           <label for="comments-input-edit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comments </label>
-          <input type="text" id="comments-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <input type="text" id="comments-input-edit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
         
         <button type="button" data-drawer-hide="drawer-top-example" id="weight-edit-button" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 inline-flex items-center p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>Submit edit</button>      

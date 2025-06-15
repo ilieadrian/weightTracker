@@ -60,7 +60,11 @@ async function getClickedElement(e) {
 
 
 export function handleEdit(){
-
+  const datePickerValue = document.getElementById("datepicker-autohide-edit").value;
+    const weightValue = document.getElementById("weight-input-edit").value.trim();
+    const commentsValue = document.getElementById("comments-input").value.trim();
+  
+    editRecord(datePickerValue, weightValue, commentsValue);
 }
 
 async function getCollection(id){
