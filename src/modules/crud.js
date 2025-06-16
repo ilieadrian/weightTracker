@@ -1,9 +1,10 @@
 import { userUid } from "./dashboard";
 import { db, doc } from "./firebaseConfig";
 import { collection, getDoc, query } from "firebase/firestore";
-import { Drawer } from "flowbite";
 import { validateEditRecord } from "./formValidation";
 import { createEditDrawer, editModalControl, drawer } from "./drawer";
+
+// let currentCollection;
 
 
 export function setupCrudListeners() {
@@ -26,14 +27,15 @@ async function getClickedElement(e) {
     if (e.target.id.startsWith("edit-")) {
       const id = e.target.id.replace("edit-", "");
 
-      // Remove old drawer if it exists
       const oldDrawer = document.getElementById("drawer-edit");
       if (oldDrawer) {
         oldDrawer.remove();
       }
 
-      // Inject new drawer HTML
-      document.body.insertAdjacentHTML("beforeend", createEditDrawer());
+      const dataToEdit = await getCollection(id);
+
+
+      document.body.insertAdjacentHTML("beforeend", createEditDrawer(dataToEdit));
       initFlowbite()
       const datePickerEdit = document.getElementById("datepicker-autohide-edit");
       const weightEdit = document.getElementById("weight-input-edit");
@@ -45,7 +47,6 @@ async function getClickedElement(e) {
       editModalControl();
 
       // Fetch data and populate form
-      await getCollection(id);
 
       // Show drawer
       drawer.show();
@@ -53,18 +54,18 @@ async function getClickedElement(e) {
 
     if (e.target.id.startsWith("remove-")) {
       const id = e.target.id.replace("remove-", "");
-      // Remove logic here
     }
   }
 }
-
 
 export function handleEdit(){
   const datePickerValue = document.getElementById("datepicker-autohide-edit").value;
     const weightValue = document.getElementById("weight-input-edit").value.trim();
     const commentsValue = document.getElementById("comments-input").value.trim();
+    const weightEditBtn = document.getElementById("weight-edit-button");
+
   
-    editRecord(datePickerValue, weightValue, commentsValue);
+    console.log("edit fired" )
 }
 
 async function getCollection(id){
@@ -74,7 +75,7 @@ async function getCollection(id){
     const docSnap = await getDoc(weightDocRef);
 
     if (docSnap.exists()) {
-      console.log(docSnap.data());
+      return docSnap.data();
     } else {
       console.log("No such document!");
     }

@@ -57,8 +57,9 @@ export function generateNewRecordDrawer() {
   return html;
 }
 
-export function createEditDrawer(){
-  console.log("Edit drawer generated in createEditDrawer")
+export function createEditDrawer(dataToEdit){
+  
+  console.log("Edit drawer generated in createEditDrawer", dataToEdit.date)
   const html = `
   <!-- drawer component -->
     <div id="drawer-edit" class="text-center fixed top-0 left-0 right-0 z-40 w-full p-4 transition-transform -translate-y-full bg-white dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-edit">
