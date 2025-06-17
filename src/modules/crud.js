@@ -3,7 +3,7 @@ import { db, doc } from "./firebaseConfig";
 import { getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { validateEditRecord } from "./formValidation";
 import { createEditDrawer, editModalControl, drawer } from "./drawer";
-import { parseDDMMYYYY } from "./dashboard";
+import { parseDDMMYYYY, currentPage, updateWeightsTable } from "./dashboard";
 
 let dataToEdit = { id: "", data: {} }
 
@@ -61,10 +61,11 @@ export async function handleEdit(){
     const commentsValue = document.getElementById("comments-input-edit").value.trim();
     const weightEditBtn = document.getElementById("weight-edit-button");
 
+
     const id = dataToEdit.id;
     const dateObj = parseDDMMYYYY(datePickerValue);
     const timestamp = Timestamp.fromDate(dateObj);
-    // vWW0GjhfzvNAydkSo7lo 
+    weightEditBtn.disabled = true;
 
     try {
       const weightDocRef = doc(db, "users", userUid, "weights", id);
@@ -74,9 +75,10 @@ export async function handleEdit(){
         weight: weightValue,
         comments: commentsValue,
     });
-    console.log("Document updated.");
 
-    // Optional: refresh UI afterwards
+    updateWeightsTable(userUid, currentPage)
+    drawer.hide()
+    
   } catch (error) {
     console.error("Error updating document.", error);
   }

@@ -22,7 +22,7 @@ import { generateNewRecordDrawer } from "./drawer.js";
 
 export let userUid;
 const pageSize = 10;
-let currentPage = 1;
+export let currentPage = 1;
 let cachedWeights = [];
 let pagesArr = []
 let paginationListenerAttached = false;
@@ -216,7 +216,7 @@ async function getWeightData(useruid) {
   return weights;
 }
 
-async function updateWeightsTable(useruid, selectedPage){
+export async function updateWeightsTable(useruid, selectedPage){
   const table = document.getElementById("t-body");
 
   cachedWeights = await getWeightData(useruid);
