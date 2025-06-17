@@ -1,11 +1,10 @@
 import { userUid } from "./dashboard";
-import { db, doc } from "./firebaseConfig";
-import { collection, getDoc, query } from "firebase/firestore";
+import { db, doc, } from "./firebaseConfig";
+import { getDoc, updateDoc } from "firebase/firestore";
 import { validateEditRecord } from "./formValidation";
 import { createEditDrawer, editModalControl, drawer } from "./drawer";
 
-// let currentCollection;
-
+let dataToEdit = { id: "", data: {} }
 
 export function setupCrudListeners() {
   console.log("Setting up CRUD listeners");
@@ -32,8 +31,7 @@ async function getClickedElement(e) {
         oldDrawer.remove();
       }
 
-      const dataToEdit = await getCollection(id);
-
+      dataToEdit = await getCollection(id);
 
       document.body.insertAdjacentHTML("beforeend", createEditDrawer(dataToEdit));
       initFlowbite()
@@ -43,12 +41,8 @@ async function getClickedElement(e) {
       datePickerEdit.addEventListener("changeDate", validateEditRecord);
       weightEdit.addEventListener("change", validateEditRecord);
 
-      // Re-initialize drawer
       editModalControl();
 
-      // Fetch data and populate form
-
-      // Show drawer
       drawer.show();
     }
 
@@ -58,14 +52,24 @@ async function getClickedElement(e) {
   }
 }
 
-export function handleEdit(){
+export async function handleEdit(){
   const datePickerValue = document.getElementById("datepicker-autohide-edit").value;
     const weightValue = document.getElementById("weight-input-edit").value.trim();
-    const commentsValue = document.getElementById("comments-input").value.trim();
+    const commentsValue = document.getElementById("comments-input-edit").value.trim();
     const weightEditBtn = document.getElementById("weight-edit-button");
 
+    console.log("dataToEdit", dataToEdit)
+
+    // const weightDocRef = doc(db, "users", userUid, "weights", id);
+
+    // await weightDocRef(dataToEdit, {
+    //   date: datePickerValue,
+    //   timestamp: timestamp,
+    //   weight: weightValue,
+    //   comments: commentsValue,
+    // });
   
-    console.log("edit fired" )
+    // console.log("edit fired", datePickerValue, weightValue,commentsValue  )
 }
 
 async function getCollection(id){
@@ -75,7 +79,7 @@ async function getCollection(id){
     const docSnap = await getDoc(weightDocRef);
 
     if (docSnap.exists()) {
-      return docSnap.data();
+      return { id, data: docSnap.data() };
     } else {
       console.log("No such document!");
     }
