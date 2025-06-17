@@ -49,6 +49,7 @@ async function getClickedElement(e) {
 
     if (e.target.id.startsWith("remove-")) {
       const id = e.target.id.replace("remove-", "");
+      handleDelete(id)
     }
   }
 }
@@ -56,11 +57,10 @@ async function getClickedElement(e) {
 export async function handleEdit(){
   if (!dataToEdit) return;
 
-  const datePickerValue = document.getElementById("datepicker-autohide-edit").value;
+    const datePickerValue = document.getElementById("datepicker-autohide-edit").value;
     const weightValue = document.getElementById("weight-input-edit").value.trim();
     const commentsValue = document.getElementById("comments-input-edit").value.trim();
     const weightEditBtn = document.getElementById("weight-edit-button");
-
 
     const id = dataToEdit.id;
     const dateObj = parseDDMMYYYY(datePickerValue);
@@ -84,6 +84,10 @@ export async function handleEdit(){
   }
 
     
+}
+
+async function handleDelete(id){
+  console.log("Delete has been clicked for id", id)
 }
 
 async function getCollection(id){
