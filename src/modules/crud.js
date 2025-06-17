@@ -1,6 +1,6 @@
 import { userUid } from "./dashboard";
 import { db, doc } from "./firebaseConfig";
-import { getDoc, updateDoc, Timestamp } from "firebase/firestore";
+import { getDoc, updateDoc, deleteDoc, Timestamp } from "firebase/firestore";
 import { validateEditRecord } from "./formValidation";
 import { createEditDrawer, editModalControl, drawer } from "./drawer";
 import { parseDDMMYYYY, currentPage, updateWeightsTable } from "./dashboard";
@@ -82,12 +82,18 @@ export async function handleEdit(){
   } catch (error) {
     console.error("Error updating document.", error);
   }
-
-    
 }
 
 async function handleDelete(id){
-  console.log("Delete has been clicked for id", id)
+  const weightDocRef = doc(db, "users", userUid, "weights", id);
+
+  try {
+    await deleteDoc(weightDocRef)
+    updateWeightsTable(userUid)
+    console.log("record deleted")
+  } catch(error){
+    console.error("Error deleting record.", error)
+  }
 }
 
 async function getCollection(id){
