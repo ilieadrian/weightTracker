@@ -194,7 +194,7 @@ export async function registerNewRecord(date, weight, comments) {
   }
 }
 
-function parseDDMMYYYY(dateString) {
+export function parseDDMMYYYY(dateString) {
   const [day, month, year] = dateString.split("-");
   return new Date(year, month - 1, day); // month is 0-based
 }
@@ -245,7 +245,6 @@ async function updateWeightsTable(useruid, selectedPage){
 async function handlePagination(selectedPage){
   const paginationContainer = document.getElementById("pagination-container");
   if (paginationContainer) {
-    console.log("about to call await generatePagination()")
     paginationContainer.innerHTML = await generatePagination(selectedPage);
   }
 
@@ -260,7 +259,6 @@ async function handlePagination(selectedPage){
 function handlePaginationClick(){
   const target = event.target;
   const selectedPage = target.id;
-  console.log("Callig updateWeightsTable from handlePaginationClick")
 
   if((selectedPage === "prev-btn" || selectedPage === "next-btn")){
     handleNonNumericPagination(selectedPage)
@@ -296,14 +294,12 @@ async function generatePagination(page){
 }
 
 async function paginationLogic(page) {
-  console.log("PaginationLogic fired with page", page)
   let pagesArr = [];
   let activePage = Number(page) || 1;
   let data = await getWeightData(userUid);
 
   //get controlls and container
-  
-  const prevBtn = document.getElementById("prev-btn");
+    const prevBtn = document.getElementById("prev-btn");
   const nextBtn = document.getElementById("next-btn");
 
   //get the number of pages

@@ -1,8 +1,9 @@
 import { userUid } from "./dashboard";
-import { db, doc, } from "./firebaseConfig";
-import { getDoc, updateDoc } from "firebase/firestore";
+import { db, doc } from "./firebaseConfig";
+import { getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { validateEditRecord } from "./formValidation";
 import { createEditDrawer, editModalControl, drawer } from "./drawer";
+import { parseDDMMYYYY } from "./dashboard";
 
 let dataToEdit = { id: "", data: {} }
 
@@ -53,29 +54,40 @@ async function getClickedElement(e) {
 }
 
 export async function handleEdit(){
+  if (!dataToEdit) return;
+
   const datePickerValue = document.getElementById("datepicker-autohide-edit").value;
     const weightValue = document.getElementById("weight-input-edit").value.trim();
     const commentsValue = document.getElementById("comments-input-edit").value.trim();
     const weightEditBtn = document.getElementById("weight-edit-button");
 
-    console.log("dataToEdit", dataToEdit)
+    const id = dataToEdit.id;
+    const dateObj = parseDDMMYYYY(datePickerValue);
+    const timestamp = Timestamp.fromDate(dateObj);
+    // vWW0GjhfzvNAydkSo7lo 
 
-    // const weightDocRef = doc(db, "users", userUid, "weights", id);
+    try {
+      const weightDocRef = doc(db, "users", userUid, "weights", id);
+      await updateDoc(weightDocRef, {
+        timestamp: timestamp,
+        date: datePickerValue,
+        weight: weightValue,
+        comments: commentsValue,
+    });
+    console.log("Document updated.");
 
-    // await weightDocRef(dataToEdit, {
-    //   date: datePickerValue,
-    //   timestamp: timestamp,
-    //   weight: weightValue,
-    //   comments: commentsValue,
-    // });
-  
-    // console.log("edit fired", datePickerValue, weightValue,commentsValue  )
+    // Optional: refresh UI afterwards
+  } catch (error) {
+    console.error("Error updating document.", error);
+  }
+
+    
 }
 
 async function getCollection(id){
     const weightDocRef = doc(db, "users", userUid, "weights", id);
 
- try {
+  try {
     const docSnap = await getDoc(weightDocRef);
 
     if (docSnap.exists()) {
