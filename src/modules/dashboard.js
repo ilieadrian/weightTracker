@@ -1,5 +1,6 @@
 import "../styles.css";
 import { setupCrudListeners } from "./crud";
+import { getEvolution } from "./evolution.js";
 import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import {
@@ -351,7 +352,7 @@ function renderPage(table, selectedPage){
                       ${entry.weight}
                   </td>
                   <td class="px-6 py-4">
-                      To be added
+                      ${getEvolution()}
                   </td>
                   <td class="px-6 py-4">
                       ${entry.comments}

@@ -46,7 +46,7 @@ async function getClickedElement(e) {
 
       drawer.show();
 
-       document.querySelector('[data-drawer-hide="drawer-edit"]')?.addEventListener("click", () => {
+      document.querySelector('[data-drawer-hide="drawer-edit"]')?.addEventListener("click", () => {
         drawer.hide();
       });
     }
