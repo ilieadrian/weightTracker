@@ -1,6 +1,6 @@
 import { cachedWeights } from "./dashboard";
 
 export function getEvolution(){
-    console.log(cachedWeights)
+    console.table(cachedWeights)
     return "evo";
 }

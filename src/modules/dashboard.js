@@ -210,7 +210,9 @@ async function getWeightData(useruid) {
   querySnapshot.forEach((doc) => {
     weights.push({
       id: doc.id,
+      evolution,
       ...doc.data(),
+      
     });
   });
 
