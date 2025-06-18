@@ -24,7 +24,7 @@ import { generateNewRecordDrawer } from "./drawer.js";
 export let userUid;
 const pageSize = 10;
 export let currentPage = 1;
-let cachedWeights = [];
+export let cachedWeights = [];
 let pagesArr = []
 let paginationListenerAttached = false;
 // let currentUserData;
