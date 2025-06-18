@@ -35,7 +35,7 @@ async function getClickedElement(e) {
       dataToEdit = await getCollection(id);
 
       document.body.insertAdjacentHTML("beforeend", createEditDrawer(dataToEdit));
-      initFlowbite()
+      initFlowbite();
       const datePickerEdit = document.getElementById("datepicker-autohide-edit");
       const weightEdit = document.getElementById("weight-input-edit");
             
@@ -45,6 +45,10 @@ async function getClickedElement(e) {
       editModalControl();
 
       drawer.show();
+
+       document.querySelector('[data-drawer-hide="drawer-edit"]')?.addEventListener("click", () => {
+        drawer.hide();
+      });
     }
 
     if (e.target.id.startsWith("remove-")) {
