@@ -208,11 +208,11 @@ async function getWeightData(useruid) {
   const weights = [];
 
   querySnapshot.forEach((doc) => {
+          console.log("doc.id", doc.id)
+
     weights.push({
       id: doc.id,
-      evolution,
       ...doc.data(),
-      
     });
   });
 
@@ -354,7 +354,7 @@ function renderPage(table, selectedPage){
                       ${entry.weight}
                   </td>
                   <td class="px-6 py-4">
-                      ${getEvolution()}
+                      "Evo"
                   </td>
                   <td class="px-6 py-4">
                       ${entry.comments}
@@ -366,7 +366,7 @@ function renderPage(table, selectedPage){
     `;
       table.appendChild(tableRow);
     });
-
+  getEvolution()
   return table;
 }
 
