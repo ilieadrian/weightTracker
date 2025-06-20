@@ -208,11 +208,12 @@ async function getWeightData(useruid) {
   const weights = [];
 
   querySnapshot.forEach((doc) => {
-          console.log("doc.id", doc.id)
+    console.log("doc.id", doc.id)
 
     weights.push({
       id: doc.id,
       ...doc.data(),
+     //evolution: getEvolution()  
     });
   });
 
@@ -299,7 +300,7 @@ async function generatePagination(page){
 async function paginationLogic(page) {
   let pagesArr = [];
   let activePage = Number(page) || 1;
-  let data = await getWeightData(userUid);
+  let data = cachedWeights;
 
   //get controlls and container
     const prevBtn = document.getElementById("prev-btn");
@@ -366,7 +367,7 @@ function renderPage(table, selectedPage){
     `;
       table.appendChild(tableRow);
     });
-  getEvolution()
+  // getEvolution()
   return table;
 }
 
