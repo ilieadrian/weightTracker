@@ -1,7 +1,12 @@
 import { cachedWeights } from "./dashboard";
 
-export function getEvolution() {
+
+export function getEvolution(id) {
+    console.log("doc.id getEvolution called", id)
+
   // const evolution = [];
+
+
 
   for (let i = 0; i < cachedWeights.length; i++) {
     const current = cachedWeights[i];
@@ -11,7 +16,6 @@ export function getEvolution() {
       prev !== undefined
         ? parseFloat(current.weight) - parseFloat(prev.weight)
         : null;
-
     // evolution.push({
     //   index: current.id,
     //   date: current.date,
@@ -19,9 +23,10 @@ export function getEvolution() {
     //   change: diff,
     // });
 
-    return diff;
+    return 2;
   }
 
   // console.table(evolution);
   // return evolution;
 }
+
