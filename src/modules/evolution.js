@@ -9,10 +9,14 @@ export function getEvolution() {
       ...current,
       evolution:
         prev !== undefined
-          ? parseFloat(current.weight) - parseFloat(prev.weight)
+          ? setSimbols(current.weight, prev.weight)
           : null,
     };
   });
+}
+
+function setSimbols(a, b){
+  return parseFloat(a) - parseFloat(b);
 }
 
   // console.table(evolution);
