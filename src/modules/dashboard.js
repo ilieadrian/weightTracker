@@ -200,24 +200,6 @@ export function parseDDMMYYYY(dateString) {
   return new Date(year, month - 1, day); // month is 0-based
 }
 
-// async function getWeightData(useruid) {
-//   const weightsRef = collection(db, "users", useruid, "weights");
-//   const weightsRefOrdered = query(weightsRef, orderBy("timestamp", "desc"));
-//   const querySnapshot = await getDocs(weightsRefOrdered);
-
-//   const weights = [];
-
-//   querySnapshot.forEach((doc) => {
-
-//     weights.push({
-//       id: doc.id,
-//       ...doc.data(),
-//      evolution: getEvolution(doc.id),  
-//     });
-//   });
-//   return weights;
-// }
-
 export async function getWeightData(useruid) {
   const weightsRef = collection(db, "users", useruid, "weights");
   const weightsRefOrdered = query(weightsRef, orderBy("timestamp", "desc"));
@@ -240,6 +222,8 @@ export async function updateWeightsTable(useruid, selectedPage){
   const table = document.getElementById("t-body");
 
   cachedWeights = await getWeightData(useruid);
+  cachedWeights = getEvolution();
+  //getEvolution()
   
   table.innerHTML = "";
 
@@ -372,7 +356,7 @@ function renderPage(table, selectedPage){
                       ${entry.weight}
                   </td>
                   <td class="px-6 py-4">
-                      "Evo"
+                      ${entry.evolution}
                   </td>
                   <td class="px-6 py-4">
                       ${entry.comments}
