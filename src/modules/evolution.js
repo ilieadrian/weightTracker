@@ -10,16 +10,24 @@ export function getEvolution() {
       evolution:
         prev !== undefined
           ? setSimbols(current.weight, prev.weight)
-          : null,
+          : "=",
     };
   });
 }
 
 function setSimbols(a, b){
-  return parseFloat(a) - parseFloat(b);
+  console.log("A:", a, "B:", b); // debug
+
+  const numA = parseFloat(a);
+  const numB = parseFloat(b);
+
+  const result = numA - numB;
+
+  if (result >= 1) return "^";
+  if (result < 0) return "down";
+  return "=";
+  
 }
 
-  // console.table(evolution);
-  // return evolution;
 
 
