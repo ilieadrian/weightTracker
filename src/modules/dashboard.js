@@ -223,7 +223,6 @@ export async function updateWeightsTable(useruid, selectedPage){
 
   cachedWeights = await getWeightData(useruid);
   cachedWeights = getEvolution();
-  //getEvolution()
   
   table.innerHTML = "";
 
@@ -244,7 +243,7 @@ export async function updateWeightsTable(useruid, selectedPage){
   
   console.log("Table rendered from updateWeightsTable()");
   setupCrudListeners();
-    console.table(cachedWeights)
+    //console.table(cachedWeights)
 }
 
 async function handlePagination(selectedPage){
@@ -356,7 +355,7 @@ function renderPage(table, selectedPage){
                       ${entry.weight}
                   </td>
                   <td class="px-6 py-4">
-                      ${entry.evolution}
+                    <img src="${entry.evolution}"></img>
                   </td>
                   <td class="px-6 py-4">
                       ${entry.comments}
