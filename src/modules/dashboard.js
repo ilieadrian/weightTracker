@@ -355,7 +355,7 @@ function renderPage(table, selectedPage){
                       ${entry.weight}
                   </td>
                   <td class="px-6 py-4">
-                    <img src="${entry.evolution}"></img>
+                    <img src="${entry.evolution}" class="evolution-image"></img>
                   </td>
                   <td class="px-6 py-4">
                       ${entry.comments}
