@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     index: "./src/index.js",
     frontend: "./src/modules/frontend.js",
+    layout: "./src/modules/layout.js",
     login: "./src/modules/login.js",
     dashboard: "./src/modules/dashboard.js",
     profile: "./src/modules/profile.js"

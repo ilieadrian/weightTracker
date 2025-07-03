@@ -19,6 +19,7 @@ import {
   setSubmitButtonState,
   setDrawerFieldsState
 } from './formValidation.js';
+import { generateLayout } from "./layout.js";
 import { generateNewRecordDrawer } from "./drawer.js";
 
 export let userUid;
@@ -139,6 +140,9 @@ function generateDashboardUi() {
   initFlowbite();
   console.log("the dashboard has rendered");
 }
+
+
+
 
 function generateRecordsTable() {
   const html = `
@@ -472,6 +476,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
   profileLink.addEventListener("click", function () {
     window.location.href = "profile.html";
-
   });
 });
