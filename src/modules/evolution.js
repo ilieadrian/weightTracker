@@ -14,7 +14,6 @@ const equalsSign = document.createElement("img");
 equalsSign.src = Equals;
 equalsSign.alt = "Equals sign";
 
-
 export function getEvolution() {
   return cachedWeights.map((current, i) => {
   const prev = cachedWeights[i + 1];

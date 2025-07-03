@@ -7,6 +7,7 @@ module.exports = {
     frontend: "./src/modules/frontend.js",
     login: "./src/modules/login.js",
     dashboard: "./src/modules/dashboard.js",
+    profile: "./src/modules/profile.js"
   },
   output: {
     filename: "[name].js",
@@ -26,6 +27,13 @@ module.exports = {
       chunks: ["dashboard"],
       title: "Dashboard - Weight tracker",
     }),
+    ,
+    new HtmlWebpackPlugin({
+      filename: "profile.html",
+      template: "./src/index.html",
+      chunks: ["profile"],
+      title: "Profile - Weight tracker",
+    })
   ],
   mode: "development",
   // watch: true,
@@ -51,8 +59,8 @@ module.exports = {
         type: 'asset/resource',
       },
       {
-      test: /\.svg$/i,
-      type: 'asset/resource',
+        test: /\.svg$/i,
+        type: 'asset/resource',
       },
     ],
   },

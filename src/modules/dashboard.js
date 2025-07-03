@@ -453,6 +453,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const mobileMenu = document.getElementById("mobile-menu");
   const logoutButton = document.getElementById("logout-link");
   const logoutButtonMobile = document.getElementById("logout-link-mobile");
+  const profileLink = document.getElementById("user-profile-link");
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
@@ -467,5 +468,10 @@ document.addEventListener("DOMContentLoaded", function () {
     menuOpenIcon.classList.toggle("hidden");
     menuCloseIcon.classList.toggle("hidden");
     mobileMenu.classList.toggle("hidden");
+  });
+
+  profileLink.addEventListener("click", function () {
+    window.location.href = "profile.html";
+
   });
 });
