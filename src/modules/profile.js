@@ -3,6 +3,19 @@ import "../styles.css";
 
 
 function generateProfileUI() {
+
+    let container = document.querySelector(".dashboard-container");
+  const htmlTag = document.getElementsByTagName("html")[0];
+  const bodyTag = document.body;
+  htmlTag.classList.add("h-full", "bg-gray-100");
+  bodyTag.classList.add("h-full");
+
+  if (!container) {
+    container = document.createElement("div");
+    container.classList.add("min-h-full");
+    container.id = "dashboardContainer";
+    document.body.appendChild(container);
+  }
     return `
     <nav class="bg-gray-800">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -14,9 +27,8 @@ function generateProfileUI() {
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="dashboard.html" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Dashboard</a>
-                <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
-                <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Profile</a>
+                <a href="dashboard.html" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Dashboard</a>
+                <a href="#" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Profile</a>
                 </div>
             </div>
           </div>
