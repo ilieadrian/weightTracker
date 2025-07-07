@@ -90,5 +90,17 @@ function generateProfileUI() {
 
 document.addEventListener("DOMContentLoaded", () => {
   document.body.innerHTML = generateProfileUI();
+    const menuButton = document.querySelector(".md\\:hidden button");
+      const menuOpenIcon = menuButton.querySelector("svg:first-of-type"); // First SVG (Menu open icon)
+  const menuCloseIcon = menuButton.querySelector("svg:last-of-type"); // Second SVG (Menu close icon)
+
+    const mobileMenu = document.getElementById("mobile-menu");
+
+     menuButton.addEventListener("click", function () {
+    menuOpenIcon.classList.toggle("hidden");
+    menuCloseIcon.classList.toggle("hidden");
+    mobileMenu.classList.toggle("hidden");
+  });
+
 });
 
