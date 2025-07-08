@@ -23,6 +23,7 @@ import { generateLayout } from "./layout.js";
 import { generateNewRecordDrawer } from "./drawer.js";
 
 export let userUid;
+export let currentUserData;
 const pageSize = 10;
 export let currentPage = 1;
 export let cachedWeights = [];
@@ -402,7 +403,13 @@ async function updateUserData(userData, useruid) {
   document.getElementById("mobile-menu-email").textContent =
     userData.email || "No Email Available";
 
-  updateWeightsTable(useruid)
+
+  const table = document.getElementById("t-body");
+  
+  if(table) {
+     updateWeightsTable(useruid)
+  }
+ 
 
   console.log("Dashboard rendered with user data");
 }
@@ -416,7 +423,7 @@ async function getUserDBData(user){
       if (docSnap.exists()) {
         const userData = docSnap.data();
         userUid = user.uid;
-        //currentUserData = user;
+        currentUserData = userData;
 
         updateUserData(userData, user.uid);
       } else {
