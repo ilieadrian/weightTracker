@@ -91,7 +91,21 @@ function generateProfileUI() {
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">Your profile</h1>
       </div>
     </header>
+      <div id="content-container" class="mx-auto max-w-7xl flex flex-col items-center justify-center px-4 py-6 sm:px-6 lg:px-8">
+          ${generatProfileContent()}
+      </div>    
   `;
+}
+
+
+function generatProfileContent(){
+  const html = `
+    <div class="relative shadow-md sm:rounded-lg mt-5">
+
+      <p>Test</p>
+    </div>      
+  `;
+  return html;
 }
 
 
