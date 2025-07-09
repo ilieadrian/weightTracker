@@ -142,9 +142,6 @@ function generateDashboardUi() {
   console.log("the dashboard has rendered");
 }
 
-
-
-
 function generateRecordsTable() {
   const html = `
       <div class="relative shadow-md sm:rounded-lg mt-5">
