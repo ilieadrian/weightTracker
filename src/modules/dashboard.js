@@ -442,7 +442,7 @@ onAuthStateChanged(auth, async (user) => {
   getUserDBData(user);
 });
 
-async function logOut() {
+export async function logOut() {
   try {
     await signOut(auth);
     window.location.href = "index.html";

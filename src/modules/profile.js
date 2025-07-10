@@ -1,5 +1,6 @@
 console.log("Hello from profile")
 import "../styles.css";
+import { logOut } from "./dashboard";
 import { userUid } from "./dashboard";
 import { currentUserData } from "./dashboard";
 
@@ -116,6 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuButton = document.querySelector(".md\\:hidden button");
       const menuOpenIcon = menuButton.querySelector("svg:first-of-type"); // First SVG (Menu open icon)
   const menuCloseIcon = menuButton.querySelector("svg:last-of-type"); // Second SVG (Menu close icon)
+   const logoutButton = document.getElementById("logout-link");
+  const logoutButtonMobile = document.getElementById("logout-link-mobile");
 
     const mobileMenu = document.getElementById("mobile-menu");
 
@@ -124,6 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
     menuCloseIcon.classList.toggle("hidden");
     mobileMenu.classList.toggle("hidden");
   });
+
+  logoutButton.addEventListener("click", logOut);
+    logoutButtonMobile.addEventListener("click", logOut);
 
 });
 
