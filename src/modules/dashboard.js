@@ -19,8 +19,8 @@ import {
   setSubmitButtonState,
   setDrawerFieldsState
 } from './formValidation.js';
-import { generateLayout } from "./layout.js";
 import { generateNewRecordDrawer } from "./drawer.js";
+import { generateProfileUI } from "./profile.js";
 
 export let userUid;
 export let currentUserData;
@@ -29,7 +29,9 @@ export let currentPage = 1;
 export let cachedWeights = [];
 let pagesArr = []
 let paginationListenerAttached = false;
-// let currentUserData;
+
+
+const appRoot = document.getElementById(".dashboard-container");
 
 console.log("Hello from dashboard");
 
@@ -283,6 +285,7 @@ function handleNonNumericPagination(selectedPage){
   updateWeightsTable(userUid, currentPage)
 }
 
+
 async function generatePagination(page){
   const html = `
       <li>
@@ -400,13 +403,11 @@ async function updateUserData(userData, useruid) {
   document.getElementById("mobile-menu-email").textContent =
     userData.email || "No Email Available";
 
-
   const table = document.getElementById("t-body");
   
   if(table) {
-     updateWeightsTable(useruid)
+    updateWeightsTable(useruid)
   }
- 
 
   console.log("Dashboard rendered with user data");
 }
@@ -419,8 +420,12 @@ async function getUserDBData(user){
 
       if (docSnap.exists()) {
         const userData = docSnap.data();
-        userUid = user.uid;
+        userUid = await user.uid;
+        console.log("userUid has been populated", userUid)
+
         currentUserData = userData;
+        setupProfileLink();
+        
 
         updateUserData(userData, user.uid);
       } else {
@@ -429,6 +434,12 @@ async function getUserDBData(user){
     } catch (error) {
       console.error("Error getting document:", error);
     }
+}
+
+function setupProfileLink() {
+  profileLink.addEventListener("click", () => {
+    window.location.href = "profile.html";
+  });
 }
 
 onAuthStateChanged(auth, async (user) => {
@@ -477,8 +488,9 @@ document.addEventListener("DOMContentLoaded", function () {
     menuCloseIcon.classList.toggle("hidden");
     mobileMenu.classList.toggle("hidden");
   });
+    console.log("About to add the link to profile page")
 
-  profileLink.addEventListener("click", function () {
-    window.location.href = "profile.html";
-  });
+  // profileLink.addEventListener("click", function () {
+  //   window.location.href = "profile.html";
+  // });
 });
