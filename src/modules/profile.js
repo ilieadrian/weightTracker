@@ -1,19 +1,8 @@
 console.log("Hello from profile")
 import "../styles.css";
 import { logOut } from "./dashboard";
+import { getUidCookie, deleteUidCookie } from "./cookie-utils";
 
-function getUidCookie() {
-  const name = "Uid=";
-  const decoded = decodeURIComponent(document.cookie);
-  const cookies = decoded.split(';');
-  for (let c of cookies) {
-    c = c.trim();
-    if (c.indexOf(name) === 0) {
-      return c.substring(name.length);
-    }
-  }
-  return null;
-}
 
 const userUid = getUidCookie();
 console.log("UID from cookie:", userUid);
@@ -166,8 +155,6 @@ export function generateProfileContent() {
 //     console.log("userUid not ready yet")
 //   }
 // }
-
-
 
 
 document.addEventListener("DOMContentLoaded", () => {
