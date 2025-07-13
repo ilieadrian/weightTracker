@@ -20,18 +20,14 @@ import {
   setDrawerFieldsState
 } from './formValidation.js';
 import { generateNewRecordDrawer } from "./drawer.js";
-import { generateProfileUI } from "./profile.js";
 
-export let userUid;
+export let userUid = null;
 export let currentUserData;
 const pageSize = 10;
 export let currentPage = 1;
 export let cachedWeights = [];
 let pagesArr = []
 let paginationListenerAttached = false;
-
-
-const appRoot = document.getElementById(".dashboard-container");
 
 console.log("Hello from dashboard");
 
@@ -424,7 +420,9 @@ async function getUserDBData(user){
         console.log("userUid has been populated", userUid)
 
         currentUserData = userData;
-        setupProfileLink();
+
+        
+        setCookie(userUid)
         
 
         updateUserData(userData, user.uid);
@@ -434,6 +432,17 @@ async function getUserDBData(user){
     } catch (error) {
       console.error("Error getting document:", error);
     }
+}
+
+function setCookie(userUid) {
+  const d = new Date();
+  d.setTime(d.getTime() + (24 * 60 * 60 * 1000)); // 1 day
+  const expires = "expires=" + d.toUTCString();
+  document.cookie = `Uid=${userUid}; ${expires}; path=/`;
+}
+
+function deleteUidCookie() {
+  document.cookie = "Uid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
 
 function setupProfileLink() {
@@ -458,6 +467,7 @@ export async function logOut() {
     await signOut(auth);
     window.location.href = "index.html";
     cachedWeights = [];
+    deleteUidCookie();
   } catch (error) {
     console.error("Error Signing out:", error);
   }

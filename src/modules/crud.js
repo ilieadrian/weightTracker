@@ -101,7 +101,7 @@ async function handleDelete(id){
 }
 
 async function getCollection(id){
-    const weightDocRef = doc(db, "users", userUid, "weights", id);
+  const weightDocRef = doc(db, "users", userUid, "weights", id);
 
   try {
     const docSnap = await getDoc(weightDocRef);

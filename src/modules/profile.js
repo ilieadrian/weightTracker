@@ -1,25 +1,25 @@
 console.log("Hello from profile")
 import "../styles.css";
 import { logOut } from "./dashboard";
-import { userUid } from "./dashboard";
 
-// function waitForUserUid(retry = 0) {
-//   const uid = userUid;
+function getUidCookie() {
+  const name = "Uid=";
+  const decoded = decodeURIComponent(document.cookie);
+  const cookies = decoded.split(';');
+  for (let c of cookies) {
+    c = c.trim();
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length);
+    }
+  }
+  return null;
+}
 
-//   if (uid) {
-//     console.log("User UID available:", uid);
-//     // continue rendering or loading profile
-//   } else if (retry < 10) {
-//     setTimeout(() => waitForUserUid(retry + 1), 100); // retry for 1s
-//   } else {
-//     console.error("Failed to get userUid");
-//   }
-// }
+const userUid = getUidCookie();
+console.log("UID from cookie:", userUid);
 
-// waitForUserUid();
-
-export function generateProfileUI() {
-console.log("is user UID available?", userUid);
+function generateProfileUI() {
+  
   let container = document.querySelector(".dashboard-container");
   const htmlTag = document.getElementsByTagName("html")[0];
   const bodyTag = document.body;
