@@ -418,14 +418,10 @@ async function getUserDBData(user){
       if (docSnap.exists()) {
         const userData = docSnap.data();
         userUid = await user.uid;
-        console.log("userUid has been populated", userUid)
-
         currentUserData = userData;
 
-        
         setCookie(userUid)
         
-
         updateUserData(userData, user.uid);
       } else {
         console.log("No document found matching id");
@@ -433,12 +429,6 @@ async function getUserDBData(user){
     } catch (error) {
       console.error("Error getting document:", error);
     }
-}
-
-function setupProfileLink() {
-  profileLink.addEventListener("click", () => {
-    window.location.href = "profile.html";
-  });
 }
 
 onAuthStateChanged(auth, async (user) => {
@@ -490,7 +480,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
     console.log("About to add the link to profile page")
 
-  // profileLink.addEventListener("click", function () {
-  //   window.location.href = "profile.html";
-  // });
+  profileLink.addEventListener("click", function () {
+    window.location.href = "profile.html";
+  });
 });

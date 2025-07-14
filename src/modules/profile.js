@@ -1,15 +1,38 @@
 console.log("Hello from profile")
 import "../styles.css";
+import { auth, db } from "./firebaseConfig";
+import {
+  getDoc,
+  doc,
+} from "firebase/firestore";
+
 import { logOut } from "./dashboard";
-import { getUidCookie, deleteUidCookie } from "./cookie-utils";
+import { getUidCookie } from "./cookie-utils";
 
 
-const userUid = getUidCookie();
-console.log("UID from cookie:", userUid);
+async function getUserProfileDBData(){
+  const uId = getUidCookie();
+  try {
+        const docRef = doc(db, "users", uId);
+  
+        const docSnap = await getDoc(docRef);
+  
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+  
+          console.log("Second run of generate profile content")
+          await generateProfileContent(userData) 
+
+        } else {
+          console.log("No document found matching id");
+        }
+      } catch (error) {
+        console.error("Error getting document:", error);
+      }
+}
 
 function generateProfileUI() {
-  
-  let container = document.querySelector(".dashboard-container");
+   let container = document.querySelector(".dashboard-container");
   const htmlTag = document.getElementsByTagName("html")[0];
   const bodyTag = document.body;
   htmlTag.classList.add("h-full", "bg-gray-100");
@@ -96,28 +119,21 @@ function generateProfileUI() {
       </div>
     </header>
       <div id="content-container" class="mx-auto max-w-7xl flex flex-col items-center justify-center px-4 py-6 sm:px-6 lg:px-8">
-          ${generateProfileContent()}
-      </div>    
-  `;
-}
-
-export function generateProfileContent() {
-  
-  const html = `
-    <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg mt-5 max-w-md w-full mx-auto p-6 space-y-6 text-gray-800 dark:text-white">
+        <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg mt-5 max-w-md w-full mx-auto p-6 space-y-6 text-gray-800 dark:text-white">
 
       <!-- Profile Info -->
       <div class="space-y-2">
         <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">Profile Information</h2>
-        <p><span class="font-medium">Name:</span> Adrian Ilie</p>
-        <p><span class="font-medium">Email:</span> adrian@example.com</p>
+        <p id="profile-name"><span class="font-medium">Name: </span></p>
+        <p id="profile-email"><span class="font-medium">Email: </span></p>
+        <p id="profile-registered-on"><span class="font-medium">Account registered on: </span></p>
       </div>
 
       <!-- Change Email -->
       <form id="change-email-form" class="space-y-4">
         <div>
-          <label for="new-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Email</label>
-          <input type="email" id="new-email" required placeholder="your@email.com"
+          <label for="new-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+          <input type="email" id="new-email" required placeholder=""
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
             focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
@@ -142,40 +158,36 @@ export function generateProfileContent() {
       </div>
 
     </div>
+    </div>    
   `;
-  return html;
+}
+
+export function generateProfileContent(userData) {
+ document.getElementById("profile-name").textContent +=
+    userData.name || "Unknown User";
+    
 }
 
 
-// function checkForUid(){
-//   if(userUid){
-//     document.body.innerHTML = generateProfileUI();
-//   } else {
-//         setTimeout(() => checkForUid); // retry for 1s
-//     console.log("userUid not ready yet")
-//   }
-// }
-
+getUserProfileDBData()
 
 document.addEventListener("DOMContentLoaded", () => {
-document.body.innerHTML = generateProfileUI();
-  
-    const menuButton = document.querySelector(".md\\:hidden button");
-      const menuOpenIcon = menuButton.querySelector("svg:first-of-type"); // First SVG (Menu open icon)
+  document.body.innerHTML = generateProfileUI();
+  const menuButton = document.querySelector(".md\\:hidden button");
+  const menuOpenIcon = menuButton.querySelector("svg:first-of-type"); // First SVG (Menu open icon)
   const menuCloseIcon = menuButton.querySelector("svg:last-of-type"); // Second SVG (Menu close icon)
-   const logoutButton = document.getElementById("logout-link");
+  const logoutButton = document.getElementById("logout-link");
   const logoutButtonMobile = document.getElementById("logout-link-mobile");
 
-    const mobileMenu = document.getElementById("mobile-menu");
+  const mobileMenu = document.getElementById("mobile-menu");
 
-     menuButton.addEventListener("click", function () {
+  menuButton.addEventListener("click", function () {
     menuOpenIcon.classList.toggle("hidden");
     menuCloseIcon.classList.toggle("hidden");
     mobileMenu.classList.toggle("hidden");
   });
 
   logoutButton.addEventListener("click", logOut);
-    logoutButtonMobile.addEventListener("click", logOut);
-
+  logoutButtonMobile.addEventListener("click", logOut);
 });
 

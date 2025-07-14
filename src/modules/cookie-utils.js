@@ -2,12 +2,11 @@ export function setCookie(userUid) {
   const d = new Date();
   d.setTime(d.getTime() + (24 * 60 * 60 * 1000)); // 1 day
   const expires = "expires=" + d.toUTCString();
-  document.cookie = `Uid=${userUid}; ${expires}; path=/`;
+  document.cookie = `uId=${userUid}; ${expires}; path=/`;
 }
 
-
 export function getUidCookie() {
-  const name = "Uid=";
+  const name = "uId=";
   const decoded = decodeURIComponent(document.cookie);
   const cookies = decoded.split(';');
   for (let c of cookies) {
@@ -20,5 +19,5 @@ export function getUidCookie() {
 }
 
 export function deleteUidCookie() {
-  document.cookie = "Uid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  document.cookie = "uId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
