@@ -164,8 +164,25 @@ function generateProfileUI() {
 
 export function generateProfileContent(userData) {
  document.getElementById("profile-name").textContent +=
-    userData.name || "Unknown User";
-    
+    userData.name || "Unknown user";
+  document.getElementById("profile-email").textContent +=
+    userData.email || "Unknown email";
+  document.getElementById("profile-registered-on").textContent += getFormattedDate(userData.createdAt);
+}
+
+function getFormattedDate(createdAt){
+  const timestamp = createdAt;
+
+  if (timestamp && timestamp.seconds) {
+    const date = new Date(timestamp.seconds * 1000);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate;
+  } else {
+    return "Unknown date";
+  }
 }
 
 
