@@ -228,7 +228,6 @@ function showMessage(message, divId, login, pswReset) {
 }
 
 function checkEmailToReset() {
-  const email = document.getElementById("reset-email");
   const emailValue = document.getElementById("reset-email").value.trim();
   let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 

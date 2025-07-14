@@ -1,6 +1,6 @@
 console.log("Hello from profile")
 import "../styles.css";
-import { auth, db } from "./firebaseConfig";
+import { auth, db, updateEmail } from "./firebaseConfig";
 import {
   getDoc,
   doc,
@@ -8,7 +8,6 @@ import {
 
 import { logOut } from "./dashboard";
 import { getUidCookie } from "./cookie-utils";
-
 
 async function getUserProfileDBData(){
   const uId = getUidCookie();
@@ -20,8 +19,7 @@ async function getUserProfileDBData(){
         if (docSnap.exists()) {
           const userData = docSnap.data();
   
-          console.log("Second run of generate profile content")
-          await generateProfileContent(userData) 
+          generateProfileContent(userData) 
 
         } else {
           console.log("No document found matching id");
@@ -32,7 +30,7 @@ async function getUserProfileDBData(){
 }
 
 function generateProfileUI() {
-   let container = document.querySelector(".dashboard-container");
+  let container = document.querySelector(".dashboard-container");
   const htmlTag = document.getElementsByTagName("html")[0];
   const bodyTag = document.body;
   htmlTag.classList.add("h-full", "bg-gray-100");
@@ -133,13 +131,13 @@ function generateProfileUI() {
       <form id="change-email-form" class="space-y-4">
         <div>
           <label for="new-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
-          <input type="email" id="new-email" required placeholder=""
+          <input type="email" id="new-email" required placeholder="Change email"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
             focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
             dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
         </div>
-        <button type="submit"
+        <button type="submit" id="update-email-btn"
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
           font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 
           focus:outline-none dark:focus:ring-blue-800">
@@ -163,7 +161,7 @@ function generateProfileUI() {
 }
 
 export function generateProfileContent(userData) {
- document.getElementById("profile-name").textContent +=
+  document.getElementById("profile-name").textContent +=
     userData.name || "Unknown user";
   document.getElementById("profile-email").textContent +=
     userData.email || "Unknown email";
@@ -186,6 +184,22 @@ function getFormattedDate(createdAt){
 }
 
 
+async function changeEmail(){
+  event.preventDefault()
+
+  const newEmailInput = document.getElementById("new-email").value.trim()
+
+  updateEmail(auth.currentUser, newEmailInput).then(() => {
+  // Email updated!
+  console.log("Email updated")
+}).catch((error) => {
+  // An error occurred
+  console.error(error)
+});
+  console.log(newEmailInput)
+  
+}
+
 getUserProfileDBData()
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -195,6 +209,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuCloseIcon = menuButton.querySelector("svg:last-of-type"); // Second SVG (Menu close icon)
   const logoutButton = document.getElementById("logout-link");
   const logoutButtonMobile = document.getElementById("logout-link-mobile");
+  const updateEmailBtn = document.getElementById("update-email-btn") 
+  
 
   const mobileMenu = document.getElementById("mobile-menu");
 
@@ -203,6 +219,8 @@ document.addEventListener("DOMContentLoaded", () => {
     menuCloseIcon.classList.toggle("hidden");
     mobileMenu.classList.toggle("hidden");
   });
+
+  updateEmailBtn.addEventListener("click", changeEmail);
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
