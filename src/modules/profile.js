@@ -1,6 +1,6 @@
 console.log("Hello from profile")
 import "../styles.css";
-import { auth, db, updateEmail } from "./firebaseConfig";
+import { auth, db, updateEmail, sendEmailVerification  } from "./firebaseConfig";
 import {
   getDoc,
   doc,
@@ -183,22 +183,32 @@ function getFormattedDate(createdAt){
   }
 }
 
+async function changeEmail(event) {
+  event.preventDefault();
 
-async function changeEmail(){
-  event.preventDefault()
+  const newEmailInput = document.getElementById("new-email").value.trim();
 
-  const newEmailInput = document.getElementById("new-email").value.trim()
+  try {
+    await updateEmail(auth.currentUser, newEmailInput);
+    console.log("Email updated successfully");
 
-  updateEmail(auth.currentUser, newEmailInput).then(() => {
-  // Email updated!
-  console.log("Email updated")
-}).catch((error) => {
-  // An error occurred
-  console.error(error)
-});
-  console.log(newEmailInput)
-  
+    // Send verification email to the new address
+    await sendEmailVerification(auth.currentUser);
+    console.log("Verification email sent to new address");
+
+    alert("Email updated. Please verify your new email address.");
+
+    // Optionally, update Firestore if you're storing the email there too
+      //Display a mesaage
+
+
+  } catch (error) {
+    console.error("Error updating email:", error);
+    alert(`Failed to update email: ${error.message}`);
+  }
 }
+
+
 
 getUserProfileDBData()
 
