@@ -205,6 +205,9 @@ async function changeEmail(event) {
   } catch (error) {
     console.error("Error updating email:", error);
     alert(`Failed to update email: ${error.message}`);
+
+    //research - on a new account
+    //Failed to update email: Firebase: Error (auth/email-already-in-use).
   }
 }
 
