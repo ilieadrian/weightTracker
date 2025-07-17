@@ -4,7 +4,7 @@ import { auth, db, updateEmail, sendEmailVerification  } from "./firebaseConfig"
 import {
   getDoc,
   doc,
-  collection,
+  updateDoc,
 } from "firebase/firestore";
 
 
@@ -32,22 +32,16 @@ async function getUserProfileDBData(){
 }
 
 
-async function getUserEmailData() {
+async function updateUserEmail(newEmail) {
   const uId = getUidCookie(); // your custom function to get UID from cookie
 
-  const userDocRef = doc(db, "users", uId); // reference to single document
+  const docRef = doc(db, "users", uId); // reference to single document
 
   try {
-    const docSnap = await getDoc(userDocRef);
-
-    if (docSnap.exists()) {
-      const userData = docSnap.data();
-      console.log("User email:", userData.email); // ← the email
-      return userData.email;
-    } else {
-      console.log("No such user document.");
-      return null;
-    }
+    console.log("Try to updateUserEmail(newEmail)", newEmail)
+    await updateDoc(docRef, {
+      email: newEmail
+    });
   } catch (error) {
     console.error("Error fetching user email:", error);
     return null;
@@ -57,8 +51,6 @@ async function getUserEmailData() {
 
 
 function generateProfileUI() {
-
-  getUserEmailData()
   let container = document.querySelector(".dashboard-container");
   const htmlTag = document.getElementsByTagName("html")[0];
   const bodyTag = document.body;
@@ -221,13 +213,14 @@ async function changeEmail(event) {
 
   try {
     await updateEmail(auth.currentUser, newEmailInput);
+    updateUserEmail(newEmailInput)
     console.log("Email updated successfully");
 
     // Send verification email to the new address
-    await sendEmailVerification(auth.currentUser);
-    console.log("Verification email sent to new address");
+    // await sendEmailVerification(auth.currentUser);
+    // console.log("Verification email sent to new address");
 
-    alert("Email updated. Please verify your new email address.");
+    // alert("Email updated. Please verify your new email address.");
 
     // Optionally, update Firestore if you're storing the email there too
       //Display a mesaage
