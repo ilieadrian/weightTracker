@@ -4,7 +4,9 @@ import { auth, db, updateEmail, sendEmailVerification  } from "./firebaseConfig"
 import {
   getDoc,
   doc,
+  collection,
 } from "firebase/firestore";
+
 
 import { logOut } from "./dashboard";
 import { getUidCookie } from "./cookie-utils";
@@ -29,7 +31,34 @@ async function getUserProfileDBData(){
       }
 }
 
+
+async function getUserEmailData() {
+  const uId = getUidCookie(); // your custom function to get UID from cookie
+
+  const userDocRef = doc(db, "users", uId); // reference to single document
+
+  try {
+    const docSnap = await getDoc(userDocRef);
+
+    if (docSnap.exists()) {
+      const userData = docSnap.data();
+      console.log("User email:", userData.email); // ← the email
+      return userData.email;
+    } else {
+      console.log("No such user document.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching user email:", error);
+    return null;
+  }
+}
+
+
+
 function generateProfileUI() {
+
+  getUserEmailData()
   let container = document.querySelector(".dashboard-container");
   const htmlTag = document.getElementsByTagName("html")[0];
   const bodyTag = document.body;
@@ -182,6 +211,8 @@ function getFormattedDate(createdAt){
     return "Unknown date";
   }
 }
+
+
 
 async function changeEmail(event) {
   event.preventDefault();
