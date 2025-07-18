@@ -1,15 +1,21 @@
 console.log("Hello from profile")
 import "../styles.css";
-import { auth, db, updateEmail, sendEmailVerification  } from "./firebaseConfig";
+import { auth, db, updateEmail } from "./firebaseConfig";
 import {
   getDoc,
   doc,
   updateDoc,
 } from "firebase/firestore";
-
-
 import { logOut } from "./dashboard";
 import { getUidCookie } from "./cookie-utils";
+
+  let status;
+  
+  //Roadmap for email change
+  //Validate email
+  //clear logic with messages for error or succes
+
+
 
 async function getUserProfileDBData(){
   const uId = getUidCookie();
@@ -32,21 +38,7 @@ async function getUserProfileDBData(){
 }
 
 
-async function updateUserEmail(newEmail) {
-  const uId = getUidCookie(); // your custom function to get UID from cookie
 
-  const docRef = doc(db, "users", uId); // reference to single document
-
-  try {
-    console.log("Try to updateUserEmail(newEmail)", newEmail)
-    await updateDoc(docRef, {
-      email: newEmail
-    });
-  } catch (error) {
-    console.error("Error fetching user email:", error);
-    return null;
-  }
-}
 
 
 
@@ -64,6 +56,8 @@ function generateProfileUI() {
     document.body.appendChild(container);
   }
     return `
+  
+
     <nav class="bg-gray-800">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
@@ -141,6 +135,9 @@ function generateProfileUI() {
         <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg mt-5 max-w-md w-full mx-auto p-6 space-y-6 text-gray-800 dark:text-white">
 
       <!-- Profile Info -->
+      
+
+
       <div class="space-y-2">
         <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">Profile Information</h2>
         <p id="profile-name"><span class="font-medium">Name: </span></p>
@@ -150,6 +147,7 @@ function generateProfileUI() {
 
       <!-- Change Email -->
       <form id="change-email-form" class="space-y-4">
+        <div id="notification-container"></div>
         <div>
           <label for="new-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
           <input type="email" id="new-email" required placeholder="Change email"
@@ -213,7 +211,7 @@ async function changeEmail(event) {
 
   try {
     await updateEmail(auth.currentUser, newEmailInput);
-    updateUserEmail(newEmailInput)
+    await updateUserEmail(newEmailInput);
     console.log("Email updated successfully");
 
     // Send verification email to the new address
@@ -235,6 +233,59 @@ async function changeEmail(event) {
   }
 }
 
+async function updateUserEmail(newEmail) {
+  const uId = getUidCookie(); // your custom function to get UID from cookie
+
+  const docRef = doc(db, "users", uId); // reference to single document
+
+  try {
+    console.log("Try to updateUserEmail(newEmail)", newEmail)
+    await updateDoc(docRef, {
+      email: newEmail
+    });
+
+
+    displayUpdateMessage(status, newEmail)
+  } catch (error) {
+    status = error;
+    displayUpdateMessage(status, error)
+    // console.error("Error fetching user email:", error);
+    return null;
+  }
+}
+
+function displayUpdateMessage(status, param){
+  const notificationContainer = document.getElementById("notification-container");
+  const succesCode = 
+  `
+  <div id="alert-border-3" class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800" role="alert">
+       <div class="ms-3 text-sm font-medium">
+      Email adress changed to ${param}.
+    </div>
+    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"  data-dismiss-target="#alert-border-3" aria-label="Close">
+      <span class="sr-only">Dismiss</span>
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+      </svg>
+    </button>
+</div>
+  `;
+  const errorCode = `
+    <div id="alert-border-2" class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800" role="alert">
+        <div class="ms-3 text-sm font-medium">
+      Error: ${param}.
+    </div>
+    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"  data-dismiss-target="#alert-border-2" aria-label="Close">
+      <span class="sr-only">Dismiss</span>
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+      </svg>
+    </button>
+</div>`;
+
+return notificationContainer.innerHTML = errorCode;
+}
+
 
 
 getUserProfileDBData()
@@ -248,7 +299,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutButtonMobile = document.getElementById("logout-link-mobile");
   const updateEmailBtn = document.getElementById("update-email-btn") 
   
-
   const mobileMenu = document.getElementById("mobile-menu");
 
   menuButton.addEventListener("click", function () {
