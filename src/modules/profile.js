@@ -10,32 +10,14 @@ import { logOut } from "./dashboard";
 import { getUidCookie } from "./cookie-utils";
 
   let status;
-  
+
   //Roadmap for email change
   //Validate email
   //clear logic with messages for error or succes
 
 
 
-async function getUserProfileDBData(){
-  const uId = getUidCookie();
-  try {
-        const docRef = doc(db, "users", uId);
-  
-        const docSnap = await getDoc(docRef);
-  
-        if (docSnap.exists()) {
-          const userData = docSnap.data();
-  
-          generateProfileContent(userData) 
 
-        } else {
-          console.log("No document found matching id");
-        }
-      } catch (error) {
-        console.error("Error getting document:", error);
-      }
-}
 
 
 
@@ -202,23 +184,38 @@ function getFormattedDate(createdAt){
   }
 }
 
+async function getUserProfileDBData(){
+  const uId = getUidCookie();
+  try {
+        const docRef = doc(db, "users", uId);
+  
+        const docSnap = await getDoc(docRef);
+  
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+  
+          generateProfileContent(userData) 
+
+        } else {
+          console.log("No document found matching id");
+        }
+      } catch (error) {
+        console.error("Error getting document:", error);
+      }
+}
+
 
 
 async function changeEmail(event) {
   event.preventDefault();
 
-  const newEmailInput = document.getElementById("new-email").value.trim();
 
   try {
     await updateEmail(auth.currentUser, newEmailInput);
-    await updateUserEmail(newEmailInput);
+    // await updateUserEmail(newEmailInput);
     console.log("Email updated successfully");
 
-    // Send verification email to the new address
-    // await sendEmailVerification(auth.currentUser);
-    // console.log("Verification email sent to new address");
 
-    // alert("Email updated. Please verify your new email address.");
 
     // Optionally, update Firestore if you're storing the email there too
       //Display a mesaage
@@ -233,26 +230,26 @@ async function changeEmail(event) {
   }
 }
 
-async function updateUserEmail(newEmail) {
-  const uId = getUidCookie(); // your custom function to get UID from cookie
+// async function updateUserEmail(newEmail) {
+//   const uId = getUidCookie(); // your custom function to get UID from cookie
 
-  const docRef = doc(db, "users", uId); // reference to single document
+//   const docRef = doc(db, "users", uId); // reference to single document
 
-  try {
-    console.log("Try to updateUserEmail(newEmail)", newEmail)
-    await updateDoc(docRef, {
-      email: newEmail
-    });
+//   try {
+//     console.log("Try to updateUserEmail(newEmail)", newEmail)
+//     await updateDoc(docRef, {
+//       email: newEmail
+//     });
 
 
-    displayUpdateMessage(status, newEmail)
-  } catch (error) {
-    status = error;
-    displayUpdateMessage(status, error)
-    // console.error("Error fetching user email:", error);
-    return null;
-  }
-}
+//     displayUpdateMessage(status, newEmail)
+//   } catch (error) {
+//     status = error;
+//     displayUpdateMessage(status, error)
+//     // console.error("Error fetching user email:", error);
+//     return null;
+//   }
+// }
 
 function displayUpdateMessage(status, param){
   const notificationContainer = document.getElementById("notification-container");
@@ -286,6 +283,24 @@ function displayUpdateMessage(status, param){
 return notificationContainer.innerHTML = errorCode;
 }
 
+function checkEmailToChange() {
+  event.preventDefault();
+  const newEmailInput = document.getElementById("new-email").value.trim();
+  let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+  if (reg.test(newEmailInput) === false) {
+    console.log(newEmailInput);
+    status = "error";
+    displayUpdateMessage(status, "Invalid Email Address");
+    return;
+  } else {
+    console.log("Email is considered valid", newEmailInput )
+    //closes the modal by simulating a click on it
+    // document.querySelector('[data-modal-toggle="crud-modal"]').click();
+    // forgotPassword(emailValue);
+  }
+}
+
 
 
 getUserProfileDBData()
@@ -307,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
     mobileMenu.classList.toggle("hidden");
   });
 
-  updateEmailBtn.addEventListener("click", changeEmail);
+  updateEmailBtn.addEventListener("click", checkEmailToChange);
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
