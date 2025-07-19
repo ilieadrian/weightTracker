@@ -15,15 +15,6 @@ import { getUidCookie } from "./cookie-utils";
   //Validate email
   //clear logic with messages for error or succes
 
-
-
-
-
-
-
-
-
-
 function generateProfileUI() {
   let container = document.querySelector(".dashboard-container");
   const htmlTag = document.getElementsByTagName("html")[0];
@@ -204,29 +195,16 @@ async function getUserProfileDBData(){
       }
 }
 
-
-
-async function changeEmail(event) {
+async function changeEmail(email) {
   event.preventDefault();
-
-
   try {
-    await updateEmail(auth.currentUser, newEmailInput);
+    await updateEmail(auth.currentUser, email);
     // await updateUserEmail(newEmailInput);
-    console.log("Email updated successfully");
-
-
-
-    // Optionally, update Firestore if you're storing the email there too
-      //Display a mesaage
-
-
+    status = "valid"
+    displayUpdateMessage(status, "Email updated successfully")
   } catch (error) {
-    console.error("Error updating email:", error);
-    alert(`Failed to update email: ${error.message}`);
-
-    //research - on a new account
-    //Failed to update email: Firebase: Error (auth/email-already-in-use).
+    status = "error"
+    displayUpdateMessage(status, error.message)
   }
 }
 
@@ -242,7 +220,6 @@ async function changeEmail(event) {
 //     });
 
 
-//     displayUpdateMessage(status, newEmail)
 //   } catch (error) {
 //     status = error;
 //     displayUpdateMessage(status, error)
@@ -257,7 +234,7 @@ function displayUpdateMessage(status, param){
   `
   <div id="alert-border-3" class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800" role="alert">
        <div class="ms-3 text-sm font-medium">
-      Email adress changed to ${param}.
+      Email adress changed.
     </div>
     <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"  data-dismiss-target="#alert-border-3" aria-label="Close">
       <span class="sr-only">Dismiss</span>
@@ -278,9 +255,14 @@ function displayUpdateMessage(status, param){
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
       </svg>
     </button>
-</div>`;
+  </div>
+  `;
 
-return notificationContainer.innerHTML = errorCode;
+if(status === "valid"){
+  return notificationContainer.innerHTML = succesCode;
+} else {
+  return notificationContainer.innerHTML = errorCode;
+}
 }
 
 function checkEmailToChange() {
@@ -289,15 +271,11 @@ function checkEmailToChange() {
   let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
   if (reg.test(newEmailInput) === false) {
-    console.log(newEmailInput);
     status = "error";
     displayUpdateMessage(status, "Invalid Email Address");
     return;
   } else {
-    console.log("Email is considered valid", newEmailInput )
-    //closes the modal by simulating a click on it
-    // document.querySelector('[data-modal-toggle="crud-modal"]').click();
-    // forgotPassword(emailValue);
+    changeEmail(newEmailInput);
   }
 }
 
