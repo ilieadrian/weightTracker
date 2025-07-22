@@ -9,10 +9,10 @@ import {
 import { logOut } from "./dashboard";
 import { getUidCookie } from "./cookie-utils";
 
-  let status;
+let status;
 
-  //Roadmap for email change
-  //Validate email
+  //Roadmap for email change - 
+  //Validate email - OK!!!
   //clear logic with messages for error or succes
 
 function generateProfileUI() {
@@ -109,13 +109,11 @@ function generateProfileUI() {
 
       <!-- Profile Info -->
       
-
-
       <div class="space-y-2">
         <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">Profile Information</h2>
-        <p id="profile-name"><span class="font-medium">Name: </span></p>
-        <p id="profile-email"><span class="font-medium">Email: </span></p>
-        <p id="profile-registered-on"><span class="font-medium">Account registered on: </span></p>
+        <p id="profile-name-container">Name: <span class="font-medium" id="profile-name"></span></p>
+        <p id="profile-email-container">Email: <span class="font-medium" id="profile-email"></span></p>
+        <p id="profile-registered-on-container">Account registered on: <span class="font-medium" id="profile-registered-on"></span></p>
       </div>
 
       <!-- Change Email -->
@@ -153,11 +151,11 @@ function generateProfileUI() {
 }
 
 export function generateProfileContent(userData) {
-  document.getElementById("profile-name").textContent +=
+  document.getElementById("profile-name").textContent =
     userData.name || "Unknown user";
-  document.getElementById("profile-email").textContent +=
+  document.getElementById("profile-email").textContent =
     userData.email || "Unknown email";
-  document.getElementById("profile-registered-on").textContent += getFormattedDate(userData.createdAt);
+  document.getElementById("profile-registered-on").textContent = getFormattedDate(userData.createdAt);
 }
 
 function getFormattedDate(createdAt){
@@ -179,14 +177,11 @@ async function getUserProfileDBData(){
   const uId = getUidCookie();
   try {
         const docRef = doc(db, "users", uId);
-  
         const docSnap = await getDoc(docRef);
   
         if (docSnap.exists()) {
           const userData = docSnap.data();
-  
           generateProfileContent(userData) 
-
         } else {
           console.log("No document found matching id");
         }
@@ -199,9 +194,10 @@ async function changeEmail(email) {
   event.preventDefault();
   try {
     await updateEmail(auth.currentUser, email);
-    await updateUserEmail(newEmailInput);
+    await updateUserEmail(email);
     status = "valid"
     displayUpdateMessage(status, "Email updated successfully")
+    getUserProfileDBData();
   } catch (error) {
     status = "error"
     displayUpdateMessage(status, error.message)
@@ -210,7 +206,6 @@ async function changeEmail(email) {
 
 async function updateUserEmail(newEmail) {
   const uId = getUidCookie(); 
-
   const docRef = doc(db, "users", uId); 
 
   try {
@@ -228,38 +223,27 @@ async function updateUserEmail(newEmail) {
 function displayUpdateMessage(status, param){
   const notificationContainer = document.getElementById("notification-container");
   const succesCode = 
-  `
-  <div id="alert-border-3" class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800" role="alert">
-      <div class="ms-3 text-sm font-medium">
-      Email adress changed.
+    `
+    <div id="alert-border-3" class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800" role="alert">
+          <div class="ms-3 text-sm font-medium">
+            Email adress changed.
+          </div>
     </div>
-    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"  data-dismiss-target="#alert-border-3" aria-label="Close">
-      <span class="sr-only">Dismiss</span>
-      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-      </svg>
-    </button>
-</div>
-  `;
-  const errorCode = `
+    `;
+  const errorCode = 
+  `
     <div id="alert-border-2" class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800" role="alert">
         <div class="ms-3 text-sm font-medium">
-      Error: ${param}.
+          Error: ${param}.
+      </div>
     </div>
-    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"  data-dismiss-target="#alert-border-2" aria-label="Close">
-      <span class="sr-only">Dismiss</span>
-      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-      </svg>
-    </button>
-  </div>
   `;
 
-if(status === "valid"){
-  return notificationContainer.innerHTML = succesCode;
-} else {
-  return notificationContainer.innerHTML = errorCode;
-}
+  if(status === "valid"){
+    return notificationContainer.innerHTML = succesCode;
+  } else {
+    return notificationContainer.innerHTML = errorCode;
+  }
 }
 
 function checkEmailToChange() {
@@ -275,8 +259,6 @@ function checkEmailToChange() {
     changeEmail(newEmailInput);
   }
 }
-
-
 
 getUserProfileDBData()
 
