@@ -132,8 +132,23 @@ function generateProfileUI() {
   </h2>
   <div id="accordion-collapse-body-1" class="hidden" aria-labelledby="accordion-collapse-heading-1">
     <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-      <p class="mb-2 text-gray-500 dark:text-gray-400">Flowbite is an open-source library of interactive components built on top of Tailwind CSS including buttons, dropdowns, modals, navbars, and more.</p>
-      <p class="text-gray-500 dark:text-gray-400">Check out this guide to learn how to <a href="/docs/getting-started/introduction/" class="text-blue-600 dark:text-blue-500 hover:underline">get started</a> and start developing websites even faster with components on top of Tailwind CSS.</p>
+      <form id="change-name-form" class="space-y-4">
+        <div id="notification-container"></div>
+        <div>
+          <label for="new-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+          <input type="text" id="new-name" required placeholder="Change name"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+        </div>
+        <button type="submit" id="update-name-btn"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
+          font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 
+          focus:outline-none dark:focus:ring-blue-800">
+          Update name
+        </button>
+      </form>
     </div>
   </div>
   <h2 id="accordion-collapse-heading-2">
@@ -146,7 +161,7 @@ function generateProfileUI() {
   </h2>
   <div id="accordion-collapse-body-2" class="hidden" aria-labelledby="accordion-collapse-heading-2">
     <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
-        <!-- Change Email -->
+        
       <form id="change-email-form" class="space-y-4">
         <div id="notification-container"></div>
         <div>
@@ -161,9 +176,8 @@ function generateProfileUI() {
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
           font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 
           focus:outline-none dark:focus:ring-blue-800">
-          Update Email
+          Update email
         </button>
-
       </form>
     
     </div>
