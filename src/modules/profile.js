@@ -295,6 +295,21 @@ async function updateUserEmail(newEmail) {
   }
 }
 
+async function changeName(name) {
+  console.log(name)
+  event.preventDefault();
+  try {
+    // await updateEmail(auth.currentUser, email);
+    // await updateUserEmail(email);
+    status = "valid"
+    displayUpdateMessage(status, "Name updated successfully")
+    //getUserProfileDBData();
+  } catch (error) {
+    status = "error"
+    displayUpdateMessage(status, error.message)
+  }
+}
+
 function displayUpdateMessage(status, param){
   const notificationContainer = document.getElementById("notification-container");
   const succesCode = 
@@ -348,7 +363,7 @@ function checkNameToChange(){
       displayUpdateMessage(status, "Name contains invalid characters");
       console.log("Name contains invalid characters");
     } else {
-      console.log("Valid name");
+      changeName(nameToChange)
   }
 }
 
