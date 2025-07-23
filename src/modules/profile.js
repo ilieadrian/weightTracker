@@ -295,15 +295,15 @@ async function updateUserEmail(newEmail) {
   }
 }
 
-async function changeName(name) {
-  console.log(name)
+async function changeName(newName) {
+  console.log(newName)
   event.preventDefault();
   const uId = getUidCookie(); 
   const docRef = doc(db, "users", uId); 
 
   try {
     await updateDoc(docRef, {
-      name: name
+      name: newName
     });
 
     status = "valid"
@@ -357,18 +357,18 @@ function checkEmailToChange() {
 
 function checkNameToChange(){
   event.preventDefault();
-  const nameToChange = document.getElementById("new-name").value.trim();
+  const newNameInput = document.getElementById("new-name").value.trim();
   let reg = /^[\p{L} '’-]+$/u;
 
-  if (!nameToChange) {
+  if (!newNameInput) {
       status = "error";
       displayUpdateMessage(status, "Name cannot be empty");
-    } else if (!reg.test(nameToChange)) {
+    } else if (!reg.test(newNameInput)) {
       status = "error"
       displayUpdateMessage(status, "Name contains invalid characters");
       console.log("Name contains invalid characters");
     } else {
-      changeName(nameToChange)
+      changeName(newNameInput)
   }
 }
 
