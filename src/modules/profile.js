@@ -341,8 +341,11 @@ function checkNameToChange(){
   let reg = /^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$/;
 
   if (!nameToChange) {
-      console.log("Name cannot be empty");
-    } else if (!reg.test(name)) {
+      status = "error";
+      displayUpdateMessage(status, "Name cannot be empty");
+    } else if (!reg.test(nameToChange)) {
+      status = "error"
+      displayUpdateMessage(status, "Name contains invalid characters");
       console.log("Name contains invalid characters");
     } else {
       console.log("Valid name");
