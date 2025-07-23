@@ -25,8 +25,6 @@ function generateProfileUI() {
     document.body.appendChild(container);
   }
     return `
-  
-
     <nav class="bg-gray-800">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
@@ -337,13 +335,18 @@ function checkEmailToChange() {
   }
 }
 
-function checknameToChange(){
+function checkNameToChange(){
   event.preventDefault();
-
-  console.log("checknameToChange fired")
-
+  const nameToChange = document.getElementById("new-name").value.trim();
   let reg = /^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$/;
 
+  if (!nameToChange) {
+      console.log("Name cannot be empty");
+    } else if (!reg.test(name)) {
+      console.log("Name contains invalid characters");
+    } else {
+      console.log("Valid name");
+  }
 }
 
 getUserProfileDBData()
@@ -367,7 +370,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   updateEmailBtn.addEventListener("click", checkEmailToChange);
-  updateNameBtn.addEventListener("click", checknameToChange);
+  updateNameBtn.addEventListener("click", checkNameToChange);
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
