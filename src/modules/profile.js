@@ -298,12 +298,17 @@ async function updateUserEmail(newEmail) {
 async function changeName(name) {
   console.log(name)
   event.preventDefault();
+  const uId = getUidCookie(); 
+  const docRef = doc(db, "users", uId); 
+
   try {
-    // await updateEmail(auth.currentUser, email);
-    // await updateUserEmail(email);
+    await updateDoc(docRef, {
+      name: name
+    });
+
     status = "valid"
     displayUpdateMessage(status, "Name updated successfully")
-    //getUserProfileDBData();
+    getUserProfileDBData();
   } catch (error) {
     status = "error"
     displayUpdateMessage(status, error.message)
@@ -353,7 +358,7 @@ function checkEmailToChange() {
 function checkNameToChange(){
   event.preventDefault();
   const nameToChange = document.getElementById("new-name").value.trim();
-  let reg = /^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$/;
+  let reg = /^[\p{L} '’-]+$/u;
 
   if (!nameToChange) {
       status = "error";
