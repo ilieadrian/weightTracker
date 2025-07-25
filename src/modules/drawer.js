@@ -128,3 +128,10 @@ export function editModalControl() {
 
   drawer = new Drawer($targetEl, options, instanceOptions);
 }
+
+
+
+//<button type="submit" id="update-password-btn"
+//<input type="password" id="confirm-password" required placeholder="Confirm new password"
+//<input type="password" id="new-password" required placeholder="New password"
+//<input type="password" id="old-password" required placeholder="Old password"

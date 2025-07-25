@@ -187,7 +187,7 @@ function generateProfileUI() {
         <div id="accordion-collapse-body-3" class="hidden" aria-labelledby="accordion-collapse-heading-3">
           <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
 
-           <form id="change-password-form" class="space-y-4">
+          <form id="change-password-form" class="space-y-4">
               <div id="notification-container"></div>
               <div>
                 <label for="old-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
@@ -400,6 +400,28 @@ function checkNameToChange(){
   }
 }
 
+function checkPasswordToChange(){
+  event.preventDefault();
+  const oldPasswordInput = document.getElementById("old-password").value.trim();
+  const newPasswordInput = document.getElementById("new-password").value.trim();
+  const confirmPasswordInput = document.getElementById("confirm-password").value.trim();
+
+  console.log(oldPasswordInput, newPasswordInput, confirmPasswordInput )
+  
+  // let reg = /^[\p{L} '’-]+$/u;
+
+  if (!newPasswordInput) {
+      // status = "error";
+      // displayUpdateMessage(status, "Name cannot be empty");
+    } else if (!reg.test(newPasswordInput)) {
+      // status = "error"
+      // displayUpdateMessage(status, "Name contains invalid characters");
+      // console.log("Name contains invalid characters");
+    } else {
+      // changeName(newNameInput)
+  }
+}
+
 getUserProfileDBData()
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -411,6 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutButtonMobile = document.getElementById("logout-link-mobile");
   const updateEmailBtn = document.getElementById("update-email-btn");
   const updateNameBtn = document.getElementById("update-name-btn");
+  const updatePasswordBtn = document.getElementById("update-password-btn");
   
   const mobileMenu = document.getElementById("mobile-menu");
 
@@ -422,6 +445,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateEmailBtn.addEventListener("click", checkEmailToChange);
   updateNameBtn.addEventListener("click", checkNameToChange);
+  updatePasswordBtn.addEventListener("click", checkPasswordToChange);
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
