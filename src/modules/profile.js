@@ -127,7 +127,7 @@ function generateProfileUI() {
         <div id="accordion-collapse-body-1" class="hidden" aria-labelledby="accordion-collapse-heading-1">
           <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
             <form id="change-name-form" class="space-y-4">
-              <div id="notification-container"></div>
+              <div id="name-notification-container"></div>
               <div>
                 <label for="new-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
                 <input type="text" id="new-name" required placeholder="Change name"
@@ -157,7 +157,7 @@ function generateProfileUI() {
           <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
               
             <form id="change-email-form" class="space-y-4">
-              <div id="notification-container"></div>
+              <div id="email-notification-container"></div>
               <div>
                 <label for="new-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
                 <input type="email" id="new-email" required placeholder="Change email"
@@ -188,7 +188,7 @@ function generateProfileUI() {
           <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
 
           <form id="change-password-form" class="space-y-4">
-              <div id="notification-container"></div>
+              <div id="password-notification-container"></div>
               <div>
                 <label for="old-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
                 <input type="password" id="old-password" required placeholder="Old password"
@@ -299,11 +299,11 @@ async function changeEmail(email) {
     await updateEmail(auth.currentUser, email);
     await updateUserEmail(email);
     status = "valid"
-    displayUpdateMessage(status, "Email updated successfully")
+    displayUpdateMessage(status, "Email updated successfully", "email")
     getUserProfileDBData();
   } catch (error) {
     status = "error"
-    displayUpdateMessage(status, error.message)
+    displayUpdateMessage(status, error.message, "email")
   }
 }
 
@@ -312,13 +312,12 @@ async function updateUserEmail(newEmail) {
   const docRef = doc(db, "users", uId); 
 
   try {
-    console.log("Try to updateUserEmail(newEmail)", newEmail)
     await updateDoc(docRef, {
       email: newEmail
     });
   } catch (error) {
     status = error;
-    displayUpdateMessage(status, error.message)
+    displayUpdateMessage(status, error.message, "email")
     return null;
   }
 }
@@ -335,21 +334,32 @@ async function changeName(newName) {
     });
 
     status = "valid"
-    displayUpdateMessage(status, "Name updated successfully")
+    displayUpdateMessage(status, "Name updated successfully", "name")
     getUserProfileDBData();
   } catch (error) {
     status = "error"
-    displayUpdateMessage(status, error.message)
+    displayUpdateMessage(status, error.message, "name")
   }
 }
 
-function displayUpdateMessage(status, param){
-  const notificationContainer = document.getElementById("notification-container");
+function displayUpdateMessage(status, message, field){
+  console.log("displayUpdateMessage called with mesaage", message)
+  // const nameNotificationContainer = document.getElementById("notification-container");
+  // const emailNotificationContainer = document.getElementById("notification-container");
+  // const passwordNotificationContainer = document.getElementById("notification-container");
+
+
+const containers = {
+    name: document.getElementById("name-notification-container"),
+    email: document.getElementById("email-notification-container"),
+    password: document.getElementById("password-notification-container")
+  };
+
   const succesCode = 
     `
     <div id="alert-border-3" class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800" role="alert">
           <div class="ms-3 text-sm font-medium">
-            Email adress changed.
+            ${message}
           </div>
     </div>
     `;
@@ -357,15 +367,15 @@ function displayUpdateMessage(status, param){
   `
     <div id="alert-border-2" class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800" role="alert">
         <div class="ms-3 text-sm font-medium">
-          Error: ${param}.
+          Error: ${message}.
       </div>
     </div>
   `;
 
   if(status === "valid"){
-    return notificationContainer.innerHTML = succesCode;
+    containers[field].innerHTML = succesCode;
   } else {
-    return notificationContainer.innerHTML = errorCode;
+    containers[field].innerHTML = errorCode;
   }
 }
 
@@ -376,7 +386,7 @@ function checkEmailToChange() {
 
   if (reg.test(newEmailInput) === false) {
     status = "error";
-    displayUpdateMessage(status, "Invalid Email Address");
+    displayUpdateMessage(status, "Invalid Email Address", "email");
     return;
   } else {
     changeEmail(newEmailInput);
@@ -390,10 +400,10 @@ function checkNameToChange(){
 
   if (!newNameInput) {
       status = "error";
-      displayUpdateMessage(status, "Name cannot be empty");
+      displayUpdateMessage(status, "Name cannot be empty", "name");
     } else if (!reg.test(newNameInput)) {
       status = "error"
-      displayUpdateMessage(status, "Name contains invalid characters");
+      displayUpdateMessage(status, "Name contains invalid characters", "name");
       console.log("Name contains invalid characters");
     } else {
       changeName(newNameInput)
@@ -408,12 +418,13 @@ function checkPasswordToChange(){
 
   console.log(oldPasswordInput, newPasswordInput, confirmPasswordInput )
   
-  // let reg = /^[\p{L} '’-]+$/u;
+  let passwordReg = /^\S+$/;
 
-  if (!newPasswordInput) {
-      // status = "error";
-      // displayUpdateMessage(status, "Name cannot be empty");
-    } else if (!reg.test(newPasswordInput)) {
+  if (!oldPasswordInput || !newPasswordInput || !confirmPasswordInput ) {
+    console.log("One iof the fields is empty")
+      status = "error";
+      displayUpdateMessage(status, "Please fill all the fields");
+    } else if (!passwordReg.test(newPasswordInput)) {
       // status = "error"
       // displayUpdateMessage(status, "Name contains invalid characters");
       // console.log("Name contains invalid characters");
