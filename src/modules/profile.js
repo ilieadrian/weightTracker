@@ -343,12 +343,6 @@ async function changeName(newName) {
 }
 
 function displayUpdateMessage(status, message, field){
-  console.log("displayUpdateMessage called with mesaage", message)
-  // const nameNotificationContainer = document.getElementById("notification-container");
-  // const emailNotificationContainer = document.getElementById("notification-container");
-  // const passwordNotificationContainer = document.getElementById("notification-container");
-
-
 const containers = {
     name: document.getElementById("name-notification-container"),
     email: document.getElementById("email-notification-container"),
@@ -421,12 +415,11 @@ function checkPasswordToChange(){
   let passwordReg = /^\S+$/;
 
   if (!oldPasswordInput || !newPasswordInput || !confirmPasswordInput ) {
-    console.log("One iof the fields is empty")
       status = "error";
-      displayUpdateMessage(status, "Please fill all the fields");
-    } else if (!passwordReg.test(newPasswordInput)) {
-      // status = "error"
-      // displayUpdateMessage(status, "Name contains invalid characters");
+      displayUpdateMessage(status, "Please fill all the fields", "password");
+    } else if (!passwordReg.test(oldPasswordInput) || !passwordReg.test(newPasswordInput) || !passwordReg.test(confirmPasswordInput)) {
+      status = "error"
+      displayUpdateMessage(status, "Passoword cannot contain spaces", "password");
       // console.log("Name contains invalid characters");
     } else {
       // changeName(newNameInput)
