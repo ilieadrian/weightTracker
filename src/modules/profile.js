@@ -1,6 +1,6 @@
 console.log("Hello from profile")
 import "../styles.css";
-import { auth, db, updateEmail } from "./firebaseConfig";
+import { auth, db, updateEmail, updatePassword } from "./firebaseConfig";
 import {
   getDoc,
   doc,
@@ -293,6 +293,26 @@ async function getUserProfileDBData(){
       }
 }
 
+async function changeName(newName) {
+  console.log(newName)
+  event.preventDefault();
+  const uId = getUidCookie(); 
+  const docRef = doc(db, "users", uId); 
+
+  try {
+    await updateDoc(docRef, {
+      name: newName
+    });
+
+    status = "valid"
+    displayUpdateMessage(status, "Name updated successfully", "name")
+    getUserProfileDBData();
+  } catch (error) {
+    status = "error"
+    displayUpdateMessage(status, error.message, "name")
+  }
+}
+
 async function changeEmail(email) {
   event.preventDefault();
   try {
@@ -322,24 +342,17 @@ async function updateUserEmail(newEmail) {
   }
 }
 
-async function changeName(newName) {
-  console.log(newName)
-  event.preventDefault();
-  const uId = getUidCookie(); 
-  const docRef = doc(db, "users", uId); 
+async function updateUserPassword(newPassword){
+  const user = auth.currentUser;
+  console.log(newPassword)
 
-  try {
-    await updateDoc(docRef, {
-      name: newName
-    });
+  updatePassword(user, newPassword).then(() => {
+  // Update successful.
+}).catch((error) => {
+  // An error ocurred
+  // ...
+});
 
-    status = "valid"
-    displayUpdateMessage(status, "Name updated successfully", "name")
-    getUserProfileDBData();
-  } catch (error) {
-    status = "error"
-    displayUpdateMessage(status, error.message, "name")
-  }
 }
 
 function displayUpdateMessage(status, message, field){
@@ -424,7 +437,7 @@ function checkPasswordToChange(){
       status = "error";
       displayUpdateMessage(status, "New passwords are not the same", "password");
     } else {
-      // changeName(newNameInput)
+      updateUserPassword(newPassword)
   }
 }
 
