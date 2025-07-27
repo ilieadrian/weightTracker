@@ -419,8 +419,10 @@ function checkPasswordToChange(){
       displayUpdateMessage(status, "Please fill all the fields", "password");
     } else if (!passwordReg.test(oldPasswordInput) || !passwordReg.test(newPasswordInput) || !passwordReg.test(confirmPasswordInput)) {
       status = "error"
-      displayUpdateMessage(status, "Passoword cannot contain spaces", "password");
-      // console.log("Name contains invalid characters");
+      displayUpdateMessage(status, "Password cannot contain spaces", "password");
+    } else if(newPasswordInput !== confirmPasswordInput){
+      status = "error";
+      displayUpdateMessage(status, "New passwords are not the same", "password");
     } else {
       // changeName(newNameInput)
   }
