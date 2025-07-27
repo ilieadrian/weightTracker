@@ -344,13 +344,13 @@ async function updateUserEmail(newEmail) {
 
 async function updateUserPassword(newPassword){
   const user = auth.currentUser;
-  console.log(newPassword)
-
-  updatePassword(user, newPassword).then(() => {
-  // Update successful.
+  
+  await updatePassword(user, newPassword).then(() => {
+  status = "valid";
+      displayUpdateMessage(status, "Password successfully updated", "password");
 }).catch((error) => {
-  // An error ocurred
-  // ...
+    status = "error";
+    displayUpdateMessage(status, error.message, "password");
 });
 
 }
@@ -437,7 +437,7 @@ function checkPasswordToChange(){
       status = "error";
       displayUpdateMessage(status, "New passwords are not the same", "password");
     } else {
-      updateUserPassword(newPassword)
+      updateUserPassword(newPasswordInput)
   }
 }
 
