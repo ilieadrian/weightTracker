@@ -190,14 +190,6 @@ function generateProfileUI() {
           <form id="change-password-form" class="space-y-4">
               <div id="password-notification-container"></div>
               <div>
-                <label for="old-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
-                <input type="password" id="old-password" required placeholder="Old password"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
-                  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
-                  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
-                  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-              </div>
-              <div>
                 <label for="new-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
                 <input type="password" id="new-password" required placeholder="New password"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
@@ -225,15 +217,6 @@ function generateProfileUI() {
         </div>
       </div>
 
-
-
-
-
-
-
-
-
-      
 
       <!-- Change Password -->
       <!--<div class="pt-4 border-t border-gray-200 dark:border-gray-700"> Change name
@@ -344,15 +327,14 @@ async function updateUserEmail(newEmail) {
 
 async function updateUserPassword(newPassword){
   const user = auth.currentUser;
-  
-  await updatePassword(user, newPassword).then(() => {
-  status = "valid";
-      displayUpdateMessage(status, "Password successfully updated", "password");
-}).catch((error) => {
-    status = "error";
-    displayUpdateMessage(status, error.message, "password");
-});
 
+  await updatePassword(user, newPassword).then(() => {
+    status = "valid";
+      displayUpdateMessage(status, "Password successfully updated", "password");
+    }).catch((error) => {
+      status = "error";
+      displayUpdateMessage(status, error.message, "password");
+    });
 }
 
 function displayUpdateMessage(status, message, field){
@@ -419,18 +401,15 @@ function checkNameToChange(){
 
 function checkPasswordToChange(){
   event.preventDefault();
-  const oldPasswordInput = document.getElementById("old-password").value.trim();
   const newPasswordInput = document.getElementById("new-password").value.trim();
   const confirmPasswordInput = document.getElementById("confirm-password").value.trim();
 
-  console.log(oldPasswordInput, newPasswordInput, confirmPasswordInput )
-  
   let passwordReg = /^\S+$/;
 
-  if (!oldPasswordInput || !newPasswordInput || !confirmPasswordInput ) {
+  if (!newPasswordInput || !confirmPasswordInput ) {
       status = "error";
       displayUpdateMessage(status, "Please fill all the fields", "password");
-    } else if (!passwordReg.test(oldPasswordInput) || !passwordReg.test(newPasswordInput) || !passwordReg.test(confirmPasswordInput)) {
+    } else if (!passwordReg.test(newPasswordInput) || !passwordReg.test(confirmPasswordInput)) {
       status = "error"
       displayUpdateMessage(status, "Password cannot contain spaces", "password");
     } else if(newPasswordInput !== confirmPasswordInput){
