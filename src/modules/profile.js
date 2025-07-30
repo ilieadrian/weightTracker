@@ -107,6 +107,7 @@ function generateProfileUI() {
         <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">Profile Information</h2>
         <p id="profile-name-container">Name: <span class="font-medium" id="profile-name"></span></p>
         <p id="profile-email-container">Email: <span class="font-medium" id="profile-email"></span></p>
+        <p id="profile-weight-container">Weight: <span class="font-medium" id="profile-weight"></span></p>
         <p id="profile-registered-on-container">Account registered on: <span class="font-medium" id="profile-registered-on"></span></p>
       </div>
 
@@ -145,6 +146,7 @@ function generateProfileUI() {
             </form>
           </div>
         </div>
+
         <h2 id="accordion-collapse-heading-2">
           <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-2" aria-expanded="false" aria-controls="accordion-collapse-body-2">
             <span>Change email</span>
@@ -155,7 +157,6 @@ function generateProfileUI() {
         </h2>
         <div id="accordion-collapse-body-2" class="hidden" aria-labelledby="accordion-collapse-heading-2">
           <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
-              
             <form id="change-email-form" class="space-y-4">
               <div id="email-notification-container"></div>
               <div>
@@ -173,20 +174,49 @@ function generateProfileUI() {
                 Update email
               </button>
             </form>
-          
           </div>
         </div>
+
         <h2 id="accordion-collapse-heading-3">
-          <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-3" aria-expanded="false" aria-controls="accordion-collapse-body-3">
-            <span>Change password</span>
+          <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200  focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-3" aria-expanded="false" aria-controls="accordion-collapse-body-3">
+            <span>Change weight</span>
             <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
             </svg>
           </button>
         </h2>
         <div id="accordion-collapse-body-3" class="hidden" aria-labelledby="accordion-collapse-heading-3">
-          <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
+          <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+            <form id="change-weight-form" class="space-y-4">
+              <div id="weight-notification-container"></div>
+              <div>
+                <label for="new-weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+                <input type="text" id="new-weight" required placeholder="Change weight (kg)"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+                  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+                  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+                  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+              </div>
+              <button type="submit" id="update-weight-btn"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
+                font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 
+                focus:outline-none dark:focus:ring-blue-800">
+                Update weight
+              </button>
+            </form>
+          </div>
+        </div>
 
+        <h2 id="accordion-collapse-heading-4">
+          <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-4" aria-expanded="false" aria-controls="accordion-collapse-body-4">
+            <span>Change password</span>
+            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+            </svg>
+          </button>
+        </h2>
+        <div id="accordion-collapse-body-4" class="hidden" aria-labelledby="accordion-collapse-heading-4">
+          <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
           <form id="change-password-form" class="space-y-4">
               <div id="password-notification-container"></div>
               <div>
@@ -212,11 +242,9 @@ function generateProfileUI() {
                 Update password
               </button>
             </form>
-
           </div>
         </div>
       </div>
-
 
       <!-- Change Password -->
       <!--<div class="pt-4 border-t border-gray-200 dark:border-gray-700"> Change name
@@ -241,6 +269,8 @@ export function generateProfileContent(userData) {
     userData.name || "Unknown user";
   document.getElementById("profile-email").textContent =
     userData.email || "Unknown email";
+    document.getElementById("profile-weight").textContent =
+    userData.weight || "No weight added yet.";
   document.getElementById("profile-registered-on").textContent = getFormattedDate(userData.createdAt);
 }
 
@@ -448,4 +478,3 @@ document.addEventListener("DOMContentLoaded", () => {
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
 });
-
