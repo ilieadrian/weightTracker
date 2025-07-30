@@ -157,6 +157,9 @@ function generateRecordsTable() {
                       Evolution
                   </th>
                   <th scope="col" class="px-6 py-3">
+                      BMI
+                  </th>
+                  <th scope="col" class="px-6 py-3">
                       Comments
                   </th>
                   <th scope="col" class="px-6 py-3">
@@ -358,6 +361,9 @@ function renderPage(table, selectedPage){
                   </td>
                   <td class="px-6 py-4">
                     <img src="${entry.evolution}" class="evolution-image"></img>
+                  </td>
+                  <td class="px-6 py-4">
+                      BMI
                   </td>
                   <td class="px-6 py-4">
                       ${entry.comments}
