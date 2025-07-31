@@ -371,6 +371,7 @@ function displayUpdateMessage(status, message, field){
 const containers = {
     name: document.getElementById("name-notification-container"),
     email: document.getElementById("email-notification-container"),
+    weight: document.getElementById("weight-notification-container"),
     password: document.getElementById("password-notification-container")
   };
 
@@ -453,6 +454,19 @@ function checkPasswordToChange(){
 function checkWeightToChange(){
   event.preventDefault();
   const newWeightInput = document.getElementById("new-weight").value.trim();
+
+  let reg = /^\d+([.,]\d{1,2})?$/;
+
+  if (!newWeightInput) {
+      status = "error";
+      displayUpdateMessage(status, "Field cannot be empty", "weight");
+    } else if (!reg.test(newWeightInput)) {
+      status = "error"
+      displayUpdateMessage(status, "Input expects: Numbers (0-9), Decimals ( , / . ), Up to 2 decimal places (70.99 or 70.9)", "weight");
+    } else {
+      console.log("Weight is valid", newWeightInput)
+      //changeWeight(newWeightInput)
+  }
 
   console.log(newWeightInput)
 }
