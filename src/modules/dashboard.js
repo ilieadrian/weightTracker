@@ -490,3 +490,9 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = "profile.html";
   });
 });
+
+//<form id="change-weight-form" class="space-y-4">
+//<div id="weight-notification-container"></div>
+//<div id="weight-notification-container"></div>
+//<input type="text" id="new-weight" required placeholder="Change weight (kg)"
+//<button type="submit" id="update-weight-btn"

@@ -450,6 +450,13 @@ function checkPasswordToChange(){
   }
 }
 
+function checkWeightToChange(){
+  event.preventDefault();
+  const newWeightInput = document.getElementById("new-weight").value.trim();
+
+  console.log(newWeightInput)
+}
+
 getUserProfileDBData()
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -462,6 +469,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateEmailBtn = document.getElementById("update-email-btn");
   const updateNameBtn = document.getElementById("update-name-btn");
   const updatePasswordBtn = document.getElementById("update-password-btn");
+  const updateWeightBtn = document.getElementById("update-weight-btn");
   
   const mobileMenu = document.getElementById("mobile-menu");
 
@@ -474,6 +482,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateEmailBtn.addEventListener("click", checkEmailToChange);
   updateNameBtn.addEventListener("click", checkNameToChange);
   updatePasswordBtn.addEventListener("click", checkPasswordToChange);
+  updateWeightBtn.addEventListener("click", checkWeightToChange);
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
