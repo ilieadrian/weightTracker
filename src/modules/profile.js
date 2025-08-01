@@ -340,6 +340,10 @@ async function changeEmail(email) {
   }
 }
 
+async function changeWeight(weight) {
+  console.log("changeWeight(weight)", weight)
+}
+
 async function updateUserEmail(newEmail) {
   const uId = getUidCookie(); 
   const docRef = doc(db, "users", uId); 
@@ -464,11 +468,8 @@ function checkWeightToChange(){
       status = "error"
       displayUpdateMessage(status, "Input expects: Numbers (0-9), Decimals ( , / . ), Up to 2 decimal places (70.99 or 70.9)", "weight");
     } else {
-      console.log("Weight is valid", newWeightInput)
-      //changeWeight(newWeightInput)
+      changeWeight(newWeightInput)
   }
-
-  console.log(newWeightInput)
 }
 
 getUserProfileDBData()
