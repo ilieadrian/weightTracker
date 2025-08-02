@@ -107,7 +107,7 @@ function generateProfileUI() {
         <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">Profile Information</h2>
         <p id="profile-name-container">Name: <span class="font-medium" id="profile-name"></span></p>
         <p id="profile-email-container">Email: <span class="font-medium" id="profile-email"></span></p>
-        <p id="profile-weight-container">Weight: <span class="font-medium" id="profile-weight"></span></p>
+        <p id="profile-weight-container">Height: <span class="font-medium" id="profile-height"></span> (cm)</p>
         <p id="profile-registered-on-container">Account registered on: <span class="font-medium" id="profile-registered-on"></span></p>
       </div>
 
@@ -179,7 +179,7 @@ function generateProfileUI() {
 
         <h2 id="accordion-collapse-heading-3">
           <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200  focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-3" aria-expanded="false" aria-controls="accordion-collapse-body-3">
-            <span>Change weight</span>
+            <span>Change height</span>
             <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
             </svg>
@@ -187,21 +187,21 @@ function generateProfileUI() {
         </h2>
         <div id="accordion-collapse-body-3" class="hidden" aria-labelledby="accordion-collapse-heading-3">
           <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-            <form id="change-weight-form" class="space-y-4">
-              <div id="weight-notification-container"></div>
+            <form id="change-height-form" class="space-y-4">
+              <div id="height-notification-container"></div>
               <div>
-                <label for="new-weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
-                <input type="text" id="new-weight" required placeholder="Change weight (kg)"
+                <label for="new-height" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+                <input type="text" id="new-height" required placeholder="Change height (centimeters)"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
                   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
                   dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
               </div>
-              <button type="submit" id="update-weight-btn"
+              <button type="submit" id="update-height-btn"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
                 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 
                 focus:outline-none dark:focus:ring-blue-800">
-                Update weight
+                Update height
               </button>
             </form>
           </div>
@@ -269,8 +269,8 @@ export function generateProfileContent(userData) {
     userData.name || "Unknown user";
   document.getElementById("profile-email").textContent =
     userData.email || "Unknown email";
-    document.getElementById("profile-weight").textContent =
-    userData.weight || "No weight added yet.";
+    document.getElementById("profile-height").textContent =
+    userData.height || "No height added yet.";
   document.getElementById("profile-registered-on").textContent = getFormattedDate(userData.createdAt);
 }
 
@@ -307,7 +307,6 @@ async function getUserProfileDBData(){
 }
 
 async function changeName(newName) {
-  console.log(newName)
   event.preventDefault();
   const uId = getUidCookie(); 
   const docRef = doc(db, "users", uId); 
@@ -340,8 +339,23 @@ async function changeEmail(email) {
   }
 }
 
-async function changeWeight(weight) {
-  console.log("changeWeight(weight)", weight)
+async function changeHeight(newHeight) {
+  event.preventDefault();
+  const uId = getUidCookie(); 
+  const docRef = doc(db, "users", uId); 
+
+  try {
+    await updateDoc(docRef, {
+      height: newHeight
+    });
+
+    status = "valid"
+    displayUpdateMessage(status, "Height updated successfully", "height")
+    getUserProfileDBData();
+  } catch (error) {
+    status = "error"
+    displayUpdateMessage(status, error.message, "height")
+  }
 }
 
 async function updateUserEmail(newEmail) {
@@ -375,7 +389,7 @@ function displayUpdateMessage(status, message, field){
 const containers = {
     name: document.getElementById("name-notification-container"),
     email: document.getElementById("email-notification-container"),
-    weight: document.getElementById("weight-notification-container"),
+    height: document.getElementById("height-notification-container"),
     password: document.getElementById("password-notification-container")
   };
 
@@ -455,20 +469,20 @@ function checkPasswordToChange(){
   }
 }
 
-function checkWeightToChange(){
+function checkHeightToChange(){
   event.preventDefault();
-  const newWeightInput = document.getElementById("new-weight").value.trim();
+  const newHeightInput = document.getElementById("new-height").value.trim();
 
   let reg = /^\d+([.,]\d{1,2})?$/;
 
-  if (!newWeightInput) {
+  if (!newHeightInput) {
       status = "error";
-      displayUpdateMessage(status, "Field cannot be empty", "weight");
-    } else if (!reg.test(newWeightInput)) {
+      displayUpdateMessage(status, "Field cannot be empty", "height");
+    } else if (!reg.test(newHeightInput)) {
       status = "error"
-      displayUpdateMessage(status, "Input expects: Numbers (0-9), Decimals ( , / . ), Up to 2 decimal places (70.99 or 70.9)", "weight");
+      displayUpdateMessage(status, "Input expects: Numbers (0-9), example 183 for 1.83 meters height", "height");
     } else {
-      changeWeight(newWeightInput)
+      changeHeight(newHeightInput)
   }
 }
 
@@ -484,7 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateEmailBtn = document.getElementById("update-email-btn");
   const updateNameBtn = document.getElementById("update-name-btn");
   const updatePasswordBtn = document.getElementById("update-password-btn");
-  const updateWeightBtn = document.getElementById("update-weight-btn");
+  const updateHeightBtn = document.getElementById("update-height-btn");
   
   const mobileMenu = document.getElementById("mobile-menu");
 
@@ -497,7 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateEmailBtn.addEventListener("click", checkEmailToChange);
   updateNameBtn.addEventListener("click", checkNameToChange);
   updatePasswordBtn.addEventListener("click", checkPasswordToChange);
-  updateWeightBtn.addEventListener("click", checkWeightToChange);
+  updateHeightBtn.addEventListener("click", checkHeightToChange);
 
   logoutButton.addEventListener("click", logOut);
   logoutButtonMobile.addEventListener("click", logOut);
