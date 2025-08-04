@@ -1,6 +1,7 @@
 import "../styles.css";
 import { setupCrudListeners } from "./crud";
 import { getEvolution } from "./evolution.js";
+import { getBMI} from "./calculateBMI.js"
 import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import {
@@ -375,7 +376,6 @@ function renderPage(table, selectedPage){
     `;
       table.appendChild(tableRow);
     });
-  // getEvolution()
   return table;
 }
 

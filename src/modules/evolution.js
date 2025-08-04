@@ -2,6 +2,9 @@ import { cachedWeights } from "./dashboard";
 import ArrowUp from "../images/arrow-up-solid.svg"
 import ArrowDown from "../images/arrow-down-solid.svg"
 import Equals from "../images/equals-solid.svg"
+
+console.log("Evolution.js called")
+
 const arrowUp = document.createElement("img");
 arrowUp.src = ArrowUp;
 arrowUp.alt = "Upward Arrow";
