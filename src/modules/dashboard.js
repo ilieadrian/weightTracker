@@ -228,6 +228,7 @@ export async function updateWeightsTable(useruid, selectedPage){
 
   cachedWeights = await getWeightData(useruid);
   cachedWeights = getEvolution();
+  cachedWeights = getBMI();
   
   table.innerHTML = "";
 
@@ -364,7 +365,7 @@ function renderPage(table, selectedPage){
                     <img src="${entry.evolution}" class="evolution-image"></img>
                   </td>
                   <td class="px-6 py-4">
-                      BMI
+                      ${entry.BMI}
                   </td>
                   <td class="px-6 py-4">
                       ${entry.comments}
