@@ -364,9 +364,21 @@ function renderPage(table, selectedPage){
                   <td class="px-6 py-4">
                     <img src="${entry.evolution}" class="evolution-image"></img>
                   </td>
-                  <td class="px-6 py-4">
-                      ${entry.BMI}
-                  </td>
+
+                  <td class="relative px-6 py-4 group">
+                    <span class="font-medium text-gray-700 dark:text-gray-200">${entry.BMI}</span>
+                    <div class="absolute left-1/2 -translate-x-1/2 -top-10 
+                                invisible opacity-0 group-hover:visible group-hover:opacity-100
+                                bg-gray-900 text-white text-xs rounded px-3 py-1 
+                                transition-opacity duration-300 whitespace-nowrap">
+                      BMI Here
+                      <div class="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-full 
+                                  w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent 
+                                  border-t-4 border-t-gray-900"></div>
+                    </div>
+                </td>
+
+
                   <td class="px-6 py-4">
                       ${entry.comments}
                   </td>

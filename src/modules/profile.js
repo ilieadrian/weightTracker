@@ -270,7 +270,7 @@ export function generateProfileContent(userData) {
   document.getElementById("profile-email").textContent =
     userData.email || "Unknown email";
     document.getElementById("profile-height").textContent =
-    userData.height || "No height added yet.";
+    userData.height / 100 || "No height added yet.";
   document.getElementById("profile-registered-on").textContent = getFormattedDate(userData.createdAt);
 }
 
