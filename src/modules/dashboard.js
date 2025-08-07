@@ -1,7 +1,7 @@
 import "../styles.css";
 import { setupCrudListeners } from "./crud";
 import { getEvolution } from "./evolution.js";
-import { getBMI} from "./calculateBMI.js"
+import { calculateBMI } from "./calculateBMI.js"
 import { auth, db } from "./firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import {
@@ -185,12 +185,14 @@ export async function registerNewRecord(date, weight, comments) {
     const weightsCollectionRef = collection(db, "users", userUid, "weights");
     const dateObj = parseDDMMYYYY(date);
     const timestamp = Timestamp.fromDate(dateObj);
-
+    const { BMI, category } = calculateBMI(weight);
     
     const docRef = await addDoc(weightsCollectionRef, {
       timestamp: timestamp,
       date: date,
       weight: weight,
+      BMI: BMI ?? "N/A",
+      category: category ?? "Unknown",
       comments: comments,
     });
       console.log("Document written with ID: ", docRef.id);
@@ -229,7 +231,6 @@ export async function updateWeightsTable(useruid, selectedPage){
 
   cachedWeights = await getWeightData(useruid);
   cachedWeights = getEvolution();
-  cachedWeights = getBMI();
   
   table.innerHTML = "";
 
