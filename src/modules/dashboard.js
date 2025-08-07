@@ -185,6 +185,7 @@ export async function registerNewRecord(date, weight, comments) {
     const weightsCollectionRef = collection(db, "users", userUid, "weights");
     const dateObj = parseDDMMYYYY(date);
     const timestamp = Timestamp.fromDate(dateObj);
+
     
     const docRef = await addDoc(weightsCollectionRef, {
       timestamp: timestamp,
@@ -287,7 +288,6 @@ function handleNonNumericPagination(selectedPage){
   updateWeightsTable(userUid, currentPage)
 }
 
-
 async function generatePagination(page){
   const html = `
       <li>
@@ -310,7 +310,7 @@ async function paginationLogic(page) {
   let data = cachedWeights;
 
   //get controlls and container
-    const prevBtn = document.getElementById("prev-btn");
+  const prevBtn = document.getElementById("prev-btn");
   const nextBtn = document.getElementById("next-btn");
 
   //get the number of pages
@@ -371,7 +371,7 @@ function renderPage(table, selectedPage){
                                 invisible opacity-0 group-hover:visible group-hover:opacity-100
                                 bg-gray-900 text-white text-xs rounded px-3 py-1 
                                 transition-opacity duration-300 whitespace-nowrap">
-                      BMI Here
+                      ${entry.category}
                       <div class="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-full 
                                   w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent 
                                   border-t-4 border-t-gray-900"></div>
