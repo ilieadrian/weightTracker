@@ -4,6 +4,7 @@ import { getDoc, updateDoc, deleteDoc, Timestamp } from "firebase/firestore";
 import { validateEditRecord } from "./formValidation";
 import { createEditDrawer, editModalControl, drawer } from "./drawer";
 import { parseDDMMYYYY, currentPage, updateWeightsTable } from "./dashboard";
+import { calculateBMI } from "./calculateBMI.js"
 
 let dataToEdit = { id: "", data: {} }
 
@@ -71,12 +72,17 @@ export async function handleEdit(){
     const timestamp = Timestamp.fromDate(dateObj);
     weightEditBtn.disabled = true;
 
+        const { BMI, category } = calculateBMI(weightValue);
+
+
     try {
       const weightDocRef = doc(db, "users", userUid, "weights", id);
       await updateDoc(weightDocRef, {
         timestamp: timestamp,
         date: datePickerValue,
         weight: weightValue,
+        BMI: BMI ?? "N/A",
+        category: category ?? "Unknown",
         comments: commentsValue,
     });
 

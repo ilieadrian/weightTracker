@@ -107,7 +107,7 @@ function generateProfileUI() {
         <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">Profile Information</h2>
         <p id="profile-name-container">Name: <span class="font-medium" id="profile-name"></span></p>
         <p id="profile-email-container">Email: <span class="font-medium" id="profile-email"></span></p>
-        <p id="profile-weight-container">Height (cm): <span class="font-medium" id="profile-height"></span></p>
+        <p id="profile-weight-container">Height (meters): <span class="font-medium" id="profile-height"></span></p>
         <p id="profile-registered-on-container">Account registered on: <span class="font-medium" id="profile-registered-on"></span></p>
       </div>
 
