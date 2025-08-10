@@ -157,8 +157,19 @@ function generateRecordsTable() {
                   <th scope="col" class="px-6 py-3">
                       Evolution
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" class="px-6 py-3 relative group">
                       BMI
+
+                    <div class="absolute left-1/2 -translate-x-1/2 -top-10 
+                          invisible opacity-0 group-hover:visible group-hover:opacity-100
+                          bg-gray-900 text-white text-xs rounded px-3 py-1 
+                          transition-opacity duration-300 whitespace-nowrap">
+                BMI is calculated as weight / height². No gender differences are taken into account in the formula. Needs height set in the Profile page.
+                <div class="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-full 
+                            w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent 
+                  border-t-4 border-t-gray-900">
+                </div>
+  </div>
                   </th>
                   <th scope="col" class="px-6 py-3">
                       Comments
