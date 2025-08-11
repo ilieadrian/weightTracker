@@ -247,7 +247,7 @@ export async function updateWeightsTable(useruid, selectedPage){
 
   if (cachedWeights.length === 0) {
       table.innerHTML += `<tr>
-          <td colspan="5" class="text-center py-4">
+          <td colspan="6" class="text-center py-4">
             <p class="text-gray-500">No weight entries found.</p>
           </td>
         </tr>
