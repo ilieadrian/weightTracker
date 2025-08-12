@@ -52,39 +52,46 @@ export function validateEditRecord(){
   }
 
 export function setSubmitButtonState(active, edit = false) {
-  // const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
-  // const weightEditBtn = document.getElementById("weight-edit-button");
+   const activeButtonClasses = [
+    "text-white",
+    "bg-blue-700",
+    "hover:bg-blue-800",
+  ];
+  const disabledButtonClasses = [
+    "bg-gray-100",
+    "border",
+    "border-gray-300",
+    "text-gray-400",
+    "cursor-not-allowed",
+  ];
 
-  // const activeButtonClasses = [
-  //   "text-white",
-  //   "bg-blue-700",
-  //   "hover:bg-blue-800",
-  // ];
-  // const disabledButtonClasses = [
-  //   "bg-gray-100",
-  //   "border",
-  //   "border-gray-300",
-  //   "text-gray-400",
-  //   "cursor-not-allowed",
-  // ];
 
-  // if (active) {
-  //   weightRecordSubmitBtn.classList.remove(...disabledButtonClasses);
-  //   weightRecordSubmitBtn.classList.add(...activeButtonClasses);
-  //   weightRecordSubmitBtn.disabled = false;
+  const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
 
-  //   weightEditBtn.classList.remove(...disabledButtonClasses);
-  //   weightEditBtn.classList.add(...activeButtonClasses);
-  //   weightEditBtn.disabled = false;
-  // } else {
-  //   weightRecordSubmitBtn.classList.remove(...activeButtonClasses);
-  //   weightRecordSubmitBtn.classList.add(...disabledButtonClasses);
-  //   weightRecordSubmitBtn.disabled = true;
+  if (edit){
+      const weightEditBtn = document.getElementById("weight-edit-button");
 
-  //   weightEditBtn.classList.remove(...activeButtonClasses);
-  //   weightEditBtn.classList.add(...disabledButtonClasses);
-  //   weightEditBtn.disabled = true;
-  // }
+
+    if (active) {
+      weightEditBtn.classList.remove(...disabledButtonClasses);
+      weightEditBtn.classList.add(...activeButtonClasses);
+      weightEditBtn.disabled = false;
+    } else {
+      weightEditBtn.classList.remove(...activeButtonClasses);
+      weightEditBtn.classList.add(...disabledButtonClasses);
+      weightEditBtn.disabled = true;
+    }
+  }
+
+  if (active) {
+    weightRecordSubmitBtn.classList.remove(...disabledButtonClasses);
+    weightRecordSubmitBtn.classList.add(...activeButtonClasses);
+    weightRecordSubmitBtn.disabled = false;
+  } else {
+    weightRecordSubmitBtn.classList.remove(...activeButtonClasses);
+    weightRecordSubmitBtn.classList.add(...disabledButtonClasses);
+    weightRecordSubmitBtn.disabled = true;
+  }
 }
 
 export function setDrawerFieldsState(valid, edit = false) {
