@@ -20,12 +20,11 @@ export function validateWeightRecord() {
   weightRecordSubmitBtn.removeEventListener("click", handleSubmit);
   if (datePickerValue && weightValue) {
     weightRecordSubmitBtn.addEventListener("click", handleSubmit);
-    setSubmitButtonState("active");
-    setDrawerFieldsState("valid");
-
+    setAddSubmitButtonState("valid");
+    setAddDrawerFieldsState("valid");
   } else {
-    setSubmitButtonState();
-    setDrawerFieldsState();
+    setAddSubmitButtonState();
+    setAddDrawerFieldsState();
     return;
   }
 }
@@ -39,19 +38,18 @@ export function validateEditRecord(){
   const weightEditBtn = document.getElementById("weight-edit-button");
 
     weightEditBtn.removeEventListener("click", handleEdit);
-  if (datePickerEditValue && weightEditValue) {
-    weightEditBtn.addEventListener("click", handleEdit);
-    setSubmitButtonState("active", true);
-    setDrawerFieldsState("valid", true);
-
-  } else {
-    setSubmitButtonState();
-    setDrawerFieldsState();
-    return;
+    if (datePickerEditValue && weightEditValue) {
+      weightEditBtn.addEventListener("click", handleEdit);
+      setSubmitButtonState("active", true);
+      setDrawerFieldsState("valid", true);
+    } else {
+      setSubmitButtonState();
+      setDrawerFieldsState();
+      return;
+    }
   }
-  }
 
-export function setSubmitButtonState(active, edit = false) {
+export function setAddSubmitButtonState(valid) {
   const activeButtonClasses = [
     "text-white",
     "bg-blue-700",
@@ -67,21 +65,21 @@ export function setSubmitButtonState(active, edit = false) {
 
   const weightRecordSubmitBtn = document.getElementById("weight-submit-button");
 
-  if (edit){
-    const weightEditBtn = document.getElementById("weight-edit-button");
+  // if(edit){
+  //   const weightEditBtn = document.getElementById("weight-edit-button");
 
-    if (active) {
-      weightEditBtn.classList.remove(...disabledButtonClasses);
-      weightEditBtn.classList.add(...activeButtonClasses);
-      weightEditBtn.disabled = false;
-    } else {
-      weightEditBtn.classList.remove(...activeButtonClasses);
-      weightEditBtn.classList.add(...disabledButtonClasses);
-      weightEditBtn.disabled = true;
-    }
-  }
+  //   if (valid) {
+  //     weightEditBtn.classList.remove(...disabledButtonClasses);
+  //     weightEditBtn.classList.add(...activeButtonClasses);
+  //     weightEditBtn.disabled = false;
+  //   } else {
+  //     weightEditBtn.classList.remove(...activeButtonClasses);
+  //     weightEditBtn.classList.add(...disabledButtonClasses);
+  //     weightEditBtn.disabled = true;
+  //   }
+  // }
 
-  if (active) {
+  if(valid) {
     weightRecordSubmitBtn.classList.remove(...disabledButtonClasses);
     weightRecordSubmitBtn.classList.add(...activeButtonClasses);
     weightRecordSubmitBtn.disabled = false;
@@ -92,8 +90,8 @@ export function setSubmitButtonState(active, edit = false) {
   }
 }
 
-export function setDrawerFieldsState(valid, edit = false) {
-    const validClasses = [
+export function setAddDrawerFieldsState(valid) {
+  const validClasses = [
     "bg-gray-50",
     "border-gray-300",
     "text-gray-900",
@@ -121,29 +119,7 @@ export function setDrawerFieldsState(valid, edit = false) {
   const datePicker = document.getElementById("datepicker-autohide");
   const weight = document.getElementById("weight-input");
 
-  if(edit){
-      const datePickerEdit = document.getElementById("datepicker-autohide-edit");
-      const weightEdit = document.getElementById("weight-input-edit");
-
-    if(datePickerEdit.value.trim() !== "") {
-      datePickerEdit.classList.remove(...errorClasses);
-      datePickerEdit.classList.add(...validClasses);
-    } else {
-      datePickerEdit.classList.remove(...validClasses);
-      datePickerEdit.classList.add(...errorClasses);
-    }
-
-    if (weightEdit.value.trim() !== "") {
-      weightEdit.classList.remove(...errorClasses);
-      weightEdit.classList.add(...validClasses);
-    } else {
-      weightEdit.classList.remove(...validClasses);
-      weightEdit.classList.add(...errorClasses);
-    }
-  }
-  
-
-    if (datePicker.value.trim() !== "") {
+  if (valid) {
       datePicker.classList.remove(...errorClasses);
       datePicker.classList.add(...validClasses);
     } else {
@@ -158,4 +134,25 @@ export function setDrawerFieldsState(valid, edit = false) {
       weight.classList.remove(...validClasses);
       weight.classList.add(...errorClasses);
     }
+
+  // if(edit){
+  //     const datePickerEdit = document.getElementById("datepicker-autohide-edit");
+  //     const weightEdit = document.getElementById("weight-input-edit");
+
+  //   if(datePickerEdit.value.trim() !== "") {
+  //     datePickerEdit.classList.remove(...errorClasses);
+  //     datePickerEdit.classList.add(...validClasses);
+  //   } else {
+  //     datePickerEdit.classList.remove(...validClasses);
+  //     datePickerEdit.classList.add(...errorClasses);
+  //   }
+
+  //   if (weightEdit.value.trim() !== "") {
+  //     weightEdit.classList.remove(...errorClasses);
+  //     weightEdit.classList.add(...validClasses);
+  //   } else {
+  //     weightEdit.classList.remove(...validClasses);
+  //     weightEdit.classList.add(...errorClasses);
+  //   }
+  // }
 }
