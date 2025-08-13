@@ -21,7 +21,7 @@ export function validateWeightRecord() {
   if (datePickerValue && weightValue) {
     weightRecordSubmitBtn.addEventListener("click", handleSubmit);
     setAddSubmitButtonState("valid");
-    setAddDrawerFieldsState("valid");
+    setAddDrawerFieldsState();
   } else {
     setAddSubmitButtonState();
     setAddDrawerFieldsState();
@@ -90,7 +90,7 @@ export function setAddSubmitButtonState(valid) {
   }
 }
 
-export function setAddDrawerFieldsState(valid) {
+export function setAddDrawerFieldsState() {
   const validClasses = [
     "bg-gray-50",
     "border-gray-300",
@@ -119,7 +119,7 @@ export function setAddDrawerFieldsState(valid) {
   const datePicker = document.getElementById("datepicker-autohide");
   const weight = document.getElementById("weight-input");
 
-  if (valid) {
+  if (datePicker.value.trim() !== "") {
       datePicker.classList.remove(...errorClasses);
       datePicker.classList.add(...validClasses);
     } else {
