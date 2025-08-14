@@ -41,10 +41,10 @@ export function validateEditRecord(){
     if (datePickerEditValue && weightEditValue) {
       weightEditBtn.addEventListener("click", handleEdit);
       setEditSubmitButtonState("valid");
-      // setDrawerFieldsState("valid");
+      setEditDrawerFieldsState();
     } else {
       setEditSubmitButtonState();
-      // setDrawerFieldsState();
+      setEditDrawerFieldsState();
       return;
     }
   }
@@ -184,4 +184,51 @@ export function setAddDrawerFieldsState() {
   //     weightEdit.classList.add(...errorClasses);
   //   }
   // }
+}
+
+export function setEditDrawerFieldsState() {
+  const validClasses = [
+    "bg-gray-50",
+    "border-gray-300",
+    "text-gray-900",
+    "focus:ring-blue-500",
+    "focus:border-blue-500",
+    "dark:border-gray-600",
+    "dark:placeholder-gray-400",
+    "dark:text-white",
+    "dark:focus:ring-blue-500",
+    "dark:focus:border-blue-500",
+  ];
+
+  const errorClasses = [
+    "bg-red-50",
+    "border-red-500",
+    "text-red-900",
+    "placeholder-red-700",
+    "focus:ring-red-500",
+    "focus:border-red-500",
+    "dark:text-red-500",
+    "dark:placeholder-red-500",
+    "dark:border-red-500",
+  ];
+
+  const datePickerEdit = document.getElementById("datepicker-autohide-edit");
+  const weightEdit = document.getElementById("weight-input-edit");
+
+    if(datePickerEdit.value.trim() !== "") {
+      datePickerEdit.classList.remove(...errorClasses);
+      datePickerEdit.classList.add(...validClasses);
+    } else {
+      datePickerEdit.classList.remove(...validClasses);
+      datePickerEdit.classList.add(...errorClasses);
+    }
+
+    if (weightEdit.value.trim() !== "") {
+      weightEdit.classList.remove(...errorClasses);
+      weightEdit.classList.add(...validClasses);
+    } else {
+      weightEdit.classList.remove(...validClasses);
+      weightEdit.classList.add(...errorClasses);
+    }
+
 }
