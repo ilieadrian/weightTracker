@@ -40,11 +40,11 @@ export function validateEditRecord(){
     weightEditBtn.removeEventListener("click", handleEdit);
     if (datePickerEditValue && weightEditValue) {
       weightEditBtn.addEventListener("click", handleEdit);
-      setSubmitButtonState("active", true);
-      setDrawerFieldsState("valid", true);
+      setEditSubmitButtonState("valid");
+      // setDrawerFieldsState("valid");
     } else {
-      setSubmitButtonState();
-      setDrawerFieldsState();
+      setEditSubmitButtonState();
+      // setDrawerFieldsState();
       return;
     }
   }
@@ -89,6 +89,35 @@ export function setAddSubmitButtonState(valid) {
     weightRecordSubmitBtn.disabled = true;
   }
 }
+
+
+export function setEditSubmitButtonState(valid) {
+  const activeButtonClasses = [
+    "text-white",
+    "bg-blue-700",
+    "hover:bg-blue-800",
+  ];
+  const disabledButtonClasses = [
+    "bg-gray-100",
+    "border",
+    "border-gray-300",
+    "text-gray-400",
+    "cursor-not-allowed",
+  ];
+
+    const weightEditBtn = document.getElementById("weight-edit-button");
+
+    if (valid) {
+      weightEditBtn.classList.remove(...disabledButtonClasses);
+      weightEditBtn.classList.add(...activeButtonClasses);
+      weightEditBtn.disabled = false;
+    } else {
+      weightEditBtn.classList.remove(...activeButtonClasses);
+      weightEditBtn.classList.add(...disabledButtonClasses);
+      weightEditBtn.disabled = true;
+    }
+
+  }
 
 export function setAddDrawerFieldsState() {
   const validClasses = [
